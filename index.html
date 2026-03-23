@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1c1a16">
+<title>OPERIX Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:#c49440; --gold2:#e8b96a; --gold-bg:rgba(196,148,64,.1); --gold-border:rgba(196,148,64,.25);
+    --text:#1c1a16; --text2:#3a3630; --text3:#6b6560; --text4:#a09890;
+    --surface:#fff; --surface2:#f7f5f0; --surface3:#f0ede6;
+    --border:#e8e5dc; --border2:#ede9e0;
+    --red:#dc2626; --red-bg:#fef2f2; --red-border:#fecaca;
+    --green:#16a34a; --green-bg:#f0fdf4; --green-border:#bbf7d0;
+    --blue:#2563eb; --blue-bg:#eff6ff; --blue-border:#bfdbfe;
+    --amber:#d97706; --amber-bg:#fffbeb; --amber-border:#fde68a;
+    --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-border:#ddd6fe;
+    --sb: env(safe-area-inset-bottom, 0px);
+    --st: env(safe-area-inset-top, 0px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; background: var(--surface2); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); overflow: hidden; }
+
+  /* ── Screens ── */
+  .screen { display: none; position: fixed; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── Auth screens ── */
+  .auth-screen { background: var(--surface2); align-items: center; justify-content: center; padding: 28px 24px; }
+
+  /* ── Main app ── */
+  #app-screen { background: var(--surface2); }
+  .app-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(72px + var(--sb)); padding-top: calc(60px + var(--st)); }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(28,26,22,.96); backdrop-filter: blur(20px);
+    padding: calc(var(--st) + 12px) 16px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .top-bar-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -.01em; }
+  .top-bar-sub { font-size: 9px; color: rgba(255,255,255,.4); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin-top: 1px; }
+
+  /* ── Bottom nav ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(28,26,22,.97); backdrop-filter: blur(20px);
+    padding: 8px 0 calc(8px + var(--sb));
+    display: flex; align-items: center;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 4px; background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,.35); font-size: 9px; font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: .03em;
+    transition: color .15s; position: relative;
+  }
+  .nav-item.active { color: var(--gold2); }
+  .nav-item.active svg { filter: drop-shadow(0 0 4px rgba(196,148,64,.5)); }
+  .nav-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .nav-badge { position: absolute; top: 2px; right: 20%; background: var(--red); color: #fff; font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 9px; min-width: 16px; text-align: center; display: none; }
+
+  /* ── Cards ── */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+
+  /* ── Buttons ── */
+  .btn-gold { width: 100%; padding: 14px; background: linear-gradient(135deg,#9a7230,#c49440); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 16px rgba(154,114,48,.3); letter-spacing: .01em; }
+  .btn-dark { width: 100%; padding: 14px; background: #1c1a16; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-outline { width: 100%; padding: 13px; background: var(--surface); color: var(--text); border: 1.5px solid var(--border2); border-radius: 12px; font-size: 14px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-danger { padding: 10px 18px; background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); border-radius: 10px; font-size: 13px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; }
+
+  /* ── Fields ── */
+  .field { width: 100%; padding: 13px 14px; background: var(--surface2); border: 1.5px solid var(--border2); border-radius: 12px; font-size: 15px; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color .15s; }
+  .field:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,148,64,.12); }
+  .field-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 6px; }
+
+  /* ── Status chips ── */
+  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 9px; font-size: 11px; font-weight: 700; }
+  .chip-gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+  .chip-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .chip-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .chip-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .chip-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+
+  /* ── KPI tile ── */
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .kpi-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 12px; text-align: center; }
+  .kpi-val { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 900; color: var(--gold); }
+  .kpi-lbl { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; margin-top: 3px; }
+
+  /* ── Check-in button ── */
+  .checkin-btn {
+    width: 160px; height: 160px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    margin: 0 auto; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 800;
+    color: #fff; transition: all .2s; box-shadow: 0 8px 32px rgba(154,114,48,.4);
+    -webkit-user-select: none; user-select: none;
+  }
+  .checkin-btn.idle { background: linear-gradient(135deg,#1c1a16,#3a3630); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+  .checkin-btn.checkin { background: linear-gradient(135deg,#15803d,#16a34a); box-shadow: 0 8px 32px rgba(22,163,74,.4); }
+  .checkin-btn.checkout { background: linear-gradient(135deg,#dc2626,#b91c1c); box-shadow: 0 8px 32px rgba(220,38,38,.4); }
+  .checkin-btn:active { transform: scale(.95); }
+
+  /* ── OTP dots ── */
+  .otp-row { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
+  .otp-digit { width: 44px; height: 54px; text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; border: 2px solid var(--border2); border-radius: 12px; background: var(--surface); color: var(--text); outline: none; }
+  .otp-digit:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,148,64,.15); }
+
+  /* ── Mail list ── */
+  .mail-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; background: var(--surface); transition: background .15s; }
+  .mail-item:active { background: var(--surface2); }
+  .mail-item.unread { border-left: 3px solid var(--gold); background: #fffdf5; }
+  .mail-avatar { width: 40px; height: 40px; border-radius: 12px; background: var(--gold-bg); border: 1.5px solid var(--gold-border); display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; color: var(--gold); flex-shrink: 0; }
+
+  /* ── Section header ── */
+  .sec-hdr { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 800; color: var(--text3); text-transform: uppercase; letter-spacing: .12em; padding: 16px 16px 8px; }
+
+  /* ── Request item ── */
+  .req-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+
+  /* ── Toast ── */
+  #m-toast { position: fixed; bottom: calc(82px + var(--sb)); left: 50%; transform: translateX(-50%); background: #1c1a16; color: var(--gold2); font-size: 13px; font-weight: 600; padding: 11px 20px; border-radius: 12px; z-index: 999; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 6px 24px rgba(0,0,0,.3); border: 1px solid rgba(196,148,64,.3); max-width: 280px; text-align: center; display: none; transition: opacity .3s; }
+
+  /* ── Modal overlay ── */
+  .m-modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 200; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
+  .m-modal.open { display: flex; }
+  .m-modal-box { background: var(--surface); border-radius: 24px 24px 0 0; padding: 20px 20px calc(20px + var(--sb)); width: 100%; max-height: 85vh; overflow-y: auto; }
+  .m-modal-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 2px; margin: 0 auto 18px; }
+
+  /* ── Shift card ── */
+  .shift-card { background: linear-gradient(135deg,#1c1a16,#2e2c28); border-radius: 16px; padding: 18px; color: #fff; margin-bottom: 14px; }
+
+  /* ── Attendance log ── */
+  .att-row { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+
+  /* ── Animate ── */
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  .fadeup { animation: fadeUp .3s ease both; }
+
+  @keyframes pulse-ring { 0% { transform: scale(1); opacity:.6; } 100% { transform: scale(1.35); opacity:0; } }
+  .pulse-ring { position: absolute; border-radius: 50%; border: 2px solid currentColor; animation: pulse-ring 1.8s ease-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════════════ -->
+<div id="login-screen" class="screen auth-screen active">
+  <div style="width:100%;max-width:340px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:24px;background:#1c1a16;border:1.5px solid rgba(196,148,64,.3);box-shadow:0 8px 32px rgba(0,0,0,.15);margin-bottom:16px;">
+        <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:56px;height:56px;object-fit:contain;border-radius:14px;" onerror="this.style.display='none'">
+      </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:900;color:var(--text);">OPERIX</div>
+      <div style="font-size:10px;color:var(--text4);font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-top:4px;">Mobile · Field Operations</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+      <div>
+        <label class="field-label">Email</label>
+        <input id="l-email" type="email" class="field" placeholder="you@operix.com" autocomplete="email" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
+      </div>
+      <div>
+        <label class="field-label">Password</label>
+        <input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()">
+      </div>
+    </div>
+    <div id="l-error" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;text-align:center;"></div>
+    <button onclick="mLogin()" id="l-btn" class="btn-dark" style="margin-bottom:12px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      Sign In
+    </button>
+    <button onclick="showScreen('forgot-screen')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;width:100%;text-align:center;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
+    <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text4);">
+      Desktop version: use OPERIX on a computer
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     OTP SCREEN
+════════════════════════════════════════════ -->
+<div id="otp-screen" class="screen auth-screen">
+  <div style="width:100%;max-width:340px;">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--surface);border:1.5px solid var(--border2);box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:14px;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="var(--gold)"/></svg>
+      </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);">Verify Identity</div>
+      <div id="otp-subtitle" style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.5;">Code sent to your trusted email</div>
+    </div>
+    <div class="otp-row" id="otp-inputs">
+      <input type="tel" maxlength="1" class="otp-digit" id="o0" oninput="otpIn(this,0)" onkeydown="otpKey(event,0)">
+      <input type="tel" maxlength="1" class="otp-digit" id="o1" oninput="otpIn(this,1)" onkeydown="otpKey(event,1)">
+      <input type="tel" maxlength="1" class="otp-digit" id="o2" oninput="otpIn(this,2)" onkeydown="otpKey(event,2)">
+      <input type="tel" maxlength="1" class="otp-digit" id="o3" oninput="otpIn(this,3)" onkeydown="otpKey(event,3)">
+      <input type="tel" maxlength="1" class="otp-digit" id="o4" oninput="otpIn(this,4)" onkeydown="otpKey(event,4)">
+      <input type="tel" maxlength="1" class="otp-digit" id="o5" oninput="otpIn(this,5)" onkeydown="otpKey(event,5)">
+    </div>
+    <div style="text-align:center;margin-bottom:16px;">
+      <span id="otp-timer" style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);">05:00</span>
+      <span style="font-size:12px;color:var(--text3);"> remaining</span>
+    </div>
+    <div id="otp-error" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin-bottom:12px;"></div>
+    <button onclick="mVerifyOTP()" id="otp-btn" class="btn-gold" style="margin-bottom:12px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Verify Code
+    </button>
+    <button onclick="mResendOTP()" id="otp-resend" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;width:100%;text-align:center;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">Resend Code</button>
+    <button onclick="showScreen('login-screen')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;text-align:center;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;margin-top:4px;">← Back to Sign In</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECURITY QUESTIONS — NEW DEVICE
+════════════════════════════════════════════ -->
+<div id="secq-screen" class="screen auth-screen">
+  <div style="width:100%;max-width:340px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--surface);border:1.5px solid var(--border2);margin-bottom:14px;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);">New Device</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:6px;">Answer security questions to verify</div>
+    </div>
+    <div id="secq-container" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
+    <div id="secq-error" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);margin-bottom:12px;text-align:center;"></div>
+    <button onclick="mVerifySecQ()" class="btn-dark" style="margin-bottom:10px;">Verify & Continue →</button>
+    <button onclick="showScreen('login-screen')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;text-align:center;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">← Back</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SETUP SECURITY QUESTIONS (first time)
+════════════════════════════════════════════ -->
+<div id="setup-secq-screen" class="screen auth-screen">
+  <div style="width:100%;max-width:340px;">
+    <div style="text-align:center;margin-bottom:22px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--surface);border:1.5px solid var(--border2);margin-bottom:14px;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:800;color:var(--text);">Set Security Questions</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.5;">One-time setup. Used to verify new devices.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;">
+      <div>
+        <label class="field-label">Question 1</label>
+        <select id="ss-q1" class="field" style="margin-bottom:8px;">
+          <option value="">— Choose —</option>
+          <option>What is your mother's maiden name?</option>
+          <option>What was your first pet's name?</option>
+          <option>What city were you born in?</option>
+          <option>What was your primary school's name?</option>
+          <option>What was the make of your first car?</option>
+        </select>
+        <input id="ss-a1" class="field" placeholder="Your answer">
+      </div>
+      <div>
+        <label class="field-label">Question 2</label>
+        <select id="ss-q2" class="field" style="margin-bottom:8px;">
+          <option value="">— Choose —</option>
+          <option>What is your mother's maiden name?</option>
+          <option>What was your first pet's name?</option>
+          <option>What city were you born in?</option>
+          <option>What was your primary school's name?</option>
+          <option>What was the make of your first car?</option>
+        </select>
+        <input id="ss-a2" class="field" placeholder="Your answer">
+      </div>
+      <div>
+        <label class="field-label">Question 3</label>
+        <select id="ss-q3" class="field" style="margin-bottom:8px;">
+          <option value="">— Choose —</option>
+          <option>What is your mother's maiden name?</option>
+          <option>What was your first pet's name?</option>
+          <option>What city were you born in?</option>
+          <option>What was your primary school's name?</option>
+          <option>What was the make of your first car?</option>
+        </select>
+        <input id="ss-a3" class="field" placeholder="Your answer">
+      </div>
+    </div>
+    <div id="ss-error" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);margin-bottom:12px;text-align:center;"></div>
+    <button onclick="mSaveSecQ()" class="btn-dark">Save & Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FORGOT PASSWORD
+════════════════════════════════════════════ -->
+<div id="forgot-screen" class="screen auth-screen">
+  <div style="width:100%;max-width:340px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);">Reset Password</div>
+      <div id="fp-sub" style="font-size:12px;color:var(--text3);margin-top:6px;">Enter your login email to begin.</div>
+    </div>
+    <div id="fp-step1">
+      <input id="fp-email" type="email" class="field" placeholder="your@email.com" style="margin-bottom:14px;">
+      <button onclick="fpStep1()" class="btn-dark" style="margin-bottom:10px;">Continue →</button>
+    </div>
+    <div id="fp-step2" style="display:none;">
+      <div id="fp-q-container" style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;"></div>
+      <button onclick="fpStep2()" class="btn-dark" style="margin-bottom:10px;">Verify Answers →</button>
+    </div>
+    <div id="fp-step3" style="display:none;">
+      <div class="otp-row"><input type="tel" maxlength="1" class="otp-digit" id="fp0" oninput="fpOtpIn(this,0)" onkeydown="fpOtpKey(event,0)"><input type="tel" maxlength="1" class="otp-digit" id="fp1" oninput="fpOtpIn(this,1)" onkeydown="fpOtpKey(event,1)"><input type="tel" maxlength="1" class="otp-digit" id="fp2" oninput="fpOtpIn(this,2)" onkeydown="fpOtpKey(event,2)"><input type="tel" maxlength="1" class="otp-digit" id="fp3" oninput="fpOtpIn(this,3)" onkeydown="fpOtpKey(event,3)"><input type="tel" maxlength="1" class="otp-digit" id="fp4" oninput="fpOtpIn(this,4)" onkeydown="fpOtpKey(event,4)"><input type="tel" maxlength="1" class="otp-digit" id="fp5" oninput="fpOtpIn(this,5)" onkeydown="fpOtpKey(event,5)"></div>
+      <button onclick="fpStep3()" class="btn-gold" style="margin-bottom:10px;">Verify Code →</button>
+    </div>
+    <div id="fp-step4" style="display:none;">
+      <input id="fp-np" type="password" class="field" placeholder="New password" style="margin-bottom:10px;">
+      <input id="fp-cp" type="password" class="field" placeholder="Confirm password" style="margin-bottom:14px;">
+      <button onclick="fpStep4()" class="btn-gold" style="margin-bottom:10px;">Set New Password</button>
+    </div>
+    <div id="fp-error" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin-bottom:12px;"></div>
+    <button onclick="showScreen('login-screen')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;text-align:center;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">← Back to Sign In</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN APP SCREEN
+════════════════════════════════════════════ -->
+<div id="app-screen" class="screen">
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title" id="page-title">Home</div>
+      <div class="top-bar-sub" id="page-sub">OPERIX Mobile</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="top-avatar" style="width:36px;height:36px;border-radius:10px;background:rgba(154,114,48,.2);border:1.5px solid rgba(196,148,64,.4);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:#c49440;cursor:pointer;" onclick="showTab('profile')"></div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="app-content">
+
+    <!-- ── HOME PAGE ── -->
+    <div id="page-home" class="fadeup" style="padding:14px;">
+      <div id="home-greeting" style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;">Good morning 👋</div>
+      <div id="home-name" style="font-size:13px;color:var(--text3);margin-bottom:18px;"></div>
+
+      <!-- Shift card -->
+      <div id="home-shift-card" class="shift-card" style="display:none;">
+        <div style="font-size:10px;color:rgba(232,185,106,.6);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Your Shift</div>
+        <div id="home-shift-name" style="font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;"></div>
+        <div id="home-shift-time" style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:12px;"></div>
+        <div style="display:flex;gap:8px;">
+          <div id="home-shift-loc" style="font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="home-loc-text">Loading…</span></div>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-tile"><div class="kpi-val" id="kpi-days">--</div><div class="kpi-lbl">Days Present</div></div>
+        <div class="kpi-tile"><div class="kpi-val" id="kpi-hours">--</div><div class="kpi-lbl">Hours Logged</div></div>
+        <div class="kpi-tile"><div class="kpi-val" id="kpi-salary" style="font-size:18px;">--</div><div class="kpi-lbl">Salary (SAR)</div></div>
+        <div class="kpi-tile"><div class="kpi-val" id="kpi-pending" style="color:var(--amber);">--</div><div class="kpi-lbl">Pending Req.</div></div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="card-title" style="padding:0 2px;margin-bottom:8px;">Quick Actions</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;">
+        <button onclick="showTab('attendance')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">Check In/Out</span>
+        </button>
+        <button onclick="showTab('requests')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">Requests</span>
+        </button>
+        <button onclick="showTab('mail')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">Mail</span>
+          <span id="home-mail-badge" class="nav-badge" style="top:8px;right:8px;"></span>
+        </button>
+        <button onclick="showTab('shift')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">My Schedule</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── ATTENDANCE PAGE ── -->
+    <div id="page-attendance" style="display:none;padding:14px;">
+      <div style="text-align:center;padding:20px 0 28px;">
+        <!-- Live clock -->
+        <div id="att-clock" style="font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:900;color:var(--text);letter-spacing:-.02em;margin-bottom:4px;">--:--</div>
+        <div id="att-date" style="font-size:13px;color:var(--text3);margin-bottom:28px;"></div>
+
+        <!-- Big check-in button -->
+        <div style="position:relative;display:inline-block;margin-bottom:24px;">
+          <button id="checkin-btn" class="checkin-btn idle" onclick="mCheckIn()" style="position:relative;z-index:1;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="checkin-label">Check In</span>
+          </button>
+        </div>
+
+        <!-- GPS status -->
+        <div id="gps-status" style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--text3);margin-bottom:8px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="gps-text">Locating…</span>
+        </div>
+        <div id="att-status-msg" style="font-size:12px;color:var(--text3);min-height:18px;"></div>
+      </div>
+
+      <!-- Today's log -->
+      <div class="card">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Today's Attendance
+        </div>
+        <div id="att-today-list"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
+      </div>
+
+      <!-- Recent attendance -->
+      <div class="card">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Recent History
+        </div>
+        <div id="att-history-list"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ── SHIFT / SCHEDULE PAGE ── -->
+    <div id="page-shift" style="display:none;padding:14px;">
+      <div id="shift-detail-card" class="shift-card" style="display:none;">
+        <div style="font-size:10px;color:rgba(232,185,106,.5);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Your Current Shift</div>
+        <div id="sd-project" style="font-size:18px;font-weight:900;color:#fff;margin-bottom:6px;"></div>
+        <div id="sd-location" style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:12px;display:flex;align-items:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="sd-loc-text"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:10px;">
+            <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">Hours</div>
+            <div id="sd-hours" style="font-size:16px;font-weight:800;color:#fff;"></div>
+          </div>
+          <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:10px;">
+            <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">Work Days</div>
+            <div id="sd-days" style="font-size:16px;font-weight:800;color:#fff;"></div>
+          </div>
+          <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:10px;">
+            <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">Days Off</div>
+            <div id="sd-daysoff" style="font-size:16px;font-weight:800;color:#fff;"></div>
+          </div>
+          <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:10px;">
+            <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">Salary</div>
+            <div id="sd-salary" style="font-size:16px;font-weight:800;color:var(--gold2);"></div>
+          </div>
+        </div>
+      </div>
+      <div id="shift-empty" style="text-align:center;padding:40px 20px;color:var(--text4);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" style="margin:0 auto 12px;display:block;opacity:.3;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div style="font-size:14px;font-weight:600;">No shift assigned yet</div>
+        <div style="font-size:12px;margin-top:4px;">Contact your administrator</div>
+      </div>
+    </div>
+
+    <!-- ── REQUESTS PAGE ── -->
+    <div id="page-requests" style="display:none;padding:14px;">
+      <!-- New request button -->
+      <button onclick="openNewRequestModal()" class="btn-gold" style="margin-bottom:16px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Request
+      </button>
+
+      <div class="card-title" style="padding:0 2px;margin-bottom:10px;">My Requests</div>
+      <div id="req-list"><div style="font-size:12px;color:var(--text4);text-align:center;padding:24px;">Loading…</div></div>
+    </div>
+
+    <!-- ── MAIL PAGE ── -->
+    <div id="page-mail" style="display:none;">
+      <!-- Mail sub-nav -->
+      <div style="display:flex;gap:0;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+        <button class="mail-folder-btn active" id="mf-inbox" onclick="mMailNav('inbox',this)" style="padding:12px 16px;background:none;border:none;border-bottom:2px solid var(--gold);font-size:12px;font-weight:700;color:var(--gold);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;">
+          Inbox <span id="m-inbox-badge" style="display:none;background:var(--gold);color:#fff;font-size:9px;padding:1px 5px;border-radius:6px;margin-left:3px;"></span>
+        </button>
+        <button class="mail-folder-btn" id="mf-sent" onclick="mMailNav('sent',this)" style="padding:12px 16px;background:none;border:none;border-bottom:2px solid transparent;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;">Sent</button>
+        <button class="mail-folder-btn" id="mf-compose" onclick="openMobileCompose()" style="padding:12px 16px;background:none;border:none;border-bottom:2px solid transparent;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;">✏️ Compose</button>
+      </div>
+      <div id="m-mail-list" style="background:var(--surface);"></div>
+    </div>
+
+    <!-- ── PROFILE PAGE ── -->
+    <div id="page-profile" style="display:none;padding:14px;">
+      <div class="card" style="text-align:center;padding:24px;">
+        <div id="p-avatar" style="width:72px;height:72px;border-radius:20px;background:var(--gold-bg);border:2px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--gold);margin:0 auto 12px;overflow:hidden;"></div>
+        <div id="p-name" style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:var(--text);"></div>
+        <div id="p-role" style="font-size:12px;color:var(--text3);margin-top:3px;"></div>
+        <div id="p-email" style="font-size:11px;color:var(--text4);margin-top:2px;font-family:'Fira Code',monospace;"></div>
+      </div>
+
+      <!-- Trusted Devices -->
+      <div class="card">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Trusted Devices
+        </div>
+        <div id="p-devices-list"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
+      </div>
+
+      <!-- Sign out -->
+      <button onclick="mSignOut()" class="btn-danger" style="width:100%;padding:14px;font-size:14px;margin-top:4px;">
+        Sign Out
+      </button>
+    </div>
+
+  </div><!-- end app-content -->
+
+  <!-- Bottom navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="showTab('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Home
+    </button>
+    <button class="nav-item" id="nav-attendance" onclick="showTab('attendance')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Check In
+    </button>
+    <button class="nav-item" id="nav-requests" onclick="showTab('requests')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Requests
+    </button>
+    <button class="nav-item" id="nav-mail" onclick="showTab('mail')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Mail
+      <span id="nav-mail-badge" class="nav-badge"></span>
+    </button>
+    <button class="nav-item" id="nav-shift" onclick="showTab('shift')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Schedule
+    </button>
+  </nav>
+
+</div><!-- end app-screen -->
+
+<!-- ── New Request Modal ── -->
+<div id="req-modal" class="m-modal">
+  <div class="m-modal-box">
+    <div class="m-modal-handle"></div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:16px;">New Request</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+      <div>
+        <label class="field-label">Request Type</label>
+        <select id="req-type" class="field">
+          <option value="leave">Leave Request</option>
+          <option value="salary">Salary Inquiry</option>
+          <option value="document">Document Request</option>
+          <option value="complaint">Complaint</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Details</label>
+        <textarea id="req-details" class="field" rows="4" style="resize:none;" placeholder="Describe your request…"></textarea>
+      </div>
+    </div>
+    <button onclick="submitMobileRequest()" class="btn-gold" style="margin-bottom:10px;">Submit Request</button>
+    <button onclick="closeModal('req-modal')" class="btn-outline">Cancel</button>
+  </div>
+</div>
+
+<!-- ── Mail Read Modal ── -->
+<div id="mail-read-modal" class="m-modal">
+  <div class="m-modal-box" style="max-height:90vh;">
+    <div class="m-modal-handle"></div>
+    <div id="mail-read-content" style="padding-bottom:8px;"></div>
+    <button onclick="closeModal('mail-read-modal')" class="btn-outline" style="margin-top:12px;">Close</button>
+  </div>
+</div>
+
+<!-- ── Mail Compose Modal ── -->
+<div id="mail-compose-modal" class="m-modal">
+  <div class="m-modal-box">
+    <div class="m-modal-handle"></div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:16px;">New Message</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+      <div>
+        <label class="field-label">To (OPERIX users)</label>
+        <input id="mc-to" class="field" placeholder="email or name" list="mc-to-list">
+        <datalist id="mc-to-list"></datalist>
+      </div>
+      <div>
+        <label class="field-label">Subject</label>
+        <input id="mc-subject" class="field" placeholder="Subject">
+      </div>
+      <div>
+        <label class="field-label">Message</label>
+        <textarea id="mc-body" class="field" rows="5" style="resize:none;" placeholder="Write your message…"></textarea>
+      </div>
+    </div>
+    <button onclick="mSendMail()" class="btn-gold" style="margin-bottom:10px;">Send</button>
+    <button onclick="closeModal('mail-compose-modal')" class="btn-outline">Cancel</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="m-toast"></div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const OPS_API    = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgIFFXUoKip3yeEkQqzbugfJtUsK7YHj8Ma0eMxDl6lLDtzL8f/exec';
+const SUPABASE_URL  = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
+
+var currentUser = null;
+var _pendingLogin = null;
+var _secQData = null;
+var _otpTimer = null;
+var myLat = null, myLng = null, myDist = 9999;
+var CAFE_LAT = 24.7694973, CAFE_LNG = 46.7625231, GPS_RADIUS = 150;
+var myShiftData = null;
+var mailCurrentFolder = 'inbox';
+var mailEmails = [];
+
+// ═══════════════════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════════════════
+async function sb(path, opts = {}) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    ...opts,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON,
+      'Authorization': 'Bearer ' + SUPABASE_ANON,
+      'Prefer': opts.prefer || (opts.method === 'GET' ? 'count=exact' : 'return=representation'),
+      ...(opts.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    throw new Error('SB ' + res.status + ': ' + t.slice(0, 120));
+  }
+  if (res.status === 204 || opts.method === 'DELETE') return null;
+  try { return await res.json(); } catch { return null; }
+}
+
+async function gasCall(url, payload) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 15000);
+  try {
+    const res = await fetch(url, { method: 'POST', body: JSON.stringify(payload), redirect: 'follow', signal: ctrl.signal });
+    clearTimeout(t);
+    return JSON.parse(await res.text());
+  } catch(e) { clearTimeout(t); return { success: false, error: e.message }; }
+}
+
+// ═══════════════════════════════════════════════
+// DEVICE FINGERPRINT
+// ═══════════════════════════════════════════════
+async function getDeviceFingerprint() {
+  var c = [navigator.userAgent, navigator.language, screen.width+'x'+screen.height, new Date().getTimezoneOffset(), navigator.platform, navigator.hardwareConcurrency||''].join('|');
+  var h = 0;
+  for (var i = 0; i < c.length; i++) { h = ((h << 5) - h) + c.charCodeAt(i); h |= 0; }
+  return 'dev_' + Math.abs(h).toString(36);
+}
+function getDeviceName() {
+  var ua = navigator.userAgent;
+  if (/iPhone/.test(ua)) return 'iPhone';
+  if (/iPad/.test(ua)) return 'iPad';
+  if (/Android/.test(ua)) return 'Android Device';
+  if (/Mac/.test(ua)) return 'Mac';
+  if (/Windows/.test(ua)) return 'Windows PC';
+  return 'Mobile Device';
+}
+async function isTrustedDevice(email) {
+  try {
+    var fp = await getDeviceFingerprint();
+    var rows = await sb('operix_trusted_devices?account_email=eq.' + encodeURIComponent(email) + '&device_id=eq.' + encodeURIComponent(fp) + '&limit=1', { method: 'GET' });
+    if (Array.isArray(rows) && rows.length) {
+      sb('operix_trusted_devices?id=eq.' + rows[0].id, { method: 'PATCH', body: JSON.stringify({ last_used: new Date().toISOString() }) }).catch(() => {});
+      return true;
+    }
+    return false;
+  } catch { return false; }
+}
+async function trustDevice(email) {
+  try {
+    var fp = await getDeviceFingerprint();
+    await sb('operix_trusted_devices', { method: 'POST', body: JSON.stringify({ account_email: email, device_id: fp, device_name: getDeviceName(), last_used: new Date().toISOString() }) });
+  } catch(e) { console.warn('trustDevice:', e); }
+}
+
+// ═══════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.style.display = 'none'; });
+  var el = document.getElementById(id);
+  if (el) { el.style.display = 'flex'; el.classList.add('active'); }
+}
+
+function showTab(tab) {
+  ['home','attendance','shift','requests','mail','profile'].forEach(function(t) {
+    var page = document.getElementById('page-' + t);
+    if (page) page.style.display = t === tab ? 'block' : 'none';
+    var nav = document.getElementById('nav-' + t);
+    if (nav) nav.classList.toggle('active', t === tab);
+  });
+  var titles = { home: 'Home', attendance: 'Check In/Out', shift: 'My Schedule', requests: 'Requests', mail: 'Mail', profile: 'Profile' };
+  document.getElementById('page-title').innerText = titles[tab] || 'OPERIX';
+
+  if (tab === 'home') loadHome();
+  if (tab === 'attendance') loadAttendance();
+  if (tab === 'shift') loadShiftPage();
+  if (tab === 'requests') loadRequests();
+  if (tab === 'mail') loadMail(mailCurrentFolder);
+  if (tab === 'profile') loadProfile();
+}
+
+function toast(msg, duration) {
+  var el = document.getElementById('m-toast');
+  el.innerText = msg; el.style.display = 'block'; el.style.opacity = '1';
+  setTimeout(function() { el.style.opacity = '0'; setTimeout(function(){ el.style.display='none'; }, 300); }, duration || 2500);
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ═══════════════════════════════════════════════
+// LOGIN FLOW
+// ═══════════════════════════════════════════════
+async function mLogin() {
+  var email = (document.getElementById('l-email').value || '').trim().toLowerCase();
+  var pass  = (document.getElementById('l-pass').value  || '').trim();
+  var errEl = document.getElementById('l-error');
+  var btn   = document.getElementById('l-btn');
+  errEl.style.display = 'none';
+  if (!email || !pass) { errEl.innerText = 'Please enter email and password.'; errEl.style.display = 'block'; return; }
+
+  btn.disabled = true; btn.innerText = 'Signing in…';
+  try {
+    var rows = await sb('accounts?email=eq.' + encodeURIComponent(email) + '&password=eq.' + encodeURIComponent(pass) + '&select=id,name,email,role,job,phone,photo,otp_email&limit=1', { method: 'GET' });
+    if (!Array.isArray(rows) || !rows.length) { errEl.innerText = 'Wrong email or password.'; errEl.style.display = 'block'; btn.disabled=false; btn.innerText='Sign In'; return; }
+    var acc = rows[0];
+    if ((acc.role||'').toLowerCase() === 'pending') { errEl.innerText = 'Account pending approval. Contact your administrator.'; errEl.style.display = 'block'; btn.disabled=false; btn.innerText='Sign In'; return; }
+    _pendingLogin = acc;
+
+    var isFile = window.location.protocol === 'file:';
+    if (isFile) { finishLogin(acc); btn.disabled=false; btn.innerText='Sign In'; return; }
+    if (!acc.otp_email) { errEl.innerText = '2FA not configured. Contact your administrator.'; errEl.style.display = 'block'; btn.disabled=false; btn.innerText='Sign In'; return; }
+
+    btn.innerText = 'Checking device…';
+    var trusted = await isTrustedDevice(acc.email);
+    if (trusted) { finishLogin(acc); btn.disabled=false; btn.innerText='Sign In'; return; }
+
+    // New device — check security questions
+    var hasSQ = await hasSecQ(acc.email);
+    btn.disabled=false; btn.innerText='Sign In';
+    if (!hasSQ) {
+      showScreen('setup-secq-screen');
+    } else {
+      await showSecQScreen(acc.email);
+      showScreen('secq-screen');
+    }
+  } catch(e) { errEl.innerText = 'Connection error: ' + e.message; errEl.style.display='block'; btn.disabled=false; btn.innerText='Sign In'; }
+}
+
+async function hasSecQ(email) {
+  try {
+    var r = await sb('operix_security_questions?account_email=eq.' + encodeURIComponent(email) + '&limit=1', { method: 'GET' });
+    return Array.isArray(r) && r.length > 0 && r[0].q1;
+  } catch { return false; }
+}
+
+async function showSecQScreen(email) {
+  var rows = await sb('operix_security_questions?account_email=eq.' + encodeURIComponent(email) + '&limit=1', { method: 'GET' });
+  _secQData = (Array.isArray(rows) && rows.length) ? rows[0] : null;
+  var c = document.getElementById('secq-container');
+  c.innerHTML = '';
+  if (!_secQData) return;
+  ['q1','q2'].forEach(function(k) {
+    c.innerHTML += '<div><label class="field-label">' + _secQData[k] + '</label><input class="field" id="sq-' + k + '" placeholder="Your answer" autocomplete="off"></div>';
+  });
+}
+
+async function mVerifySecQ() {
+  var a1 = (document.getElementById('sq-q1')?.value||'').trim().toLowerCase();
+  var a2 = (document.getElementById('sq-q2')?.value||'').trim().toLowerCase();
+  var errEl = document.getElementById('secq-error');
+  errEl.style.display = 'none';
+  if (!a1 || !a2) { errEl.innerText='Answer both questions.'; errEl.style.display='block'; return; }
+  if (!_secQData || a1 !== _secQData.a1 || a2 !== _secQData.a2) { errEl.innerText='Incorrect answers. Try again.'; errEl.style.display='block'; return; }
+  // Correct — send OTP
+  await sendAndShowOTP(_pendingLogin);
+}
+
+async function mSaveSecQ() {
+  var q1=(document.getElementById('ss-q1').value||'').trim(), a1=(document.getElementById('ss-a1').value||'').trim().toLowerCase();
+  var q2=(document.getElementById('ss-q2').value||'').trim(), a2=(document.getElementById('ss-a2').value||'').trim().toLowerCase();
+  var q3=(document.getElementById('ss-q3').value||'').trim(), a3=(document.getElementById('ss-a3').value||'').trim().toLowerCase();
+  var errEl=document.getElementById('ss-error'); errEl.style.display='none';
+  if (!q1||!a1||!q2||!a2||!q3||!a3) { errEl.innerText='Fill all questions.'; errEl.style.display='block'; return; }
+  if (q1===q2||q2===q3||q1===q3) { errEl.innerText='Choose 3 different questions.'; errEl.style.display='block'; return; }
+  try {
+    await sb('operix_security_questions', { method: 'POST', body: JSON.stringify({ account_email: _pendingLogin.email, q1,a1,q2,a2,q3,a3 }) });
+    await sendAndShowOTP(_pendingLogin);
+  } catch(e) { errEl.innerText='Error: '+e.message; errEl.style.display='block'; }
+}
+
+async function sendAndShowOTP(acc) {
+  var sent = await sendOTPCode(acc.email, acc.otp_email, acc.name);
+  if (!sent) return;
+  var masked = acc.otp_email.charAt(0) + '***@' + acc.otp_email.split('@')[1];
+  document.getElementById('otp-subtitle').innerText = 'Code sent to ' + masked;
+  for (var i=0;i<6;i++) { var el=document.getElementById('o'+i); if(el){el.value=''; el.style.borderColor='var(--border2)';} }
+  document.getElementById('otp-error').style.display='none';
+  showScreen('otp-screen');
+  startOTPTimer(300);
+  setTimeout(function(){ document.getElementById('o0').focus(); }, 300);
+}
+
+async function sendOTPCode(accountEmail, otpEmail, name) {
+  try {
+    var code = String(Math.floor(100000 + Math.random() * 900000));
+    var exp  = new Date(Date.now() + 5*60*1000).toISOString();
+    await sb('operix_otp?email=eq.' + encodeURIComponent(accountEmail) + '&used=eq.false', { method: 'PATCH', body: JSON.stringify({ used: true }), headers:{'Prefer':'return=minimal'} }).catch(()=>{});
+    await sb('operix_otp', { method: 'POST', body: JSON.stringify({ email: accountEmail, code, expires_at: exp, used: false }) });
+    var r = await gasCall(OPS_API, { action:'sendOTPEmail', otpEmail, name: name||'User', code, expiresIn:'5 minutes' });
+    if (!r || !r.success) { alert('Failed to send OTP: ' + (r?.error||'Try again.')); return false; }
+    return true;
+  } catch(e) { alert('OTP error: '+e.message); return false; }
+}
+
+function startOTPTimer(sec) {
+  if (_otpTimer) clearInterval(_otpTimer);
+  var rem = sec;
+  var el = document.getElementById('otp-timer');
+  var resend = document.getElementById('otp-resend');
+  if (resend) resend.disabled = true;
+  var tick = function() {
+    if (!el) return;
+    el.innerText = String(Math.floor(rem/60)).padStart(2,'0') + ':' + String(rem%60).padStart(2,'0');
+    el.style.color = rem <= 30 ? 'var(--red)' : 'var(--gold)';
+    if (rem <= 0) { clearInterval(_otpTimer); el.innerText='Expired'; if(resend)resend.disabled=false; }
+    rem--;
+  };
+  tick(); _otpTimer = setInterval(tick, 1000);
+}
+
+function otpIn(el, idx) {
+  el.value = el.value.replace(/[^0-9]/g,'');
+  if (el.value && idx < 5) document.getElementById('o'+(idx+1)).focus();
+  var code=''; for(var i=0;i<6;i++) code+=(document.getElementById('o'+i)?.value||'');
+  if (code.length===6) setTimeout(mVerifyOTP, 100);
+}
+function otpKey(e, idx) {
+  if (e.key==='Backspace') { var el=document.getElementById('o'+idx); if(!el.value&&idx>0) document.getElementById('o'+(idx-1)).focus(); }
+  if (e.key==='Enter') mVerifyOTP();
+}
+
+async function mVerifyOTP() {
+  var code=''; for(var i=0;i<6;i++) code+=(document.getElementById('o'+i)?.value||'');
+  if (code.length<6) { document.getElementById('otp-error').innerText='Enter all 6 digits.'; document.getElementById('otp-error').style.display='block'; return; }
+  var btn=document.getElementById('otp-btn'); btn.disabled=true; btn.innerText='Verifying…';
+  document.getElementById('otp-error').style.display='none';
+  try {
+    var now = new Date().toISOString();
+    var rows = await sb('operix_otp?email=eq.'+encodeURIComponent(_pendingLogin.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1', {method:'GET'});
+    if (!Array.isArray(rows)||!rows.length) {
+      document.getElementById('otp-error').innerText='Invalid or expired code.'; document.getElementById('otp-error').style.display='block';
+      btn.disabled=false; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Verify Code';
+      return;
+    }
+    await sb('operix_otp?id=eq.'+rows[0].id, {method:'PATCH', body:JSON.stringify({used:true}), headers:{'Prefer':'return=minimal'}});
+    if (_otpTimer) clearInterval(_otpTimer);
+    await trustDevice(_pendingLogin.email);
+    await logSession('login');
+    finishLogin(_pendingLogin);
+    btn.disabled=false; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Verify Code';
+  } catch(e) { document.getElementById('otp-error').innerText='Error: '+e.message; document.getElementById('otp-error').style.display='block'; btn.disabled=false; }
+}
+
+async function mResendOTP() {
+  if (!_pendingLogin) { showScreen('login-screen'); return; }
+  var btn=document.getElementById('otp-resend'); if(btn){btn.disabled=true; btn.innerText='Sending…';}
+  var sent=await sendOTPCode(_pendingLogin.email, _pendingLogin.otp_email, _pendingLogin.name);
+  if (sent) { for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el)el.value='';} startOTPTimer(300); document.getElementById('o0').focus(); }
+  if(btn){btn.disabled=false; btn.innerText='Resend Code';}
+}
+
+function finishLogin(acc) {
+  currentUser = {
+    name: acc.name || acc.email.split('@')[0],
+    email: acc.email, role: acc.role||'Staff',
+    job: acc.job||'', phone: acc.phone||'', photo: acc.photo||''
+  };
+  _pendingLogin = null;
+  showScreen('app-screen');
+  initApp();
+}
+
+async function logSession(action) {
+  if (!currentUser) return;
+  try {
+    var fp=await getDeviceFingerprint();
+    await sb('operix_sessions', { method:'POST', body: JSON.stringify({ account_email:currentUser.email, account_name:currentUser.name, device_id:fp, device_name:getDeviceName(), action, user_agent:navigator.userAgent.slice(0,200), logged_at:new Date().toISOString() }) });
+  } catch {}
+}
+
+function mSignOut() {
+  logSession('logout');
+  currentUser=null; _pendingLogin=null;
+  showScreen('login-screen');
+  document.getElementById('l-email').value='';
+  document.getElementById('l-pass').value='';
+}
+
+// ═══════════════════════════════════════════════
+// FORGOT PASSWORD
+// ═══════════════════════════════════════════════
+var _fpAcc=null;
+function fpShowErr(msg){var e=document.getElementById('fp-error');e.innerText=msg;e.style.display='block';}
+async function fpStep1(){
+  var email=(document.getElementById('fp-email').value||'').trim().toLowerCase();
+  document.getElementById('fp-error').style.display='none';
+  if(!email){fpShowErr('Enter your email.');return;}
+  try{
+    var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&select=id,name,email,otp_email&limit=1',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){fpShowErr('No account found.');return;}
+    _fpAcc=rows[0];
+    var sq=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});
+    if(!Array.isArray(sq)||!sq.length){fpShowErr('No security questions. Contact admin.');return;}
+    _secQData=sq[0];
+    var c=document.getElementById('fp-q-container');c.innerHTML='';
+    ['q1','q2','q3'].forEach(function(k){c.innerHTML+='<div><label class="field-label">'+_secQData[k]+'</label><input class="field" id="fpq-'+k+'" placeholder="Answer" autocomplete="off"></div>';});
+    document.getElementById('fp-step1').style.display='none';
+    document.getElementById('fp-step2').style.display='block';
+    document.getElementById('fp-sub').innerText='Answer your security questions.';
+  }catch(e){fpShowErr('Error: '+e.message);}
+}
+async function fpStep2(){
+  var a1=(document.getElementById('fpq-q1')?.value||'').trim().toLowerCase();
+  var a2=(document.getElementById('fpq-q2')?.value||'').trim().toLowerCase();
+  var a3=(document.getElementById('fpq-q3')?.value||'').trim().toLowerCase();
+  document.getElementById('fp-error').style.display='none';
+  if(!a1||!a2||!a3){fpShowErr('Answer all questions.');return;}
+  if(a1!==_secQData.a1||a2!==_secQData.a2||a3!==_secQData.a3){fpShowErr('Incorrect answers.');return;}
+  if(!_fpAcc?.otp_email){fpShowErr('No trusted email. Contact admin.');return;}
+  var sent=await sendOTPCode(_fpAcc.email,_fpAcc.otp_email,_fpAcc.name);
+  if(!sent)return;
+  document.getElementById('fp-step2').style.display='none';
+  document.getElementById('fp-step3').style.display='block';
+  document.getElementById('fp-sub').innerText='Enter the code sent to your email.';
+}
+function fpOtpIn(el,idx){el.value=el.value.replace(/[^0-9]/g,'');if(el.value&&idx<5)document.getElementById('fp'+(idx+1)).focus();var c='';for(var i=0;i<6;i++)c+=(document.getElementById('fp'+i)?.value||'');if(c.length===6)setTimeout(fpStep3,100);}
+function fpOtpKey(e,idx){if(e.key==='Backspace'){var el=document.getElementById('fp'+idx);if(!el.value&&idx>0)document.getElementById('fp'+(idx-1)).focus();}if(e.key==='Enter')fpStep3();}
+async function fpStep3(){
+  var code='';for(var i=0;i<6;i++)code+=(document.getElementById('fp'+i)?.value||'');
+  if(code.length<6){fpShowErr('Enter all 6 digits.');return;}
+  try{
+    var now=new Date().toISOString();
+    var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_fpAcc.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){fpShowErr('Invalid or expired code.');return;}
+    await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
+    document.getElementById('fp-step3').style.display='none';
+    document.getElementById('fp-step4').style.display='block';
+    document.getElementById('fp-sub').innerText='Set your new password.';
+  }catch(e){fpShowErr('Error: '+e.message);}
+}
+async function fpStep4(){
+  var np=(document.getElementById('fp-np').value||'').trim();
+  var cp=(document.getElementById('fp-cp').value||'').trim();
+  if(!np||np.length<6){fpShowErr('Password must be at least 6 characters.');return;}
+  if(np!==cp){fpShowErr('Passwords do not match.');return;}
+  try{
+    await sb('accounts?email=eq.'+encodeURIComponent(_fpAcc.email),{method:'PATCH',body:JSON.stringify({password:np}),headers:{'Prefer':'return=minimal'}});
+    _fpAcc=null; toast('✓ Password updated! Sign in with your new password.');
+    showScreen('login-screen');
+  }catch(e){fpShowErr('Error: '+e.message);}
+}
+
+// ═══════════════════════════════════════════════
+// APP INIT
+// ═══════════════════════════════════════════════
+function initApp() {
+  // Set avatar
+  var av=document.getElementById('top-avatar');
+  if(av) av.innerText=(currentUser.name||'?').charAt(0).toUpperCase();
+  // Start clock
+  startClock();
+  // Load home
+  showTab('home');
+  // Update mail badge
+  updateMailBadge();
+}
+
+function startClock() {
+  var update=function(){
+    var now=new Date();
+    var cl=document.getElementById('att-clock');
+    var dt=document.getElementById('att-date');
+    if(cl) cl.innerText=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    if(dt) dt.innerText=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    // Greeting
+    var hr=now.getHours();
+    var gr=hr<12?'Good morning ☀️':hr<17?'Good afternoon 🌤':'Good evening 🌙';
+    var ge=document.getElementById('home-greeting');
+    if(ge) ge.innerText=gr;
+  };
+  update(); setInterval(update,1000);
+}
+
+// ═══════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════
+async function loadHome() {
+  document.getElementById('home-name').innerText=currentUser.name+' · '+currentUser.role;
+  // Load shift info
+  try {
+    var rows=await sb('operix_shifts?employee_name=eq.'+encodeURIComponent(currentUser.name)+'&limit=1',{method:'GET'});
+    if(Array.isArray(rows)&&rows.length){
+      var s=rows[0]; myShiftData=s;
+      CAFE_LAT=parseFloat(s.lat)||CAFE_LAT; CAFE_LNG=parseFloat(s.lng)||CAFE_LNG; GPS_RADIUS=parseInt(s.radius)||GPS_RADIUS;
+      var sc=document.getElementById('home-shift-card'); if(sc)sc.style.display='block';
+      var sn=document.getElementById('home-shift-name'); if(sn)sn.innerText=s.project||'';
+      var st=document.getElementById('home-shift-time'); if(st)st.innerText=(s.shift_start||'')+(s.shift_end?' – '+s.shift_end:'');
+      var sl=document.getElementById('home-loc-text'); if(sl)sl.innerText=s.location_name||'';
+    }
+  } catch {}
+  // KPIs
+  try {
+    var myEmail=currentUser.email.toLowerCase();
+    var now=new Date(); var y=now.getFullYear(); var m=String(now.getMonth()+1).padStart(2,'0');
+    var monthStart=y+'-'+m+'-01T00:00:00.000Z';
+    var att=await sb('operix_attendance?employee=eq.'+encodeURIComponent(currentUser.name)+'&submitted_at=gte.'+encodeURIComponent(monthStart)+'&order=submitted_at.desc',{method:'GET'});
+    if(Array.isArray(att)){
+      var days=new Set(); var hours=0;
+      att.forEach(function(a){
+        var d=new Date(a.submitted_at).toDateString(); days.add(d);
+      });
+      document.getElementById('kpi-days').innerText=days.size;
+      document.getElementById('kpi-hours').innerText=Math.round(days.size*8);
+    }
+    // Salary from shift
+    if(myShiftData&&myShiftData.monthly_salary){
+      document.getElementById('kpi-salary').innerText=parseInt(myShiftData.monthly_salary).toLocaleString();
+    }
+    // Pending requests
+    var reqs=await sb('operix_requests?employee_email=eq.'+encodeURIComponent(myEmail)+'&status=eq.Pending&select=id',{method:'GET'}).catch(()=>[]);
+    document.getElementById('kpi-pending').innerText=Array.isArray(reqs)?reqs.length:0;
+  } catch {}
+}
+
+// ═══════════════════════════════════════════════
+// ATTENDANCE
+// ═══════════════════════════════════════════════
+function loadAttendance() {
+  startGPS();
+  loadTodayAttendance();
+  loadAttHistory();
+}
+
+function startGPS() {
+  var statusEl=document.getElementById('gps-text');
+  if (!navigator.geolocation) { if(statusEl)statusEl.innerText='GPS not available'; return; }
+  if(statusEl)statusEl.innerText='Locating…';
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    myLat=pos.coords.latitude; myLng=pos.coords.longitude;
+    myDist=Math.round(haversine(myLat,myLng,CAFE_LAT,CAFE_LNG));
+    var inRange=myDist<=GPS_RADIUS;
+    if(statusEl)statusEl.innerText=(inRange?'✓ In range':'✗ Out of range')+' ('+myDist+'m)';
+    statusEl.style.color=inRange?'var(--green)':'var(--red)';
+    updateCheckInBtn();
+  }, function(err) {
+    if(statusEl){statusEl.innerText='GPS error: '+err.message; statusEl.style.color='var(--red)';}
+  }, {enableHighAccuracy:true,timeout:12000});
+}
+
+function haversine(lat1,lon1,lat2,lon2) {
+  var R=6371000,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+async function updateCheckInBtn() {
+  var btn=document.getElementById('checkin-btn');
+  var lbl=document.getElementById('checkin-label');
+  var msg=document.getElementById('att-status-msg');
+  if(!btn)return;
+  // Check today's last entry
+  try{
+    var today=new Date().toISOString().slice(0,10);
+    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(currentUser.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.desc&limit=1',{method:'GET'});
+    var lastType=(Array.isArray(rows)&&rows.length)?rows[0].type:'';
+    if(lastType==='check-in'){
+      btn.className='checkin-btn checkout'; if(lbl)lbl.innerText='Check Out';
+      if(msg)msg.innerText='Checked in at '+new Date(rows[0].submitted_at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    } else {
+      btn.className='checkin-btn checkin'; if(lbl)lbl.innerText='Check In';
+      if(msg)msg.innerText=lastType==='check-out'?'Last checked out at '+new Date(rows[0].submitted_at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'Ready to check in';
+    }
+  }catch{btn.className='checkin-btn checkin'; if(lbl)lbl.innerText='Check In';}
+}
+
+async function mCheckIn() {
+  var btn=document.getElementById('checkin-btn');
+  var lbl=document.getElementById('checkin-label');
+  if(!myLat){toast('⚠️ Waiting for GPS…'); startGPS(); return;}
+  if(myDist>GPS_RADIUS){toast('⚠️ You must be within '+GPS_RADIUS+'m of the location ('+myDist+'m away)'); return;}
+
+  var today=new Date().toISOString().slice(0,10);
+  var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(currentUser.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.desc&limit=1',{method:'GET'}).catch(()=>[]);
+  var lastType=(Array.isArray(rows)&&rows.length)?rows[0].type:'';
+  var type=lastType==='check-in'?'check-out':'check-in';
+
+  btn.disabled=true; if(lbl)lbl.innerText='Saving…';
+  try{
+    await sb('operix_attendance',{method:'POST',body:JSON.stringify({
+      employee:currentUser.name, type, project:myShiftData?.project||'',
+      submitted_at:new Date().toISOString(),
+      distance_m:myDist, coords:myLat+','+myLng
+    })});
+    toast(type==='check-in'?'✓ Checked in successfully!':'✓ Checked out successfully!');
+    updateCheckInBtn(); loadTodayAttendance(); loadAttHistory();
+  }catch(e){toast('Error: '+e.message);}
+  btn.disabled=false;
+}
+
+async function loadTodayAttendance() {
+  var el=document.getElementById('att-today-list'); if(!el)return;
+  try{
+    var today=new Date().toISOString().slice(0,10);
+    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(currentUser.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.asc',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No entries today</div>';return;}
+    el.innerHTML=rows.map(function(a){
+      var t=new Date(a.submitted_at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      var isIn=a.type==='check-in';
+      return '<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'">'+(isIn?'→ In':'← Out')+'</span><span style="font-size:13px;font-weight:600;color:var(--text);flex:1;">'+t+'</span><span style="font-size:11px;color:var(--text4);">'+(a.distance_m?a.distance_m+'m':'')+'</span></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);">Error: '+e.message+'</div>';}
+}
+
+async function loadAttHistory() {
+  var el=document.getElementById('att-history-list'); if(!el)return;
+  try{
+    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(currentUser.name)+'&order=submitted_at.desc&limit=20',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No history</div>';return;}
+    el.innerHTML=rows.map(function(a){
+      var d=new Date(a.submitted_at);
+      var dateStr=d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+      var timeStr=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      var isIn=a.type==='check-in';
+      return '<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'" style="min-width:52px;justify-content:center;">'+(isIn?'In':'Out')+'</span><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text);">'+timeStr+'</div><div style="font-size:10px;color:var(--text4);">'+dateStr+'</div></div><span style="font-size:11px;color:var(--text4);">'+(a.project||'')+'</span></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);">Error: '+e.message+'</div>';}
+}
+
+// ═══════════════════════════════════════════════
+// SHIFT
+// ═══════════════════════════════════════════════
+async function loadShiftPage() {
+  var emptyEl=document.getElementById('shift-empty');
+  var detailEl=document.getElementById('shift-detail-card');
+  try{
+    var rows=await sb('operix_shifts?employee_name=eq.'+encodeURIComponent(currentUser.name)+'&limit=1',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){
+      if(emptyEl)emptyEl.style.display='block'; if(detailEl)detailEl.style.display='none'; return;
+    }
+    var s=rows[0];
+    if(emptyEl)emptyEl.style.display='none'; if(detailEl)detailEl.style.display='block';
+    document.getElementById('sd-project').innerText=s.project||'';
+    document.getElementById('sd-loc-text').innerText=s.location_name||'';
+    document.getElementById('sd-hours').innerText=(s.shift_start||'')+(s.shift_end?' – '+s.shift_end:'');
+    document.getElementById('sd-days').innerText=s.work_days||'';
+    document.getElementById('sd-daysoff').innerText=s.days_off||'';
+    document.getElementById('sd-salary').innerText=s.monthly_salary?parseInt(s.monthly_salary).toLocaleString()+' SAR':'—';
+  }catch(e){if(emptyEl){emptyEl.style.display='block'; emptyEl.innerHTML='<div style="font-size:13px;color:var(--red);">Error: '+e.message+'</div>';}}
+}
+
+// ═══════════════════════════════════════════════
+// REQUESTS
+// ═══════════════════════════════════════════════
+async function loadRequests() {
+  var el=document.getElementById('req-list'); if(!el)return;
+  el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:24px;">Loading…</div>';
+  try{
+    var myEmail=currentUser.email.toLowerCase();
+    var rows=await sb('operix_requests?employee_email=eq.'+encodeURIComponent(myEmail)+'&order=created_at.desc&limit=30',{method:'GET'}).catch(()=>[]);
+    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:13px;color:var(--text4);text-align:center;padding:32px;">No requests yet.<br>Tap + New Request to submit one.</div>';return;}
+    var statusChip={Pending:'chip-amber',Approved:'chip-green',Rejected:'chip-red',Reviewed:'chip-blue'};
+    el.innerHTML=rows.map(function(r){
+      var d=new Date(r.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+      var chip=statusChip[r.status]||'chip-amber';
+      return '<div class="req-item">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
+        +'<span style="font-size:13px;font-weight:700;color:var(--text);">'+(r.type||r.request_type||'Request')+'</span>'
+        +'<span class="chip '+chip+'">'+(r.status||'Pending')+'</span>'
+        +'</div>'
+        +'<div style="font-size:12px;color:var(--text3);margin-bottom:4px;">'+(r.details||r.message||'').slice(0,100)+'</div>'
+        +'<div style="font-size:10px;color:var(--text4);">'+d+'</div>'
+        +(r.reply?'<div style="margin-top:8px;padding:8px;background:var(--blue-bg);border-radius:8px;font-size:11px;color:var(--blue);border:1px solid var(--blue-border);"><strong>Reply:</strong> '+r.reply+'</div>':'')
+        +'</div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:16px;">Error: '+e.message+'</div>';}
+}
+
+function openNewRequestModal() {
+  document.getElementById('req-details').value='';
+  document.getElementById('req-modal').classList.add('open');
+}
+
+async function submitMobileRequest() {
+  var type=document.getElementById('req-type').value;
+  var details=(document.getElementById('req-details').value||'').trim();
+  if(!details){toast('Please describe your request.'); return;}
+  try{
+    await sb('operix_requests',{method:'POST',body:JSON.stringify({
+      employee_name:currentUser.name, employee_email:currentUser.email.toLowerCase(),
+      type, details, status:'Pending', created_at:new Date().toISOString()
+    })});
+    closeModal('req-modal');
+    toast('✓ Request submitted!');
+    loadRequests();
+  }catch(e){toast('Error: '+e.message);}
+}
+
+// ═══════════════════════════════════════════════
+// MAIL
+// ═══════════════════════════════════════════════
+async function loadMail(folder) {
+  mailCurrentFolder=folder;
+  var el=document.getElementById('m-mail-list'); if(!el)return;
+  el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:32px;">Loading…</div>';
+  try{
+    var myEmail=currentUser.email.toLowerCase();
+    var q;
+    if(folder==='inbox') q='folder=eq.inbox&recipient_emails=cs.{'+myEmail+'}&order=created_at.desc&select=*';
+    else q='folder=eq.sent&sender_email=eq.'+myEmail+'&order=created_at.desc&select=*';
+    var rows=await sb('operix_emails?'+q,{method:'GET'});
+    mailEmails=Array.isArray(rows)?rows:[];
+    if(!mailEmails.length){el.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text4);"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" style="margin:0 auto 10px;display:block;opacity:.3;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div style="font-size:13px;font-weight:600;">No messages</div></div>';return;}
+    el.innerHTML='';
+    mailEmails.forEach(function(em){
+      var isUnread=!em.is_read&&em.sender_email!==myEmail;
+      var dt=new Date(em.created_at);
+      var now=new Date();
+      var timeStr=dt.toDateString()===now.toDateString()?dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+      var preview=(em.body||'').replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s{2,}/g,' ').trim().slice(0,70);
+      var item=document.createElement('div');
+      item.className='mail-item'+(isUnread?' unread':'');
+      item.innerHTML='<div class="mail-avatar">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
+        +'<div style="flex:1;min-width:0;">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
+        +'<div style="font-size:13px;font-weight:'+(isUnread?'700':'600')+';color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;">'+(em.sender_name||em.sender_email)+'</div>'
+        +'<div style="font-size:10px;color:var(--text4);flex-shrink:0;">'+timeStr+'</div>'
+        +'</div>'
+        +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
+        +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
+        +'</div>';
+      item.onclick=function(){openMailRead(em);};
+      el.appendChild(item);
+    });
+  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:16px;">Error: '+e.message+'</div>';}
+}
+
+function mMailNav(folder,btn){
+  document.querySelectorAll('.mail-folder-btn').forEach(function(b){b.style.borderBottomColor='transparent';b.style.color='var(--text3)';b.style.fontWeight='600';});
+  if(btn){btn.style.borderBottomColor='var(--gold)';btn.style.color='var(--gold)';btn.style.fontWeight='700';}
+  loadMail(folder);
+}
+
+function openMailRead(em) {
+  var myEmail=currentUser.email.toLowerCase();
+  if(!em.is_read&&em.sender_email!==myEmail){
+    em.is_read=true;
+    sb('operix_emails?id=eq.'+em.id,{method:'PATCH',body:JSON.stringify({is_read:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
+    updateMailBadge();
+  }
+  var dt=new Date(em.created_at).toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  var bodyDisplay=em.body||'';
+  // If HTML, render in div; otherwise convert newlines
+  var looksHTML=/<[a-z][\s\S]{0,20}>/i.test(bodyDisplay);
+  var bodyHtml=looksHTML?bodyDisplay:bodyDisplay.replace(/\n/g,'<br>');
+  var c=document.getElementById('mail-read-content');
+  c.innerHTML='<div style="margin-bottom:14px;">'
+    +'<div style="font-family:Space Grotesk,sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:10px;">'+(em.subject||'(No Subject)')+'</div>'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+    +'<div style="width:38px;height:38px;border-radius:10px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:Space Grotesk,sans-serif;font-size:15px;font-weight:800;color:var(--gold);">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
+    +'<div><div style="font-size:13px;font-weight:700;color:var(--text);">'+(em.sender_name||em.sender_email)+'</div>'
+    +'<div style="font-size:10px;color:var(--text4);">'+dt+'</div></div>'
+    +'</div>'
+    +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
+    +'</div>'
+    +'<div style="border-top:1px solid var(--border);padding-top:14px;font-size:14px;line-height:1.75;color:var(--text);overflow-x:auto;">'+bodyHtml+'</div>';
+  document.getElementById('mail-read-modal').classList.add('open');
+}
+
+function openMobileCompose() {
+  // Pre-fill datalist
+  sb('accounts?select=name,email&order=name.asc',{method:'GET'}).then(function(rows){
+    var dl=document.getElementById('mc-to-list');
+    if(dl&&Array.isArray(rows))dl.innerHTML=rows.map(function(r){return '<option value="'+r.email+'">'+r.name+'</option>';}).join('');
+  }).catch(()=>{});
+  document.getElementById('mc-to').value='';
+  document.getElementById('mc-subject').value='';
+  document.getElementById('mc-body').value='';
+  document.getElementById('mail-compose-modal').classList.add('open');
+}
+
+async function mSendMail() {
+  var to=(document.getElementById('mc-to').value||'').trim().toLowerCase();
+  var sub=(document.getElementById('mc-subject').value||'').trim();
+  var body=(document.getElementById('mc-body').value||'').trim();
+  if(!to||!sub||!body){toast('Fill in all fields.'); return;}
+  try{
+    // Find recipient name
+    var recRows=await sb('accounts?email=eq.'+encodeURIComponent(to)+'&select=name&limit=1',{method:'GET'}).catch(()=>[]);
+    var recName=(Array.isArray(recRows)&&recRows.length)?recRows[0].name:to;
+    var payload={
+      sender_name:currentUser.name, sender_email:currentUser.email.toLowerCase(),
+      recipient_names:[recName], recipient_emails:[to],
+      cc_emails:[], subject:sub,
+      body:body.replace(/\n/g,'<br>'),
+      folder:'sent', is_read:true, thread_id:null, attachments:[]
+    };
+    await sb('operix_emails',{method:'POST',body:JSON.stringify(payload)});
+    // Inbox copy
+    await sb('operix_emails',{method:'POST',body:JSON.stringify({...payload,folder:'inbox',is_read:false})});
+    closeModal('mail-compose-modal');
+    toast('✓ Email sent!');
+    if(mailCurrentFolder==='sent') loadMail('sent');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+async function updateMailBadge() {
+  try{
+    var myEmail=currentUser.email.toLowerCase();
+    var rows=await sb('operix_emails?folder=eq.inbox&is_read=eq.false&recipient_emails=cs.{'+myEmail+'}&select=id',{method:'GET'});
+    var count=Array.isArray(rows)?rows.length:0;
+    ['nav-mail-badge','m-inbox-badge','home-mail-badge'].forEach(function(id){
+      var el=document.getElementById(id); if(!el)return;
+      el.innerText=count||''; el.style.display=count?'inline-block':'none';
+    });
+  }catch{}
+}
+
+// ═══════════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════════
+async function loadProfile() {
+  document.getElementById('p-name').innerText=currentUser.name||'';
+  document.getElementById('p-role').innerText=currentUser.role+(currentUser.job?' · '+currentUser.job:'');
+  document.getElementById('p-email').innerText=currentUser.email||'';
+  var av=document.getElementById('p-avatar');
+  if(av){
+    if(currentUser.photo){av.innerHTML='<img src="'+currentUser.photo+'" style="width:100%;height:100%;object-fit:cover;">';}
+    else{av.innerText=(currentUser.name||'?').charAt(0).toUpperCase();}
+  }
+  loadProfileDevices();
+}
+
+async function loadProfileDevices() {
+  var el=document.getElementById('p-devices-list'); if(!el)return;
+  try{
+    var myFP=await getDeviceFingerprint();
+    var rows=await sb('operix_trusted_devices?account_email=eq.'+encodeURIComponent(currentUser.email)+'&order=last_used.desc',{method:'GET'});
+    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No trusted devices.</div>';return;}
+    el.innerHTML='';
+    rows.forEach(function(dev){
+      var isCurrent=dev.device_id===myFP;
+      var lastUsed=new Date(dev.last_used||dev.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+      var row=document.createElement('div');
+      row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);';
+      row.innerHTML='<div style="width:36px;height:36px;border-radius:9px;background:'+(isCurrent?'var(--gold-bg)':'var(--surface2)')+';border:1px solid '+(isCurrent?'var(--gold-border)':'var(--border)')+';display:flex;align-items:center;justify-content:center;">'
+        +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+(isCurrent?'var(--gold)':'var(--text3)')+'" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>'
+        +'</div>'
+        +'<div style="flex:1;min-width:0;">'
+        +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+(dev.device_name||'Device')+(isCurrent?' <span style="font-size:9px;background:var(--gold-bg);color:var(--gold);padding:2px 6px;border-radius:6px;border:1px solid var(--gold-border);">This device</span>':'')+'</div>'
+        +'<div style="font-size:11px;color:var(--text4);">Last used: '+lastUsed+'</div>'
+        +'</div>';
+      if(!isCurrent){
+        var rmBtn=document.createElement('button');
+        rmBtn.style.cssText='padding:5px 10px;background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;flex-shrink:0;font-family:Plus Jakarta Sans,sans-serif;';
+        rmBtn.innerText='Remove';
+        (function(id,r){rmBtn.onclick=function(){removeMobileDevice(id,r);};})(dev.id,row);
+        row.appendChild(rmBtn);
+      }
+      el.appendChild(row);
+    });
+  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);">Error: '+e.message+'</div>';}
+}
+
+async function removeMobileDevice(id,rowEl){
+  if(!confirm('Remove this device?')) return;
+  try{
+    await sb('operix_trusted_devices?id=eq.'+id,{method:'DELETE',headers:{'Prefer':'return=minimal'}});
+    if(rowEl){rowEl.style.opacity='0';rowEl.style.transition='opacity .3s';setTimeout(function(){rowEl.remove();},300);}
+    toast('Device removed.');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function() {
+  showScreen('login-screen');
+  // Refresh mail badge every 60s when logged in
+  setInterval(function(){ if(currentUser) updateMailBadge(); }, 60000);
+});
+</script>
+</body>
+</html>
