@@ -13,220 +13,211 @@
 <style>
 :root{
   --gold:#c49440;--gold2:#e8b96a;--gold-bg:rgba(196,148,64,.12);--gold-border:rgba(196,148,64,.28);
-  --text:#18161200;--text2:#3a3630;--text3:#6b6560;--text4:#a09890;
-  --bg:#f2f1ed;--surface:#ffffff;--surface2:#f7f5f1;--surface3:#eeece7;
-  --border:#e4e1d8;--border2:#ece9e0;
+  --text:#1c1a16;--text2:#3a3630;--text3:#6b6560;--text4:#a09890;
+  --bg:#f2f1ed;--surface:rgba(255,255,255,0.7);--surface2:rgba(247,245,241,0.6);--surface3:#eeece7;
+  --border:rgba(228,225,216,0.6);--border2:rgba(236,233,224,0.6);
   --red:#e53e3e;--red-bg:#fff5f5;--red-border:#fed7d7;
   --green:#2f855a;--green-bg:#f0fff4;--green-border:#c6f6d5;
   --blue:#2b6cb0;--blue-bg:#ebf8ff;--blue-border:#bee3f8;
   --amber:#b7791f;--amber-bg:#fffff0;--amber-border:#faf089;
   --purple:#553c9a;--purple-bg:#faf5ff;--purple-border:#d6bcfa;
-  --text:#18161200;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-gold: 0 8px 32px rgba(196,148,64,0.25);
+  --glass-blur: blur(16px);
   --sb:env(safe-area-inset-bottom,0px);
   --st:env(safe-area-inset-top,0px);
-  --sl:env(safe-area-inset-left,0px);
-  --sr:env(safe-area-inset-right,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-:root{--text:#1c1a16;}
-html,body{height:100%;background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;}
+html,body{height:100%;background:var(--bg);background-image: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.8) 0%, transparent 70%); font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
+@keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(196,148,64,0.4)}70%{box-shadow:0 0 0 10px rgba(196,148,64,0)}100%{box-shadow:0 0 0 0 rgba(196,148,64,0)}}
+.fade-up{animation:fadeUp .4s cubic-bezier(0.16,1,0.3,1) both;}
+.pop-in{animation:popIn .3s cubic-bezier(0.16,1,0.3,1) both;}
+.hover-lift{transition:transform .2s cubic-bezier(0.16,1,0.3,1),box-shadow .2s ease;}
+.hover-lift:active{transform:scale(.97);}
 
 /* ── Screens ── */
 .screen{display:none;position:fixed;inset:0;overflow:hidden;flex-direction:column;}
-.screen.active{display:flex;}
+.screen.active{display:flex;animation:fadeUp .3s ease-out;}
 .scroll-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ── Auth ── */
 .auth-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;background:var(--bg);}
 
-/* ── Top bar ── */
+/* ── Top bar (Liquid Glass) ── */
 .topbar{
-  background:rgba(28,26,22,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  background:rgba(255,255,255,0.6);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   padding:calc(var(--st) + 12px) 16px 12px;
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   flex-shrink:0;position:relative;z-index:50;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,0.4);
+  box-shadow:var(--shadow-sm);
 }
-.topbar-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;color:#fff;letter-spacing:-.01em;}
-.topbar-sub{font-size:9px;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-top:1px;}
-.topbar-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.6);flex-shrink:0;transition:background .15s;}
-.topbar-icon:active{background:rgba(255,255,255,.12);}
+.topbar-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.01em;}
+.topbar-sub{font-size:9px;color:var(--text4);font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-top:1px;}
+.topbar-icon{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);flex-shrink:0;transition:all .2s;}
+.topbar-icon:active{transform:scale(0.92);background:rgba(255,255,255,0.8);}
 
-/* ── Bottom nav ── */
+/* ── Bottom nav (Liquid Glass) ── */
 .bottom-nav{
-  background:rgba(28,26,22,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  background:rgba(255,255,255,0.7);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   padding:8px 4px calc(8px + var(--sb));
   display:flex;align-items:stretch;
-  border-top:1px solid rgba(255,255,255,.07);
+  border-top:1px solid rgba(255,255,255,0.5);
+  box-shadow:0 -4px 24px rgba(0,0,0,.03);
   flex-shrink:0;position:relative;z-index:50;
 }
 .nav-btn{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   padding:5px 2px;background:none;border:none;cursor:pointer;
-  color:rgba(255,255,255,.3);font-size:9px;font-weight:700;
+  color:var(--text4);font-size:9px;font-weight:700;
   font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.04em;
-  transition:color .15s;position:relative;
+  transition:all .25s;position:relative;
 }
-.nav-btn svg{width:22px;height:22px;transition:filter .15s;}
-.nav-btn.active{color:var(--gold2);}
-.nav-btn.active svg{filter:drop-shadow(0 0 5px rgba(232,185,106,.5));}
-.nav-badge{position:absolute;top:2px;right:22%;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:9px;min-width:16px;text-align:center;display:none;}
+.nav-btn svg{width:22px;height:22px;transition:all .25s;}
+.nav-btn.active{color:var(--gold);}
+.nav-btn.active svg{transform:translateY(-2px);filter:drop-shadow(0 4px 6px rgba(196,148,64,.3));stroke-width:2.5;}
+.nav-badge{position:absolute;top:2px;right:22%;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:9px;min-width:16px;text-align:center;display:none;box-shadow:0 2px 4px rgba(229,62,62,.3);}
 
 /* ── Pages ── */
 .page{display:none;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;}
 .page.active{display:block;}
-.page-pad{padding:14px 16px;}
+.page-pad{padding:16px;}
 
-/* ── Cards ── */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
-.card-sm{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
-.card-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+/* ── Cards (Liquid Glass) ── */
+.card{background:var(--surface);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,0.8);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm);transition:box-shadow .3s;}
+.card:hover{box-shadow:var(--shadow-md);}
+.card-sm{background:var(--surface);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,0.8);border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 
 /* ── Fields ── */
-.field{width:100%;padding:12px 14px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:12px;font-size:15px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .15s;-webkit-appearance:none;}
-.field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,148,64,.1);}
-.field-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px;}
+.field{width:100%;padding:14px 16px;background:rgba(255,255,255,0.5);border:1.5px solid var(--border);border-radius:14px;font-size:15px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:all .2s;-webkit-appearance:none;backdrop-filter:blur(4px);}
+.field:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 4px rgba(196,148,64,.1);}
+.field-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px;margin-left:2px;}
 select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a09890' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 
 /* ── Buttons ── */
-.btn{display:flex;align-items:center;justify-content:center;gap:7px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;border-radius:12px;transition:all .15s;-webkit-user-select:none;user-select:none;}
-.btn:active{transform:scale(.97);}
-.btn-gold{background:linear-gradient(135deg,#9a7230,#c49440);color:#fff;padding:14px 20px;font-size:14px;width:100%;box-shadow:0 4px 16px rgba(154,114,48,.3);}
-.btn-dark{background:#1c1a16;color:#fff;padding:14px 20px;font-size:14px;width:100%;}
-.btn-outline{background:var(--surface);color:var(--text);border:1.5px solid var(--border2);padding:13px 20px;font-size:14px;width:100%;}
-.btn-green{background:var(--green);color:#fff;padding:12px 16px;font-size:13px;border-radius:10px;}
-.btn-red{background:var(--red);color:#fff;padding:12px 16px;font-size:13px;border-radius:10px;}
-.btn-sm{padding:8px 14px;font-size:12px;border-radius:9px;}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;border-radius:14px;transition:all .2s;-webkit-user-select:none;user-select:none;position:relative;overflow:hidden;}
+.btn:active{transform:scale(.96);}
+.btn-gold{background:linear-gradient(135deg,#c49440,#e8b96a);color:#fff;padding:16px 20px;font-size:15px;width:100%;box-shadow:var(--shadow-gold);text-shadow:0 1px 2px rgba(0,0,0,.1);}
+.btn-dark{background:#1c1a16;color:#fff;padding:16px 20px;font-size:15px;width:100%;box-shadow:0 8px 20px rgba(28,26,22,.25);}
+.btn-outline{background:var(--surface);backdrop-filter:var(--glass-blur);color:var(--text);border:1.5px solid var(--border);padding:15px 20px;font-size:15px;width:100%;box-shadow:var(--shadow-sm);}
 
 /* ── Tags/chips ── */
-.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-.chip-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border);}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+.chip-gold{background:var(--gold-bg);color:#9a7230;border:1px solid var(--gold-border);}
 .chip-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
 .chip-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
 .chip-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
 .chip-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
-.chip-purple{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border);}
-.chip-gray{background:var(--surface3);color:var(--text3);border:1px solid var(--border2);}
+.chip-gray{background:rgba(238,236,231,0.5);color:var(--text3);border:1px solid var(--border2);}
 
 /* ── KPI tiles ── */
-.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.kpi-tile{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center;}
-.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:900;color:var(--gold);}
-.kpi-lbl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;}
-
-/* ── Section header ── */
-.sec-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.kpi-tile{background:var(--surface);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,0.8);border-radius:20px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .2s;}
+.kpi-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:900;color:var(--gold);letter-spacing:-.02em;}
+.kpi-lbl{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;}
 
 /* ── Shift banner ── */
-.shift-banner{background:linear-gradient(135deg,#1c1a16 0%,#2e2c26 100%);border-radius:16px;padding:18px;margin-bottom:14px;}
+.shift-banner{background:linear-gradient(135deg,#1c1a16 0%,#2e2c26 100%);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
+.shift-banner::after{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(196,148,64,0.2) 0%,transparent 70%);border-radius:50%;transform:translate(30%,-30%);}
 
-/* ── Invoice card ── */
-.inv-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.inv-stripe-parked{width:4px;background:var(--amber);flex-shrink:0;}
-.inv-stripe-done{width:4px;background:var(--green);flex-shrink:0;}
+/* ── Invoice card (Liquid Glass) ── */
+.inv-card{background:var(--surface);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,0.8);border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;}
+.inv-card:active{transform:scale(.98);}
+.inv-stripe-parked{width:5px;background:var(--amber);flex-shrink:0;}
+.inv-stripe-done{width:5px;background:var(--green);flex-shrink:0;}
 
 /* ── OTP inputs ── */
 .otp-row{display:flex;gap:8px;justify-content:center;margin:16px 0;}
-.otp-digit{width:44px;height:54px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;border:2px solid var(--border2);border-radius:12px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
-.otp-digit:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,148,64,.12);}
-
-/* ── Bottom sheet modal ── */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
-.modal.open{display:flex;}
-.modal-box{background:var(--surface);border-radius:24px 24px 0 0;padding:0 0 calc(16px + var(--sb));width:100%;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.modal-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:14px auto 16px;}
-.modal-hdr{padding:0 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.modal-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
-.modal-body{padding:16px 18px;}
-
-/* ── Toast ── */
-#toast{position:fixed;bottom:calc(82px + var(--sb));left:50%;transform:translateX(-50%);background:#1c1a16;color:var(--gold2);font-size:13px;font-weight:600;padding:11px 20px;border-radius:12px;z-index:999;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.3);border:1px solid rgba(196,148,64,.25);max-width:300px;text-align:center;display:none;transition:opacity .3s;pointer-events:none;}
+.otp-digit{width:46px;height:56px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;border:2px solid var(--border);border-radius:14px;background:rgba(255,255,255,0.5);color:var(--text);outline:none;transition:all .2s;backdrop-filter:blur(4px);}
+.otp-digit:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 4px rgba(196,148,64,.12);}
 
 /* ── Check-in button ── */
-.ci-btn{width:160px;height:160px;border-radius:50%;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin:0 auto;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:800;color:#fff;transition:all .25s;-webkit-user-select:none;user-select:none;}
+.ci-btn{width:170px;height:170px;border-radius:50%;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:0 auto;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:#fff;transition:all .3s cubic-bezier(0.16,1,0.3,1);-webkit-user-select:none;user-select:none;position:relative;}
 .ci-btn:active{transform:scale(.93);}
-.ci-idle{background:linear-gradient(135deg,#2a2822,#3a3830);box-shadow:0 8px 32px rgba(0,0,0,.3);}
-.ci-in{background:linear-gradient(135deg,#276749,#2f855a);box-shadow:0 8px 32px rgba(47,133,90,.4);}
-.ci-out{background:linear-gradient(135deg,#9b2c2c,#c53030);box-shadow:0 8px 32px rgba(197,48,48,.4);}
+.ci-btn::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px dashed rgba(255,255,255,0.2);animation:spin 20s linear infinite;}
+@keyframes spin{100%{transform:rotate(360deg);}}
+.ci-idle{background:linear-gradient(135deg,#2a2822,#1c1a16);box-shadow:0 16px 40px rgba(0,0,0,.25);animation:pulseGlow 3s infinite;}
+.ci-in{background:linear-gradient(135deg,#38a169,#276749);box-shadow:0 16px 40px rgba(47,133,90,.3);}
+.ci-out{background:linear-gradient(135deg,#e53e3e,#9b2c2c);box-shadow:0 16px 40px rgba(229,62,62,.3);}
 
-/* ── Divider ── */
-.divider{height:1px;background:var(--border);margin:0 16px;}
+/* ── Modal (Liquid Glass) ── */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.modal.open{display:flex;animation:popIn .3s;}
+.modal-box{background:rgba(255,255,255,0.9);backdrop-filter:var(--glass-blur);border-radius:28px 28px 0 0;padding:0 0 calc(20px + var(--sb));width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 -10px 40px rgba(0,0,0,.1);border-top:1px solid rgba(255,255,255,0.8);}
+.modal-handle{width:48px;height:5px;background:var(--border2);border-radius:3px;margin:16px auto;}
+.modal-hdr{padding:0 20px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.modal-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--text);}
+.modal-body{padding:20px;}
 
-/* ── List row ── */
-.list-row{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--surface);border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
-.list-row:active{background:var(--surface2);}
-.list-row:last-child{border-bottom:none;}
+/* ── Toast ── */
+#toast{position:fixed;bottom:calc(90px + var(--sb));left:50%;transform:translateX(-50%);background:rgba(28,26,22,0.95);backdrop-filter:blur(12px);color:var(--gold2);font-size:14px;font-weight:700;padding:14px 24px;border-radius:16px;z-index:999;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 12px 32px rgba(0,0,0,.25);border:1px solid rgba(196,148,64,.3);display:none;align-items:center;gap:8px;white-space:nowrap;transition:opacity .3s;pointer-events:none;}
 
-/* ── Att row ── */
-.att-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);}
-.att-row:last-child{border-bottom:none;}
-
-/* ── Animations ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp .25s ease both;}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-
-/* ── Scrollbar hide ── */
+/* ── Layout & Misc ── */
 *::-webkit-scrollbar{display:none;}
 *{scrollbar-width:none;}
+.tab-bar{display:flex;background:rgba(255,255,255,0.6);backdrop-filter:var(--glass-blur);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;padding:0 8px;}
+.tab-btn{padding:16px;background:none;border:none;border-bottom:3px solid transparent;font-size:14px;font-weight:700;color:var(--text4);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.tab-btn.active{border-bottom-color:var(--gold);color:var(--gold);}
+.list-row{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface);backdrop-filter:var(--glass-blur);border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
+.list-row:active{background:rgba(255,255,255,0.9);}
+.att-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
+.att-row:last-child{border-bottom:none;}
 
-/* ── Tab bar ── */
-.tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;}
-.tab-btn{padding:12px 16px;background:none;border:none;border-bottom:2.5px solid transparent;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;}
-.tab-btn.active{border-bottom-color:var(--gold);color:var(--gold);font-weight:700;}
-
-/* ── Receipt hidden ── */
-#receipt-cap{position:absolute;left:-9999px;top:-9999px;width:320px;}
-
-/* ── Passcode overlay ── */
-.pc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;display:none;align-items:center;justify-content:center;backdrop-filter:blur(16px);}
-.pc-overlay.open{display:flex;}
-.pc-box{background:var(--surface);border-radius:24px;padding:28px 24px;width:280px;text-align:center;}
-.pc-dots{display:flex;justify-content:center;gap:10px;margin:16px 0 8px;}
-.pc-dot{width:12px;height:12px;border-radius:50%;background:var(--border2);transition:background .15s;}
-.pc-dot.on{background:var(--gold);}
-.pc-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
-.pc-key{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;cursor:pointer;transition:background .1s;}
-.pc-key:active{background:var(--surface3);}
+/* ── Chatbot UI ── */
+.fab-chat{position:fixed;bottom:calc(100px + var(--sb));right:20px;width:56px;height:56px;background:linear-gradient(135deg,#c49440,#9a7230);border-radius:50%;box-shadow:0 8px 24px rgba(196,148,64,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;transition:transform .3s cubic-bezier(0.175,0.885,0.32,1.275);}
+.fab-chat:hover{transform:scale(1.1);}
+.fab-chat svg{color:#fff;width:24px;height:24px;}
+#chat-panel{position:fixed;bottom:calc(110px + var(--sb));right:20px;width:calc(100% - 40px);max-width:360px;height:450px;background:rgba(255,255,255,0.95);backdrop-filter:var(--glass-blur);border-radius:24px;box-shadow:0 12px 48px rgba(0,0,0,.15);border:1px solid rgba(255,255,255,0.8);display:none;flex-direction:column;z-index:200;overflow:hidden;transform-origin:bottom right;animation:popIn .3s cubic-bezier(0.16,1,0.3,1);}
+.chat-hdr{background:linear-gradient(135deg,#1c1a16,#2e2c26);padding:16px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+.chat-body{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--surface2);}
+.chat-msg{max-width:85%;padding:12px 16px;border-radius:18px;font-size:13px;line-height:1.5;font-weight:600;}
+.chat-msg.bot{background:#fff;border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);}
+.chat-msg.user{background:var(--gold-bg);border:1px solid var(--gold-border);color:#9a7230;align-self:flex-end;border-bottom-right-radius:4px;}
+.chat-input-area{padding:12px 16px;background:rgba(255,255,255,0.9);border-top:1px solid var(--border);display:flex;gap:8px;}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════ -->
 <div id="screen-login" class="screen active">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;">
+    <div style="width:100%;max-width:340px;" class="fade-up">
       <div style="text-align:center;margin-bottom:36px;">
         <div style="display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:26px;background:#1c1a16;border:1.5px solid rgba(196,148,64,.25);box-shadow:0 12px 40px rgba(0,0,0,.15);margin-bottom:18px;">
           <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:60px;height:60px;object-fit:contain;border-radius:16px;" onerror="this.style.display='none'">
         </div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--text);letter-spacing:-.02em;">OPERIX</div>
-        <div style="font-size:10px;color:var(--text4);font-weight:700;letter-spacing:.22em;text-transform:uppercase;margin-top:5px;">Field Operations</div>
+        <div style="font-size:10px;color:var(--text4);font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-top:5px;">Field Operations</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px;">
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
         <div><label class="field-label">Email Address</label><input id="l-email" type="email" class="field" placeholder="you@operix.com" autocomplete="email" inputmode="email" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()"></div>
         <div><label class="field-label">Password</label><input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()"></div>
       </div>
-      <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:11px 14px;font-size:13px;color:var(--red);margin-bottom:14px;text-align:center;line-height:1.4;"></div>
-      <button class="btn btn-dark" onclick="mLogin()" id="l-btn" style="margin-bottom:12px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px;text-align:center;line-height:1.4;"></div>
+      <button class="btn btn-dark hover-lift" onclick="mLogin()" id="l-btn" style="margin-bottom:16px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Sign In
       </button>
-      <button onclick="showScreen('screen-forgot')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;width:100%;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
+      <button onclick="showScreen('screen-forgot')" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ OTP ═══════════════ -->
 <div id="screen-otp" class="screen">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;">
+    <div style="width:100%;max-width:340px;" class="fade-up">
       <div style="text-align:center;margin-bottom:28px;">
         <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--gold-bg);border:1.5px solid var(--gold-border);margin-bottom:14px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="var(--gold)"/></svg>
         </div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;color:var(--text);">Verify Identity</div>
-        <div id="otp-sub" style="font-size:13px;color:var(--text3);margin-top:6px;line-height:1.5;"></div>
+        <div id="otp-sub" style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;line-height:1.5;"></div>
       </div>
       <div class="otp-row" id="otp-inputs">
         <input type="tel" maxlength="1" class="otp-digit" id="o0" oninput="oI(this,0)" onkeydown="oK(event,0)">
@@ -236,269 +227,281 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
         <input type="tel" maxlength="1" class="otp-digit" id="o4" oninput="oI(this,4)" onkeydown="oK(event,4)">
         <input type="tel" maxlength="1" class="otp-digit" id="o5" oninput="oI(this,5)" onkeydown="oK(event,5)">
       </div>
-      <div style="text-align:center;margin-bottom:16px;"><span id="otp-timer" style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);">05:00</span> <span style="font-size:12px;color:var(--text3);">remaining</span></div>
-      <div id="otp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin-bottom:12px;"></div>
-      <button class="btn btn-gold" onclick="mVerifyOTP()" id="otp-btn" style="margin-bottom:12px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div style="text-align:center;margin-bottom:16px;"><span id="otp-timer" style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--gold);">05:00</span> <span style="font-size:12px;font-weight:600;color:var(--text3);">remaining</span></div>
+      <div id="otp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+      <button class="btn btn-gold hover-lift" onclick="mVerifyOTP()" id="otp-btn" style="margin-bottom:12px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
         Verify Code
       </button>
-      <button id="otp-resend" onclick="mResendOTP()" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;width:100%;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">Resend Code</button>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;margin-top:4px;">← Back to Sign In</button>
+      <button id="otp-resend" onclick="mResendOTP()" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Resend Code</button>
+      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;margin-top:4px;">← Back to Sign In</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ NEW DEVICE ═══════════════ -->
 <div id="screen-newdev" class="screen">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;">
+    <div style="width:100%;max-width:340px;" class="fade-up">
       <div style="text-align:center;margin-bottom:24px;">
         <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--blue-bg);border:1.5px solid var(--blue-border);margin-bottom:14px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
         </div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);">New Device</div>
-        <div style="font-size:13px;color:var(--text3);margin-top:6px;">Answer your security questions</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;">Answer your security questions</div>
       </div>
-      <div id="nd-container" style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;"></div>
-      <div id="nd-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin-bottom:12px;"></div>
-      <button class="btn btn-dark" onclick="mVerifySecQ()" style="margin-bottom:10px;">Verify & Continue</button>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;">← Back</button>
+      <div id="nd-container" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div>
+      <div id="nd-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+      <button class="btn btn-dark hover-lift" onclick="mVerifySecQ()" style="margin-bottom:12px;">Verify & Continue</button>
+      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">← Back</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ SETUP SECURITY Q ═══════════════ -->
 <div id="screen-setup-sq" class="screen">
   <div class="auth-wrap" style="overflow-y:auto;">
-    <div style="width:100%;max-width:340px;">
+    <div style="width:100%;max-width:340px;" class="fade-up">
       <div style="text-align:center;margin-bottom:22px;">
         <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--gold-bg);border:1.5px solid var(--gold-border);margin-bottom:14px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:800;color:var(--text);">Security Questions</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.5;">Set once. Used to verify new devices.</div>
+        <div style="font-size:12px;font-weight:600;color:var(--text3);margin-top:6px;line-height:1.5;">Set once. Used to verify new devices.</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;">
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;">
         <div><label class="field-label">Question 1</label><select id="sq1" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa1" class="field" placeholder="Your answer" autocomplete="off"></div>
         <div><label class="field-label">Question 2</label><select id="sq2" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa2" class="field" placeholder="Your answer" autocomplete="off"></div>
         <div><label class="field-label">Question 3</label><select id="sq3" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa3" class="field" placeholder="Your answer" autocomplete="off"></div>
       </div>
-      <div id="sq-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin-bottom:12px;"></div>
-      <button class="btn btn-dark" onclick="mSaveSecQ()">Save & Continue</button>
+      <div id="sq-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+      <button class="btn btn-dark hover-lift" onclick="mSaveSecQ()">Save & Continue</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ FORGOT PASSWORD ═══════════════ -->
 <div id="screen-forgot" class="screen">
   <div class="auth-wrap" style="overflow-y:auto;">
-    <div style="width:100%;max-width:340px;">
+    <div style="width:100%;max-width:340px;" class="fade-up">
       <div style="text-align:center;margin-bottom:24px;">
         <div style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;color:var(--text);">Reset Password</div>
-        <div id="fp-sub" style="font-size:13px;color:var(--text3);margin-top:6px;"></div>
+        <div id="fp-sub" style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
       </div>
-      <div id="fp-s1"><input id="fp-email" type="email" class="field" placeholder="your@email.com" style="margin-bottom:14px;"><button class="btn btn-dark" onclick="fpS1()" style="margin-bottom:10px;">Continue →</button></div>
-      <div id="fp-s2" style="display:none;"><div id="fp-qs" style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;"></div><button class="btn btn-dark" onclick="fpS2()" style="margin-bottom:10px;">Verify Answers →</button></div>
-      <div id="fp-s3" style="display:none;"><div class="otp-row"><input type="tel" maxlength="1" class="otp-digit" id="fp0" oninput="fpOI(this,0)" onkeydown="fpOK(event,0)"><input type="tel" maxlength="1" class="otp-digit" id="fp1" oninput="fpOI(this,1)" onkeydown="fpOK(event,1)"><input type="tel" maxlength="1" class="otp-digit" id="fp2" oninput="fpOI(this,2)" onkeydown="fpOK(event,2)"><input type="tel" maxlength="1" class="otp-digit" id="fp3" oninput="fpOI(this,3)" onkeydown="fpOK(event,3)"><input type="tel" maxlength="1" class="otp-digit" id="fp4" oninput="fpOI(this,4)" onkeydown="fpOK(event,4)"><input type="tel" maxlength="1" class="otp-digit" id="fp5" oninput="fpOI(this,5)" onkeydown="fpOK(event,5)"></div><button class="btn btn-gold" onclick="fpS3()" style="margin-bottom:10px;">Verify Code →</button></div>
-      <div id="fp-s4" style="display:none;"><input id="fp-np" type="password" class="field" placeholder="New password" style="margin-bottom:10px;"><input id="fp-cp" type="password" class="field" placeholder="Confirm password" style="margin-bottom:14px;"><button class="btn btn-gold" onclick="fpS4()">Set New Password</button></div>
-      <div id="fp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px;font-size:13px;color:var(--red);text-align:center;margin:12px 0;"></div>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;cursor:pointer;width:100%;padding:8px;font-family:'Plus Jakarta Sans',sans-serif;margin-top:8px;">← Back to Sign In</button>
+      <div id="fp-s1"><input id="fp-email" type="email" class="field" placeholder="your@email.com" style="margin-bottom:16px;"><button class="btn btn-dark hover-lift" onclick="fpS1()" style="margin-bottom:12px;">Continue →</button></div>
+      <div id="fp-s2" style="display:none;"><div id="fp-qs" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div><button class="btn btn-dark hover-lift" onclick="fpS2()" style="margin-bottom:12px;">Verify Answers →</button></div>
+      <div id="fp-s3" style="display:none;"><div class="otp-row"><input type="tel" maxlength="1" class="otp-digit" id="fp0" oninput="fpOI(this,0)" onkeydown="fpOK(event,0)"><input type="tel" maxlength="1" class="otp-digit" id="fp1" oninput="fpOI(this,1)" onkeydown="fpOK(event,1)"><input type="tel" maxlength="1" class="otp-digit" id="fp2" oninput="fpOI(this,2)" onkeydown="fpOK(event,2)"><input type="tel" maxlength="1" class="otp-digit" id="fp3" oninput="fpOI(this,3)" onkeydown="fpOK(event,3)"><input type="tel" maxlength="1" class="otp-digit" id="fp4" oninput="fpOI(this,4)" onkeydown="fpOK(event,4)"><input type="tel" maxlength="1" class="otp-digit" id="fp5" oninput="fpOI(this,5)" onkeydown="fpOK(event,5)"></div><button class="btn btn-gold hover-lift" onclick="fpS3()" style="margin-bottom:12px;">Verify Code →</button></div>
+      <div id="fp-s4" style="display:none;"><input id="fp-np" type="password" class="field" placeholder="New password" style="margin-bottom:12px;"><input id="fp-cp" type="password" class="field" placeholder="Confirm password" style="margin-bottom:16px;"><button class="btn btn-gold hover-lift" onclick="fpS4()">Set New Password</button></div>
+      <div id="fp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin:16px 0;"></div>
+      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;margin-top:8px;">← Back to Sign In</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ MAIN APP ═══════════════ -->
 <div id="screen-app" class="screen">
 
-  <!-- Top bar -->
   <div class="topbar">
     <div>
       <div class="topbar-title" id="pg-title">Home</div>
-      <div class="topbar-sub" id="pg-sub">OPERIX</div>
+      <div class="topbar-sub" id="pg-sub">OPERIX System</div>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div id="top-av" class="topbar-icon" style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--gold2);" onclick="goTab('profile')"></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div id="top-av" class="topbar-icon hover-lift" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:900;color:var(--gold);" onclick="goTab('profile')"></div>
     </div>
   </div>
 
-  <!-- Page container -->
   <div id="pages" style="flex:1;overflow:hidden;position:relative;">
 
-    <!-- ── HOME ── -->
     <div id="pg-home" class="page active" style="padding-bottom:calc(72px + var(--sb));">
       <div class="page-pad fade-up">
-        <div id="hm-greeting" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:3px;"></div>
-        <div id="hm-name" style="font-size:13px;color:var(--text3);margin-bottom:18px;"></div>
+        <div id="hm-greeting" style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:4px;"></div>
+        <div id="hm-name" style="font-size:14px;font-weight:600;color:var(--text3);margin-bottom:24px;"></div>
 
-        <!-- Shift banner -->
-        <div id="hm-shift" class="shift-banner" style="display:none;">
-          <div style="font-size:9px;color:rgba(232,185,106,.5);font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Active Shift</div>
-          <div id="hm-shift-proj" style="font-size:18px;font-weight:900;color:#fff;margin-bottom:4px;"></div>
-          <div id="hm-shift-time" style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:10px;"></div>
-          <div id="hm-shift-loc" style="font-size:12px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:5px;">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div id="hm-shift" class="shift-banner hover-lift" style="display:none;">
+          <div style="font-size:10px;color:var(--gold2);font-weight:800;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Active Shift</div>
+          <div id="hm-shift-proj" style="font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;"></div>
+          <div id="hm-shift-time" style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:12px;"></div>
+          <div id="hm-shift-loc" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span id="hm-loc-text"></span>
           </div>
         </div>
 
-        <!-- KPI tiles -->
         <div class="kpi-row">
-          <div class="kpi-tile"><div class="kpi-val" id="kpi-days">--</div><div class="kpi-lbl">Days This Month</div></div>
-          <div class="kpi-tile"><div class="kpi-val" id="kpi-salary" style="font-size:18px;">--</div><div class="kpi-lbl">Salary (SAR)</div></div>
+          <div class="kpi-tile"><div class="kpi-val" id="kpi-days">--</div><div class="kpi-lbl">Days Present</div></div>
+          <div class="kpi-tile"><div class="kpi-val" id="kpi-salary" style="font-size:22px;">--</div><div class="kpi-lbl">Salary (SAR)</div></div>
         </div>
 
-        <!-- Quick actions -->
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;">Quick Actions</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <button onclick="goTab('ops')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:18px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;transition:all .15s;" onmousedown="this.style.transform='scale(.96)'" onmouseup="this.style.transform=''">
-            <div style="width:44px;height:44px;border-radius:14px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px;margin-top:24px;">Quick Actions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <button class="card-sm hover-lift" onclick="goTab('ops')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 16px;cursor:pointer;">
+            <div style="width:52px;height:52px;border-radius:16px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
             </div>
-            <span style="font-size:12px;font-weight:700;color:var(--text);">Operations</span>
+            <span style="font-size:13px;font-weight:800;color:var(--text);">Operations</span>
           </button>
-          <button onclick="goTab('checkin')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:18px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;transition:all .15s;" onmousedown="this.style.transform='scale(.96)'" onmouseup="this.style.transform=''">
-            <div style="width:44px;height:44px;border-radius:14px;background:var(--green-bg);border:1.5px solid var(--green-border);display:flex;align-items:center;justify-content:center;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <button class="card-sm hover-lift" onclick="goTab('checkin')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 16px;cursor:pointer;">
+            <div style="width:52px;height:52px;border-radius:16px;background:var(--green-bg);border:1.5px solid var(--green-border);display:flex;align-items:center;justify-content:center;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <span style="font-size:12px;font-weight:700;color:var(--text);">Check In/Out</span>
+            <span style="font-size:13px;font-weight:800;color:var(--text);">Attendance</span>
           </button>
-          <button onclick="goTab('requests')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:18px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;transition:all .15s;" onmousedown="this.style.transform='scale(.96)'" onmouseup="this.style.transform=''">
-            <div style="width:44px;height:44px;border-radius:14px;background:var(--blue-bg);border:1.5px solid var(--blue-border);display:flex;align-items:center;justify-content:center;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          <button class="card-sm hover-lift" onclick="goTab('requests')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 16px;cursor:pointer;">
+            <div style="width:52px;height:52px;border-radius:16px;background:var(--blue-bg);border:1.5px solid var(--blue-border);display:flex;align-items:center;justify-content:center;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
             </div>
-            <span style="font-size:12px;font-weight:700;color:var(--text);">Requests</span>
+            <span style="font-size:13px;font-weight:800;color:var(--text);">Requests</span>
           </button>
-          <button onclick="goTab('mail')" style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:18px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;position:relative;transition:all .15s;" onmousedown="this.style.transform='scale(.96)'" onmouseup="this.style.transform=''">
-            <div style="width:44px;height:44px;border-radius:14px;background:var(--purple-bg);border:1.5px solid var(--purple-border);display:flex;align-items:center;justify-content:center;position:relative;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <span id="hm-mail-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:9px;"></span>
+          <button class="card-sm hover-lift" onclick="goTab('mail')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 16px;position:relative;cursor:pointer;">
+            <div style="width:52px;height:52px;border-radius:16px;background:var(--purple-bg);border:1.5px solid var(--purple-border);display:flex;align-items:center;justify-content:center;position:relative;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span id="hm-mail-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;box-shadow:0 2px 4px rgba(229,62,62,.3);"></span>
             </div>
-            <span style="font-size:12px;font-weight:700;color:var(--text);">Mail</span>
+            <span style="font-size:13px;font-weight:800;color:var(--text);">Mail</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- ── OPERATIONS BOARD ── -->
     <div id="pg-ops" class="page" style="padding-bottom:calc(72px + var(--sb));">
       <div class="tab-bar">
         <button class="tab-btn active" id="ops-tab-new" onclick="opsTab('new',this)">New Entry</button>
-        <button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Reports</button>
-        <button class="tab-btn" id="ops-tab-att" onclick="opsTab('att',this)" id="ops-tab-att-btn">Attendance</button>
+        <button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Live Board</button>
+        <button class="tab-btn" id="ops-tab-att" onclick="opsTab('att',this)">Staff</button>
       </div>
-      <!-- New entry -->
-      <div id="ops-pane-new" class="page-pad">
-        <div style="display:flex;gap:8px;margin-bottom:14px;">
-          <button class="tab-btn active" id="mb-tab" onclick="opsSvcTab('mb',this)" style="flex:1;padding:10px 8px;font-size:12px;border:1.5px solid var(--border);border-radius:10px;">Mind Break Member</button>
-          <button class="tab-btn" id="ext-tab" onclick="opsSvcTab('ext',this)" style="flex:1;padding:10px 8px;font-size:12px;border:1.5px solid var(--border);border-radius:10px;color:var(--text3);">External Client</button>
+      
+      <div id="ops-pane-new" class="page-pad fade-up">
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+          <button class="btn btn-outline hover-lift active" id="mb-tab" onclick="opsSvcTab('mb',this)" style="flex:1;border-color:var(--gold);color:var(--gold);background:var(--gold-bg);">Member</button>
+          <button class="btn btn-outline hover-lift" id="ext-tab" onclick="opsSvcTab('ext',this)" style="flex:1;color:var(--text3);">External</button>
         </div>
         <div class="card">
-          <div id="ops-fields" style="display:flex;flex-direction:column;gap:11px;"></div>
-          <button class="btn btn-dark" onclick="mOpsSave()" id="ops-save-btn" style="margin-top:14px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-            Save & Generate Receipt
+          <div id="ops-fields" style="display:flex;flex-direction:column;gap:14px;"></div>
+          <button class="btn btn-dark hover-lift" onclick="mOpsSave()" id="ops-save-btn" style="margin-top:20px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Save & Receipt
           </button>
         </div>
       </div>
-      <!-- Reports -->
-      <div id="ops-pane-reports" style="display:none;padding-bottom:8px;">
-        <div style="padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;">
+      
+      <div id="ops-pane-reports" class="fade-up" style="display:none;padding-bottom:12px;">
+        <div style="padding:16px 20px;background:rgba(255,255,255,0.7);backdrop-filter:var(--glass-blur);border-bottom:1px solid rgba(255,255,255,0.5);position:sticky;top:0;z-index:10;box-shadow:var(--shadow-sm);">
           <div style="position:relative;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="m-rep-search" class="field" placeholder="Search plate, staff…" oninput="mFilterReports()" style="padding-left:36px;font-size:13px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="m-rep-search" class="field" placeholder="Search plates, names..." oninput="mFilterReports()" style="padding-left:42px;background:var(--surface);">
           </div>
         </div>
-        <div id="m-reports-list" style="padding:10px 14px;"></div>
+        <div id="m-reports-list" style="padding:16px 20px;"></div>
       </div>
-      <!-- Attendance (admin only) -->
-      <div id="ops-pane-att" style="display:none;">
+      
+      <div id="ops-pane-att" class="fade-up" style="display:none;">
         <div class="page-pad">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-p" style="font-size:20px;color:var(--green);">0</div><div class="kpi-lbl">Present</div></div>
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-a" style="font-size:20px;color:var(--red);">0</div><div class="kpi-lbl">Absent</div></div>
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-t" style="font-size:20px;">0</div><div class="kpi-lbl">Total</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-p" style="font-size:24px;color:var(--green);">0</div><div class="kpi-lbl">Present</div></div>
+            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-a" style="font-size:24px;color:var(--red);">0</div><div class="kpi-lbl">Absent</div></div>
+            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-t" style="font-size:24px;">0</div><div class="kpi-lbl">Total</div></div>
           </div>
           <div id="m-att-list"></div>
         </div>
       </div>
     </div>
 
-    <!-- ── CHECK IN/OUT ── -->
     <div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad">
-        <div style="text-align:center;padding:20px 0 24px;">
-          <div id="m-clock" style="font-family:'Space Grotesk',sans-serif;font-size:46px;font-weight:900;color:var(--text);letter-spacing:-.03em;margin-bottom:4px;"></div>
-          <div id="m-date" style="font-size:13px;color:var(--text3);margin-bottom:32px;"></div>
-          <div style="position:relative;display:inline-block;margin-bottom:20px;">
+      <div class="page-pad fade-up">
+        <div style="text-align:center;padding:32px 0;">
+          <div id="m-clock" style="font-family:'Space Grotesk',sans-serif;font-size:54px;font-weight:900;color:var(--text);letter-spacing:-.04em;margin-bottom:4px;"></div>
+          <div id="m-date" style="font-size:14px;font-weight:600;color:var(--text3);margin-bottom:40px;"></div>
+          <div style="position:relative;display:inline-block;margin-bottom:28px;">
             <button id="ci-btn" class="ci-btn ci-idle" onclick="mDoCheckIn()">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span id="ci-label">Check In</span>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-bottom:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="ci-label" style="letter-spacing:0.05em;text-transform:uppercase;">Check In</span>
             </button>
           </div>
-          <div id="gps-status" style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--text3);margin-bottom:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span id="gps-txt">Locating…</span>
+          <div id="gps-status" style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;color:var(--text3);margin-bottom:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="gps-txt">Locating...</span>
           </div>
-          <div id="ci-msg" style="font-size:12px;color:var(--text3);min-height:16px;"></div>
+          <div id="ci-msg" style="font-size:13px;font-weight:600;color:var(--text4);min-height:18px;"></div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Today's Log</div>
+          <div id="ci-today"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
         </div>
         <div class="card">
-          <div class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Today</div>
-          <div id="ci-today"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
-        </div>
-        <div class="card">
-          <div class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Recent History</div>
-          <div id="ci-history"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
+          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Recent History</div>
+          <div id="ci-history"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
         </div>
       </div>
     </div>
 
-    <!-- ── REQUESTS ── -->
     <div id="pg-requests" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad">
-        <button class="btn btn-gold" onclick="openReqModal()" style="margin-bottom:16px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <div class="page-pad fade-up">
+        <button class="btn btn-gold hover-lift" onclick="openReqModal()" style="margin-bottom:20px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Request
         </button>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;">My Requests</div>
-        <div id="req-list"><div style="font-size:12px;color:var(--text4);text-align:center;padding:28px;">Loading…</div></div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px;">My Requests</div>
+        <div id="req-list"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:32px;">Loading...</div></div>
       </div>
     </div>
 
-    <!-- ── MAIL ── -->
     <div id="pg-mail" class="page" style="padding-bottom:calc(72px + var(--sb));">
       <div class="tab-bar">
-        <button class="tab-btn active" id="mf-inbox" onclick="mMailTab('inbox',this)">Inbox <span id="m-inbox-ct" style="display:none;background:var(--gold);color:#fff;font-size:9px;padding:1px 5px;border-radius:6px;margin-left:3px;"></span></button>
+        <button class="tab-btn active" id="mf-inbox" onclick="mMailTab('inbox',this)">Inbox <span id="m-inbox-ct" style="display:none;background:var(--gold);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px;"></span></button>
         <button class="tab-btn" id="mf-sent" onclick="mMailTab('sent',this)">Sent</button>
         <button class="tab-btn" id="mf-compose" onclick="openComposeModal()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Compose
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Compose
         </button>
       </div>
-      <div id="m-mail-list" style="background:var(--surface);min-height:200px;"></div>
+      <div id="m-mail-list" style="background:transparent;min-height:200px;"></div>
     </div>
 
-    <!-- ── PROFILE ── -->
     <div id="pg-profile" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad">
-        <div class="card" style="text-align:center;padding:28px 20px;">
-          <div id="p-av" style="width:76px;height:76px;border-radius:22px;background:var(--gold-bg);border:2px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:900;color:var(--gold);margin:0 auto 14px;overflow:hidden;"></div>
-          <div id="p-name" style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:var(--text);"></div>
-          <div id="p-role" style="font-size:13px;color:var(--text3);margin-top:3px;"></div>
-          <div id="p-email" style="font-size:11px;color:var(--text4);margin-top:3px;font-family:'Fira Code',monospace;"></div>
+      <div class="page-pad fade-up">
+        <div class="card" style="text-align:center;padding:32px 20px;">
+          <div id="p-av" style="width:84px;height:84px;border-radius:24px;background:var(--gold-bg);border:2px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--gold);margin:0 auto 16px;overflow:hidden;"></div>
+          <div id="p-name" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);"></div>
+          <div id="p-role" style="font-size:14px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
+          <div id="p-email" style="font-size:12px;font-weight:500;color:var(--text4);margin-top:6px;font-family:'Fira Code',monospace;"></div>
+          <div id="p-role" style="font-size:14px;font-weight:600;color:var(--text3);margin-top:4px;"></div>
+          <div id="p-email" style="font-size:12px;color:var(--text4);margin-top:4px;font-family:'Fira Code',monospace;"></div>
+          <button id="btn-export-id" class="btn btn-gold hover-lift" onclick="mExportID()" style="margin-top:24px; padding:12px 20px; font-size:13px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export Official ID
+          </button>
         </div>
         <div class="card">
-          <div class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Trusted Devices</div>
-          <div id="p-devices"><div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">Loading…</div></div>
+          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Trusted Devices</div>
+          <div id="p-devices"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
         </div>
-        <button class="btn btn-outline" onclick="mSignOut()" style="border-color:var(--red-border);color:var(--red);">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <button class="btn btn-outline hover-lift" onclick="mSignOut()" style="border-color:var(--red-border);color:var(--red);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Sign Out
         </button>
       </div>
     </div>
 
-  </div><!-- end #pages -->
+  </div><div class="fab-chat hover-lift" onclick="toggleChat()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </div>
 
-  <!-- Bottom navigation -->
+  <div id="chat-panel">
+    <div class="chat-hdr">
+      <div style="font-family:'Space Grotesk'; font-weight:800; font-size:16px; display:flex; align-items:center; gap:8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12 2.1 7.1"/></svg>
+        OPERIX AI
+      </div>
+      <svg onclick="toggleChat()" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="cursor:pointer;" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg bot pop-in">Hello! I'm your Operix assistant. How can I help you with your operations today?</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" class="field" placeholder="Ask something..." style="padding:12px 16px; font-size:14px; background:rgba(255,255,255,0.7);" onkeydown="if(event.key==='Enter') sendChat()">
+      <button class="btn btn-gold hover-lift" style="padding:12px; border-radius:14px; width:auto;" onclick="sendChat()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </div>
+
   <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-home" onclick="goTab('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home
@@ -517,66 +520,113 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
       <span id="nav-mail-badge" class="nav-badge"></span>
     </button>
   </nav>
-</div><!-- end screen-app -->
-
-<!-- ═══════════════ MODALS ═══════════════ -->
-
-<!-- Request modal -->
-<div id="req-modal" class="modal">
+</div><div id="req-modal" class="modal">
   <div class="modal-box">
     <div class="modal-handle"></div>
-    <div class="modal-hdr"><div class="modal-title">New Request</div><button onclick="closeModal('req-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px;">
+    <div class="modal-hdr"><div class="modal-title">New Request</div><button onclick="closeModal('req-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
       <div><label class="field-label">Request Type</label><select id="rm-type" class="field"><option value="Leave Request">Leave Request</option><option value="Salary Inquiry">Salary Inquiry</option><option value="Document Request">Document Request</option><option value="Complaint">Complaint</option><option value="Other">Other</option></select></div>
       <div><label class="field-label">Details</label><textarea id="rm-details" class="field" rows="4" style="resize:none;" placeholder="Describe your request…"></textarea></div>
-      <button class="btn btn-gold" onclick="mSubmitReq()">Submit Request</button>
-      <button class="btn btn-outline" onclick="closeModal('req-modal')">Cancel</button>
+      <button class="btn btn-gold hover-lift" onclick="mSubmitReq()">Submit Request</button>
+      <button class="btn btn-outline hover-lift" onclick="closeModal('req-modal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- Mail read modal -->
 <div id="mail-read-modal" class="modal">
   <div class="modal-box" style="max-height:92vh;">
     <div class="modal-handle"></div>
-    <div id="mail-read-content" style="padding:0 18px 8px;"></div>
-    <div style="padding:0 18px;"><button class="btn btn-outline" onclick="closeModal('mail-read-modal')">Close</button></div>
+    <div id="mail-read-content" style="padding:0 20px 12px;"></div>
+    <div style="padding:0 20px;"><button class="btn btn-outline hover-lift" onclick="closeModal('mail-read-modal')">Close</button></div>
   </div>
 </div>
 
-<!-- Mail compose modal -->
 <div id="compose-modal" class="modal">
   <div class="modal-box">
     <div class="modal-handle"></div>
-    <div class="modal-hdr"><div class="modal-title">New Message</div><button onclick="closeModal('compose-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body" style="display:flex;flex-direction:column;gap:11px;">
+    <div class="modal-hdr"><div class="modal-title">New Message</div><button onclick="closeModal('compose-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
       <div><label class="field-label">To</label><input id="cm-to" class="field" placeholder="email or name" list="cm-to-list"><datalist id="cm-to-list"></datalist></div>
       <div><label class="field-label">Subject</label><input id="cm-sub" class="field" placeholder="Subject"></div>
       <div><label class="field-label">Message</label><textarea id="cm-body" class="field" rows="5" style="resize:none;" placeholder="Write your message…"></textarea></div>
-      <button class="btn btn-gold" onclick="mSendMail()">Send Message</button>
-      <button class="btn btn-outline" onclick="closeModal('compose-modal')">Cancel</button>
+      <button class="btn btn-gold hover-lift" onclick="mSendMail()">Send Message</button>
+      <button class="btn btn-outline hover-lift" onclick="closeModal('compose-modal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- Receipt capture (off-screen) -->
-<div id="receipt-cap" style="position:fixed;left:-9999px;top:0;width:320px;background:#f5f4f0;padding:20px;font-family:'Space Grotesk',sans-serif;">
-  <div style="text-align:center;margin-bottom:14px;"><div style="font-size:20px;font-weight:900;color:#1c1a16;">OPERIX</div><div style="font-size:9px;color:#9a7230;letter-spacing:.2em;font-weight:700;">VALET RECEIPT</div></div>
-  <div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Plate</div><div id="r-plate" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1c1a16;"></div></div>
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Card</div><div id="r-card" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1c1a16;"></div></div>
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Client</div><div id="r-client" style="font-size:13px;font-weight:700;color:#3a3630;"></div></div>
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Amount</div><div id="r-amount" style="font-size:13px;font-weight:800;color:#9a7230;"></div></div>
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Staff</div><div id="r-staff" style="font-size:13px;font-weight:700;color:#3a3630;"></div></div>
-      <div><div style="font-size:8px;color:#9a7230;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Time</div><div id="r-time" style="font-size:11px;font-weight:600;color:#6b6560;"></div></div>
+<div id="receipt-cap" style="position:fixed;left:-9999px;top:0;width:320px;background:#f5f4f0;padding:20px;font-family:'Space Grotesk',sans-serif;z-index:-1;box-sizing:border-box;">
+  
+  <div style="text-align:center;margin-bottom:16px;border-bottom:1.5px dashed #d1c1a3;padding-bottom:16px;">
+    <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:56px;height:56px;border-radius:14px;margin-bottom:10px;object-fit:cover;border:1px solid rgba(196,148,64,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.05);" crossorigin="anonymous">
+    <div style="font-size:18px;font-weight:900;color:#1c1a16;text-transform:uppercase;line-height:1.1;letter-spacing:-0.02em;">
+      Mind Break Café<br>
+      <span style="font-size:13px;font-weight:800;color:#3a3630;">& Bakery</span>
+    </div>
+    <div style="font-size:10px;color:#c49440;font-weight:900;letter-spacing:0.25em;text-transform:uppercase;margin-top:8px;">
+      Valet Service
+    </div>
+    <div style="font-size:10px;color:#6b6560;font-weight:600;margin-top:6px;font-family:'Plus Jakarta Sans',sans-serif;">
+      King Abdullah Road - Alhamra District
     </div>
   </div>
-  <div style="text-align:center;margin-bottom:10px;"><div id="r-opid" style="font-family:'Fira Code',monospace;font-size:11px;color:#6b6560;margin-bottom:8px;"></div><div id="r-qr"></div></div>
-  <div style="font-size:9px;color:#a09890;text-align:center;margin-top:8px;">OPERIX · Mind Break Café · Thank you</div>
+
+  <div style="background:#fff;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.03);border:1px solid #ece9e0;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Plate</div><div id="r-plate" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1c1a16;"></div></div>
+      <div><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Card</div><div id="r-card" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1c1a16;"></div></div>
+      <div style="grid-column: span 2;"><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Client</div><div id="r-client" style="font-size:13px;font-weight:700;color:#3a3630;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
+      <div><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Amount</div><div id="r-amount" style="font-size:13px;font-weight:800;color:#c49440;"></div></div>
+      <div><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Staff</div><div id="r-staff" style="font-size:13px;font-weight:700;color:#3a3630;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
+      <div style="grid-column: span 2;"><div style="font-size:8px;color:#c49440;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Time</div><div id="r-time" style="font-size:10px;font-weight:600;color:#6b6560;font-family:'Plus Jakarta Sans',sans-serif;"></div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <div id="r-opid" style="font-family:'Fira Code',monospace;font-size:10px;color:#a09890;margin-bottom:12px;font-weight:500;"></div>
+    <div id="r-qr" style="width:110px; height:110px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fff; padding:6px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06); border:1px solid #ece9e0;"></div>
+    <div style="font-size:9px;color:#a09890;font-weight:800;letter-spacing:0.15em;font-family:'Plus Jakarta Sans',sans-serif;">POWERED BY OPERIX</div>
+  </div>
+</div>
+<div id="id-card-cap" style="position:fixed;left:-9999px;top:0;width:340px;background:#1c1a16;color:#ffffff;border-radius:24px;padding:24px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;border:2px solid #c49440;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.5);z-index:-1;">
+  <div style="position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle, rgba(196,148,64,0.35) 0%, transparent 70%);border-radius:50%;pointer-events:none;"></div>
+  
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative;z-index:1;width:100%;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(196,148,64,0.5);" crossorigin="anonymous">
+      <div>
+        <div style="font-size:18px;font-weight:900;letter-spacing:-0.02em;color:#fff;line-height:1.2;">OPERIX</div>
+        <div style="font-size:9px;color:#e8b96a;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;">Official ID Card</div>
+      </div>
+    </div>
+  </div>
+  
+  <div style="display:flex;gap:16px;margin-bottom:24px;position:relative;z-index:1;width:100%;">
+    <div id="id-photo" style="width:84px;height:84px;border-radius:20px;background:#2e2c26;border:2px solid #c49440;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#c49440;overflow:hidden;flex-shrink:0;"></div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">
+      <div id="id-name" style="font-size:22px;font-weight:800;margin-bottom:4px;line-height:1.1;color:#fff;word-break:break-word;"></div>
+      <div id="id-job" style="font-size:12px;color:#e8b96a;font-weight:700;margin-bottom:10px;"></div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;color:#a09890;margin-bottom:3px;display:flex;align-items:center;gap:4px;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span id="id-email" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      </div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;color:#a09890;display:flex;align-items:center;gap:4px;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span id="id-phone" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      </div>
+    </div>
+  </div>
+  
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;background:rgba(255,255,255,0.06);padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,0.1);width:100%;box-sizing:border-box;">
+    <div style="flex:1;min-width:0;padding-right:10px;">
+      <div style="font-size:9px;color:#a09890;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;">Employee ID</div>
+      <div id="id-empid" style="font-family:'Fira Code',monospace;font-size:16px;font-weight:800;color:#e8b96a;"></div>
+      <div style="font-size:8px;color:#6b6560;margin-top:6px;">Scan to verify active status</div>
+    </div>
+    <div id="id-qr" style="background:#fff;padding:6px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.5);width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"></div>
+  </div>
 </div>
 
-<!-- Toast -->
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -590,7 +640,6 @@ const OPS_API    = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgI
 const SUPABASE_URL  = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
 
-// State
 var CU = null; // currentUser
 var _pl = null; // pendingLogin
 var _sqd = null; // securityQuestionsData
@@ -603,8 +652,13 @@ var mReportsData = [];
 var mMailFolder = 'inbox';
 var mOpsSvc = 'mb'; // 'mb' | 'ext'
 
+
+// SVG Icons
+function iconTick() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`; }
+function iconCross() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`; }
+
 // ═══════════════════════════════════════════
-// SUPABASE
+// SUPABASE & GAS WRAPPERS
 // ═══════════════════════════════════════════
 async function sb(path, opts={}) {
   var res = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
@@ -667,7 +721,7 @@ function goTab(tab){
   });
   var titles={home:'Home',ops:'Operations',checkin:'Attendance',requests:'Requests',mail:'Mail',profile:'Profile'};
   document.getElementById('pg-title').innerText=titles[tab]||'OPERIX';
-  document.getElementById('pg-sub').innerText='OPERIX Mobile';
+  document.getElementById('pg-sub').innerText='OPERIX System';
   if(tab==='home')loadHome();
   if(tab==='ops')loadOpsPage();
   if(tab==='checkin')loadCheckinPage();
@@ -676,8 +730,8 @@ function goTab(tab){
   if(tab==='profile')loadProfile();
 }
 
-function toast(msg,dur){
-  var el=document.getElementById('toast'); el.innerText=msg; el.style.display='block'; el.style.opacity='1';
+function toast(msgHtml,dur){
+  var el=document.getElementById('toast'); el.innerHTML=msgHtml; el.style.display='flex'; el.style.opacity='1';
   setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.style.display='none';},300);},dur||2500);
 }
 function closeModal(id){document.getElementById(id).classList.remove('open');}
@@ -690,24 +744,24 @@ async function mLogin(){
   var pass=(document.getElementById('l-pass').value||'').trim();
   var errEl=document.getElementById('l-err'); errEl.style.display='none';
   var btn=document.getElementById('l-btn');
-  if(!email||!pass){errEl.innerText='Please enter email and password.';errEl.style.display='block';return;}
-  btn.disabled=true; btn.innerText='Signing in…';
+  if(!email||!pass){errEl.innerHTML=iconCross()+' Please enter email and password.';errEl.style.display='block';return;}
+  btn.disabled=true; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…';
   try{
     var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&password=eq.'+encodeURIComponent(pass)+'&select=id,name,email,role,job,phone,photo,otp_email&limit=1',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){errEl.innerText='Wrong email or password.';errEl.style.display='block';btn.disabled=false;btn.innerText='Sign In';return;}
+    if(!Array.isArray(rows)||!rows.length){errEl.innerHTML=iconCross()+' Wrong email or password.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
     var acc=rows[0];
-    if((acc.role||'').toLowerCase()==='pending'){errEl.innerText='Account pending approval. Contact your administrator.';errEl.style.display='block';btn.disabled=false;btn.innerText='Sign In';return;}
+    if((acc.role||'').toLowerCase()==='pending'){errEl.innerHTML=iconCross()+' Account pending approval.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
     _pl=acc;
-    if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerText='Sign In';return;}
-    if(!acc.otp_email){errEl.innerText='2-step verification not configured. Contact your administrator.';errEl.style.display='block';btn.disabled=false;btn.innerText='Sign In';return;}
-    btn.innerText='Checking device…';
+    if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+    if(!acc.otp_email){errEl.innerHTML=iconCross()+' 2-step verification not configured.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
+    btn.innerHTML='Checking device…';
     var trusted=await isTrusted(acc.email);
-    if(trusted){finishLogin(acc);btn.disabled=false;btn.innerText='Sign In';return;}
-    btn.disabled=false;btn.innerText='Sign In';
+    if(trusted){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+    btn.disabled=false;btn.innerHTML='Sign In';
     var hasSQ=await hasSecQ(acc.email);
     if(!hasSQ){showScreen('screen-setup-sq');}
     else{await showNDScreen(acc.email);showScreen('screen-newdev');}
-  }catch(e){errEl.innerText='Connection error: '+e.message;errEl.style.display='block';btn.disabled=false;btn.innerText='Sign In';}
+  }catch(e){errEl.innerHTML=iconCross()+' Connection error: '+e.message;errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';}
 }
 
 async function hasSecQ(email){
@@ -724,8 +778,8 @@ async function mVerifySecQ(){
   var a1=(document.getElementById('nd-q1')?.value||'').trim().toLowerCase();
   var a2=(document.getElementById('nd-q2')?.value||'').trim().toLowerCase();
   var errEl=document.getElementById('nd-err'); errEl.style.display='none';
-  if(!a1||!a2){errEl.innerText='Answer both questions.';errEl.style.display='block';return;}
-  if(!_sqd||a1!==_sqd.a1||a2!==_sqd.a2){errEl.innerText='Incorrect answers. Try again.';errEl.style.display='block';return;}
+  if(!a1||!a2){errEl.innerHTML=iconCross()+' Answer both questions.';errEl.style.display='block';return;}
+  if(!_sqd||a1!==_sqd.a1||a2!==_sqd.a2){errEl.innerHTML=iconCross()+' Incorrect answers. Try again.';errEl.style.display='block';return;}
   await sendAndShowOTP(_pl);
 }
 async function mSaveSecQ(){
@@ -733,17 +787,17 @@ async function mSaveSecQ(){
   var q2=(document.getElementById('sq2').value||'').trim(),a2=(document.getElementById('sa2').value||'').trim().toLowerCase();
   var q3=(document.getElementById('sq3').value||'').trim(),a3=(document.getElementById('sa3').value||'').trim().toLowerCase();
   var errEl=document.getElementById('sq-err'); errEl.style.display='none';
-  if(!q1||!a1||!q2||!a2||!q3||!a3){errEl.innerText='Fill all questions.';errEl.style.display='block';return;}
-  if(q1===q2||q2===q3||q1===q3){errEl.innerText='Choose 3 different questions.';errEl.style.display='block';return;}
+  if(!q1||!a1||!q2||!a2||!q3||!a3){errEl.innerHTML=iconCross()+' Fill all questions.';errEl.style.display='block';return;}
+  if(q1===q2||q2===q3||q1===q3){errEl.innerHTML=iconCross()+' Choose 3 different questions.';errEl.style.display='block';return;}
   try{await sb('operix_security_questions',{method:'POST',body:JSON.stringify({account_email:_pl.email,q1,a1,q2,a2,q3,a3})});await sendAndShowOTP(_pl);}
-  catch(e){errEl.innerText='Error: '+e.message;errEl.style.display='block';}
+  catch(e){errEl.innerHTML=iconCross()+' Error: '+e.message;errEl.style.display='block';}
 }
 async function sendAndShowOTP(acc){
   var sent=await sendOTPCode(acc.email,acc.otp_email,acc.name);
   if(!sent)return;
   var masked=acc.otp_email.charAt(0)+'***@'+acc.otp_email.split('@')[1];
   document.getElementById('otp-sub').innerText='Code sent to '+masked;
-  for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';el.style.borderColor='var(--border2)';}}
+  for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';el.style.borderColor='var(--border)';}}
   document.getElementById('otp-err').style.display='none';
   showScreen('screen-otp'); startOTPTimer(300);
   setTimeout(function(){document.getElementById('o0').focus();},300);
@@ -774,7 +828,7 @@ function startOTPTimer(sec){
 }
 function oI(el,idx){
   el.value=el.value.replace(/[^0-9]/g,'');
-  el.style.borderColor=el.value?'var(--gold)':'var(--border2)';
+  el.style.borderColor=el.value?'var(--gold)':'var(--border)';
   if(el.value&&idx<5)document.getElementById('o'+(idx+1)).focus();
   var c='';for(var i=0;i<6;i++)c+=(document.getElementById('o'+i)?.value||'');
   if(c.length===6)setTimeout(mVerifyOTP,100);
@@ -785,30 +839,30 @@ function oK(e,idx){
 }
 async function mVerifyOTP(){
   var code='';for(var i=0;i<6;i++)code+=(document.getElementById('o'+i)?.value||'');
-  if(code.length<6){document.getElementById('otp-err').innerText='Enter all 6 digits.';document.getElementById('otp-err').style.display='block';return;}
-  var btn=document.getElementById('otp-btn'); btn.disabled=true; btn.innerText='Verifying…';
+  if(code.length<6){document.getElementById('otp-err').innerHTML=iconCross()+' Enter all 6 digits.';document.getElementById('otp-err').style.display='block';return;}
+  var btn=document.getElementById('otp-btn'); btn.disabled=true; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Verifying…';
   document.getElementById('otp-err').style.display='none';
   try{
     var now=new Date().toISOString();
     var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_pl.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
     if(!Array.isArray(rows)||!rows.length){
-      document.getElementById('otp-err').innerText='Invalid or expired code.';document.getElementById('otp-err').style.display='block';
+      document.getElementById('otp-err').innerHTML=iconCross()+' Invalid or expired code.';document.getElementById('otp-err').style.display='block';
       var inp=document.getElementById('otp-inputs');if(inp){inp.style.animation='none';inp.offsetHeight;inp.style.animation='shake .4s ease';}
-      btn.disabled=false;btn.innerText='Verify Code';return;
+      btn.disabled=false;btn.innerHTML='Verify Code';return;
     }
     await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
     if(_otpTimer)clearInterval(_otpTimer);
     await trustDev(_pl.email);
     await logSession('login');
     finishLogin(_pl);
-  }catch(e){document.getElementById('otp-err').innerText='Error: '+e.message;document.getElementById('otp-err').style.display='block';}
-  btn.disabled=false;btn.innerText='Verify Code';
+  }catch(e){document.getElementById('otp-err').innerHTML=iconCross()+' Error: '+e.message;document.getElementById('otp-err').style.display='block';}
+  btn.disabled=false;btn.innerHTML='Verify Code';
 }
 async function mResendOTP(){
   if(!_pl){showScreen('screen-login');return;}
   var btn=document.getElementById('otp-resend');if(btn){btn.disabled=true;btn.innerText='Sending…';}
   var sent=await sendOTPCode(_pl.email,_pl.otp_email,_pl.name);
-  if(sent){for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';el.style.borderColor='var(--border2)';}}startOTPTimer(300);document.getElementById('o0').focus();}
+  if(sent){for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';el.style.borderColor='var(--border)';}}startOTPTimer(300);document.getElementById('o0').focus();}
   if(btn){btn.disabled=false;btn.innerText='Resend Code';}
 }
 function finishLogin(acc){
@@ -826,7 +880,7 @@ function mSignOut(){logSession('logout');CU=null;_pl=null;showScreen('screen-log
 // ═══════════════════════════════════════════
 // FORGOT PASSWORD
 // ═══════════════════════════════════════════
-function fpErr(msg){var e=document.getElementById('fp-err');e.innerText=msg;e.style.display='block';}
+function fpErr(msg){var e=document.getElementById('fp-err');e.innerHTML=iconCross()+' '+msg;e.style.display='block';}
 async function fpS1(){
   var email=(document.getElementById('fp-email').value||'').trim().toLowerCase();
   document.getElementById('fp-err').style.display='none';
@@ -881,7 +935,7 @@ async function fpS4(){
   if(np!==cp){fpErr('Passwords do not match.');return;}
   try{
     await sb('accounts?email=eq.'+encodeURIComponent(_fpAcc.email),{method:'PATCH',body:JSON.stringify({password:np}),headers:{'Prefer':'return=minimal'}});
-    _fpAcc=null;toast('✓ Password updated. Sign in.');showScreen('screen-login');
+    _fpAcc=null;toast(iconTick()+' Password updated. Sign in.');showScreen('screen-login');
   }catch(e){fpErr('Error: '+e.message);}
 }
 
@@ -902,7 +956,6 @@ function startClock(){
     if(cl)cl.innerText=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
     if(dt)dt.innerText=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
     var hr=now.getHours();var gr=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
-    gr=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
     var ge=document.getElementById('hm-greeting');if(ge)ge.innerText=gr;
   };
   tick();setInterval(tick,1000);
@@ -933,11 +986,10 @@ async function loadHome(){
 }
 
 // ═══════════════════════════════════════════
-// OPERATIONS BOARD
+// OPERATIONS BOARD (SUPABASE)
 // ═══════════════════════════════════════════
 function loadOpsPage(){
   buildOpsFields();
-  // Show att tab only for admin/manager
   var attBtn=document.getElementById('ops-tab-att');
   if(attBtn){var r=(CU.role||'').toLowerCase();attBtn.style.display=(r==='admin'||r==='manager')?'':'none';}
 }
@@ -952,8 +1004,19 @@ function opsTab(name,btn){
 }
 function opsSvcTab(svc,btn){
   mOpsSvc=svc;
-  document.querySelectorAll('#pg-ops .tab-btn[id$="-tab"]').forEach(function(b){b.classList.remove('active');b.style.color='var(--text3)';});
-  if(btn){btn.classList.add('active');btn.style.color='var(--gold)';}
+  var btns = document.querySelectorAll('#pg-ops .btn-outline');
+  btns.forEach(b => {
+      b.classList.remove('active'); 
+      b.style.borderColor = 'var(--border)'; 
+      b.style.color = 'var(--text3)'; 
+      b.style.background = 'transparent';
+  });
+  if(btn){
+      btn.classList.add('active'); 
+      btn.style.borderColor = 'var(--gold)'; 
+      btn.style.color = 'var(--gold)'; 
+      btn.style.background = 'var(--gold-bg)';
+  }
   buildOpsFields();
 }
 function buildOpsFields(){
@@ -970,108 +1033,211 @@ function buildOpsFields(){
     div.innerHTML='<label class="field-label">'+f.label+'</label><input id="'+f.id+'" type="'+f.type+'" class="field" placeholder="'+f.ph+'"'+(f.upper?' style="text-transform:uppercase;"':'')+' autocomplete="off">';
     c.appendChild(div);
   });
-  // Service info
   var info=document.createElement('div');
-  info.style.cssText='background:var(--surface2);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;';
-  info.innerHTML='<span style="font-size:13px;font-weight:700;color:var(--text);">Service Type</span><span class="chip '+(isMB?'chip-green':'chip-gold')+'">'+(isMB?'Free (Member)':'19 SAR (External)')+'</span>';
+  info.style.cssText='background:rgba(255,255,255,0.4);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between; margin-top: 4px; border: 1px solid var(--border);';
+  info.innerHTML='<span style="font-size:13px;font-weight:800;color:var(--text);">Service Fee</span><span class="chip '+(isMB?'chip-green':'chip-gold')+'">'+(isMB?'Free (Member)':'19 SAR')+'</span>';
   c.appendChild(info);
 }
+
+function genRef(){return'OPX-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,5).toUpperCase();}
 async function mOpsSave(){
   var plate=(document.getElementById('m-f-plate')?.value||'').trim().toUpperCase();
   var card=(document.getElementById('m-f-card')?.value||'').trim();
   var name=mOpsSvc==='mb'?'Mind Break member':((document.getElementById('m-f-name')?.value||'').trim());
   var phone=mOpsSvc==='mb'?'-':((document.getElementById('m-f-phone')?.value||'-').trim());
-  if(!plate||!card||(mOpsSvc==='ext'&&!name)){toast('Fill all required fields.');return;}
-  var btn=document.getElementById('ops-save-btn');btn.disabled=true;btn.innerText='Saving…';
+  
+  if(!plate||!card||(mOpsSvc==='ext'&&!name)){toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Fill required fields');return;}
+  
+  var btn=document.getElementById('ops-save-btn');
+  btn.disabled=true; 
+  btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving...';
+  
   var ref=genRef();
-  var payload={action:'saveInvoice',plateNum:plate,cardNum:card,clientName:name,valetName:CU.name,serviceType:mOpsSvc==='mb'?'Free':'Paid',amount:mOpsSvc==='mb'?0:19,phone,date:new Date().toISOString().slice(0,10),status:'Parked',ref};
+  
+  // MATCHING YOUR EXACT SUPABASE SCHEMA
+  var payload = {
+      plate_num: plate,
+      card_num: card,
+      client_name: name,
+      valet_name: CU.name,
+      service_type: mOpsSvc === 'mb' ? 'Free' : 'Paid',
+      amount: mOpsSvc === 'mb' ? 0 : 19,
+      phone: phone,
+      vehicle_status: 'Parked', 
+      ref: ref,
+      op_id: ref,
+      date: new Date().toISOString()
+  };
+
   try{
-    var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify(payload)});
-    var saved=await res.json().catch(()=>({}));
-    var opID=saved.opID||ref;
-    await mCaptureReceipt({...payload,staffName:CU.name,opID});
-    toast('✓ Saved! ID: '+opID);
+    await sb('operix_invoices', { method: 'POST', body: JSON.stringify(payload) });
+    
+    // Receipt generator
+    var recPayload = { plateNum: plate, cardNum: card, clientName: name, staffName: CU.name, amount: payload.amount, opID: ref, ref: ref };
+    await mCaptureReceipt(recPayload);
+    
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Saved! ID: ' + ref);
     buildOpsFields();
   }catch(e){
-    await fetch(OPS_API,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)}).catch(()=>{});
-    await mCaptureReceipt({...payload,staffName:CU.name,opID:ref});
-    toast('✓ Operation saved!');buildOpsFields();
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Error: ' + e.message);
   }
-  btn.disabled=false;btn.innerText='Save & Generate Receipt';
+  btn.disabled=false;
+  btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Save & Receipt';
 }
-function genRef(){return'OPX-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,5).toUpperCase();}
-async function mCaptureReceipt(d){
-  document.getElementById('r-plate').innerText=d.plateNum||'—';
-  document.getElementById('r-card').innerText=d.cardNum||'—';
-  document.getElementById('r-client').innerText=d.clientName||'—';
-  document.getElementById('r-amount').innerText=d.amount?d.amount+' SAR':'Free';
-  document.getElementById('r-staff').innerText=d.staffName||d.valetName||'—';
-  document.getElementById('r-time').innerText=new Date().toLocaleString('en-GB').replace(',',' ·');
-  document.getElementById('r-opid').innerText=d.opID||d.ref||'—';
-  var qrEl=document.getElementById('r-qr');qrEl.innerHTML='';
-  var qrVal=JSON.stringify({opID:d.opID,plate:d.plateNum,card:d.cardNum,client:d.clientName,staff:d.staffName||d.valetName,amount:d.amount});
-  try{new QRCode(qrEl,{text:qrVal,width:100,height:100,colorDark:'#1c1a16',colorLight:'#ffffff'});}catch(e){}
-  await new Promise(function(r){setTimeout(r,700);});
-  try{
-    var canvas=await html2canvas(document.getElementById('receipt-cap'),{scale:3,backgroundColor:'#f5f4f0',logging:false,useCORS:true});
-    var a=document.createElement('a');a.download='Receipt-'+d.plateNum+'-'+d.cardNum+'.png';a.href=canvas.toDataURL('image/png');a.click();
-  }catch(e){toast('Receipt generated (save manually)');}
+
+async function mCaptureReceipt(d) {
+  document.getElementById('r-plate').innerText = d.plateNum || '—';
+  document.getElementById('r-card').innerText = d.cardNum || '—';
+  document.getElementById('r-client').innerText = d.clientName || '—';
+  document.getElementById('r-amount').innerText = d.amount ? d.amount + ' SAR' : 'Free';
+  document.getElementById('r-staff').innerText = d.staffName || '—';
+  document.getElementById('r-time').innerText = new Date().toLocaleString('en-GB').replace(',', ' ·');
+  document.getElementById('r-opid').innerText = d.opID || d.ref || '—';
+  
+  // Clear and Generate the Receipt QR Code
+  var qrEl = document.getElementById('r-qr');
+  qrEl.innerHTML = '';
+  
+  var qrData = JSON.stringify({
+    opID: d.opID || d.ref,
+    plate: d.plateNum,
+    card: d.cardNum,
+    client: d.clientName,
+    staff: d.staffName,
+    amount: d.amount
+  });
+  
+  // 🔥 CRITICAL FIX: Encode Arabic/Unicode characters so the QR library doesn't crash
+  var safeQrData = unescape(encodeURIComponent(qrData));
+  
+  try {
+    new QRCode(qrEl, {
+      text: safeQrData,
+      width: 256,
+      height: 256,
+      colorDark: '#1c1a16',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.L
+    });
+
+    // Force the generated high-res image to shrink and fit perfectly
+    setTimeout(() => {
+        var qrImg = qrEl.querySelector('img');
+        var qrCanvas = qrEl.querySelector('canvas');
+        if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
+        if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
+    }, 50);
+
+  } catch(e) {
+    console.warn("QR Error:", e);
+  }
+  
+  // Wait 800ms to ensure the QR code finishes drawing before taking the picture
+  await new Promise(r => setTimeout(r, 800));
+  
+  try {
+    var canvas = await html2canvas(document.getElementById('receipt-cap'), {
+      scale: 3, 
+      backgroundColor: '#f5f4f0',
+      logging: false,
+      useCORS: true
+    });
+    var a = document.createElement('a');
+    a.download = 'Receipt-' + d.plateNum + '.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    a.remove();
+  } catch(e) {
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Receipt generated (save manually)');
+  }
 }
 
 async function mLoadReports(){
   var el=document.getElementById('m-reports-list');if(!el)return;
-  el.innerHTML='<div style="text-align:center;padding:32px;color:var(--text3);font-size:13px;">Loading…</div>';
+  el.innerHTML='<div style="text-align:center;padding:32px;color:var(--text3);font-size:14px;font-weight:600;">Loading Board...</div>';
+  
   try{
-    var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify({action:'getReports'})});
-    mReportsData=await res.json();
+    // Fetch from your exact table name, showing their own cars unless Admin/Manager
+    var query = 'operix_invoices?order=created_at.desc';
+    var role = (CU.role || '').toLowerCase();
+    if(role !== 'admin' && role !== 'manager') {
+       query += '&valet_name=eq.' + encodeURIComponent(CU.name);
+    }
+
+    var rows = await sb(query, { method: 'GET' });
+    
+    // Map to your exact column names
+    mReportsData = rows.map(r => ({
+      plateNum: r.plate_num,
+      cardNum: r.card_num,
+      clientName: r.client_name,
+      valetName: r.valet_name,
+      serviceType: r.service_type,
+      amount: r.amount,
+      phone: r.phone,
+      vehicleStatus: r.vehicle_status,
+      opID: r.op_id || r.ref,
+      ref: r.ref
+    }));
+    
     mRenderReports(mReportsData);
-  }catch(e){el.innerHTML='<div style="color:var(--red);font-size:12px;padding:16px;text-align:center;">Error: '+e.message+'</div>';}
+  }catch(e){
+    el.innerHTML='<div style="color:var(--red);font-size:13px;font-weight:600;padding:20px;text-align:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="vertical-align:middle;margin-right:4px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Connection failed.</div>';
+  }
 }
 function mFilterReports(){
   var q=(document.getElementById('m-rep-search')?.value||'').toLowerCase().trim();
   if(!q)return mRenderReports(mReportsData);
-  mRenderReports(mReportsData.filter(function(r){return String(r.plateNum||'').toLowerCase().includes(q)||String(r.valet||r.valetName||'').toLowerCase().includes(q)||String(r.clientName||'').toLowerCase().includes(q);}));
+  mRenderReports(mReportsData.filter(function(r){return String(r.plateNum||'').toLowerCase().includes(q)||String(r.valetName||'').toLowerCase().includes(q)||String(r.clientName||'').toLowerCase().includes(q);}));
 }
+
 function mRenderReports(rows){
   var el=document.getElementById('m-reports-list');if(!el)return;
-  if(!rows||!rows.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text4);font-size:13px;">No records</div>';return;}
+  if(!rows||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--text4);font-size:14px;font-weight:600;">No records found</div>';return;}
   el.innerHTML='';
   rows.slice(0,100).forEach(function(r,i){
     var ip=String(r.vehicleStatus||'')==='Parked';
-    var plate=String(r.plateNum||'');var card=String(r.cardNum||'');
     window._mRpt=window._mRpt||{};window._mRpt[i]=r;
     var div=document.createElement('div');
-    div.className='inv-card';
+    div.className='inv-card hover-lift pop-in';
     div.innerHTML='<div style="display:flex;">'
       +'<div class="'+(ip?'inv-stripe-parked':'inv-stripe-done')+'"></div>'
-      +'<div style="padding:13px;flex:1;">'
-        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">'
-          +'<span style="font-family:\'Fira Code\',monospace;font-size:20px;font-weight:800;color:var(--text);">'+plate+'</span>'
+      +'<div style="padding:16px;flex:1;">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+          +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
           +'<span class="chip '+(ip?'chip-amber':'chip-green')+'">'+(ip?'Parked':'Returned')+'</span>'
         +'</div>'
-        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;">'
-          +'<div style="background:var(--surface2);border-radius:9px;padding:8px 10px;"><div style="font-size:8px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:14px;font-weight:700;color:var(--text);">#'+card+'</div></div>'
-          +'<div style="background:var(--surface2);border-radius:9px;padding:8px 10px;"><div style="font-size:8px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:13px;font-weight:700;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free'?'Free':'19 SAR')+'</div></div>'
-          +'<div style="background:var(--surface2);border-radius:9px;padding:8px 10px;"><div style="font-size:8px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:12px;font-weight:600;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
-          +'<div style="background:var(--surface2);border-radius:9px;padding:8px 10px;"><div style="font-size:8px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:12px;font-weight:600;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valet||r.valetName||'—')+'</div></div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">'
+          +'<div style="background:rgba(255,255,255,0.4);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
+          +'<div style="background:rgba(255,255,255,0.4);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free'?'Free':'19 SAR')+'</div></div>'
+          +'<div style="background:rgba(255,255,255,0.4);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
+          +'<div style="background:rgba(255,255,255,0.4);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
         +'</div>'
-        +(r.opID?'<div style="background:var(--surface2);border-radius:9px;padding:6px 10px;margin-bottom:9px;display:flex;justify-content:space-between;"><span style="font-size:8px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.1em;">Op ID</span><span style="font-family:\'Fira Code\',monospace;font-size:11px;color:var(--text3);">'+r.opID+'</span></div>':'')
-        +'<div style="display:flex;gap:8px;">'
-          +'<button onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:9px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Receipt</button>'
-          +(ip?'<button onclick="mUpdateVehicle(\''+plate+'\',\''+card+'\',\'Returned\')" style="flex:1;padding:9px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirm Return</button>':'')
+        +'<div style="display:flex;gap:10px;">'
+          +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:rgba(255,255,255,0.6);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Receipt</button>'
+          +(ip?'<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Return</button>':'')
         +'</div>'
       +'</div>'
     +'</div>';
     el.appendChild(div);
   });
 }
-function mReExport(r){mCaptureReceipt({...r,staffName:r.valet||r.valetName||'—',phone:r.phone||'—',amount:r.amount||0,ref:r.ref||genRef()});}
-async function mUpdateVehicle(plate,card,status){
-  if(!confirm('Confirm vehicle returned?'))return;
-  await fetch(OPS_API,{method:'POST',mode:'no-cors',body:JSON.stringify({action:'updateVehicleStatus',plateNum:plate,cardNum:card,status})}).catch(()=>{});
-  toast('✓ Status updated');setTimeout(mLoadReports,900);
-}
+function mReExport(r){mCaptureReceipt({...r,staffName:r.valetName||'—',amount:r.amount||0,ref:r.ref||genRef()});}
 
+async function mUpdateVehicle(plate, card, status){
+  if(!confirm('Confirm vehicle returned?')) return;
+  try {
+    // Update vehicle_status in operix_invoices
+    await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
+      method: 'PATCH', 
+      body: JSON.stringify({ vehicle_status: status })
+    });
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Status Updated');
+    setTimeout(mLoadReports, 500);
+  } catch(e) { 
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Failed to update'); 
+  }
+}
 async function mLoadAttendanceList(){
   var el=document.getElementById('m-att-list');if(!el)return;
   el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px;">Loading…</div>';
@@ -1357,6 +1523,290 @@ async function rmDevice(id,rowEl){
   }catch(e){toast('Error: '+e.message);}
 }
 
+async function mExportID() {
+  var btn = document.getElementById('btn-export-id');
+  if(btn) { 
+    btn.disabled = true; 
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Generating...'; 
+  }
+  
+  try {
+    // 1. Populate UI fields
+    document.getElementById('id-name').innerText = CU.name || 'Unknown';
+    document.getElementById('id-job').innerText = (CU.role || 'Staff') + (CU.job ? ' · ' + CU.job : '');
+    document.getElementById('id-email').innerText = CU.email || 'No email';
+    document.getElementById('id-phone').innerText = CU.phone || 'No phone on record';
+    
+    // 2. Handle Profile Photo
+    var photoEl = document.getElementById('id-photo');
+    if(CU.photo) {
+      photoEl.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous">';
+    } else {
+      photoEl.innerText = (CU.name || '?').charAt(0).toUpperCase();
+    }
+
+    // 3. Generate a deterministic ID number based on their email
+    var empHash = 0;
+    var emStr = (CU.email || CU.name || 'unknown').toLowerCase();
+    for(var i=0; i < emStr.length; i++) {
+      empHash = ((empHash << 5) - empHash) + emStr.charCodeAt(i);
+      empHash |= 0;
+    }
+    var empID = 'MBX-' + Math.abs(empHash).toString(16).toUpperCase().slice(0,6).padStart(6,'0');
+    document.getElementById('id-empid').innerText = empID;
+
+    // 4. Generate QR Code (Fixed: Higher resolution, scaled down by CSS)
+    var qrEl = document.getElementById('id-qr');
+    qrEl.innerHTML = '';
+    var qrData = JSON.stringify({
+       emp_id: empID,
+       name: CU.name,
+       role: CU.role,
+       email: CU.email,
+       status: "Active"
+    });
+    
+    new QRCode(qrEl, {
+       text: qrData,
+       width: 256,  // Increased resolution so it doesn't fail
+       height: 256, // Increased resolution so it doesn't fail
+       colorDark: "#1c1a16",
+       colorLight: "#ffffff",
+       correctLevel: QRCode.CorrectLevel.L // Low error correction allows more data
+    });
+
+    // Force the generated image to perfectly fit the container
+    setTimeout(() => {
+        var qrImg = qrEl.querySelector('img');
+        var qrCanvas = qrEl.querySelector('canvas');
+        if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
+        if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
+    }, 50);
+
+    // 5. Wait for the QR and any images to fully render
+    await new Promise(r => setTimeout(r, 800));
+
+    // 6. Capture the hidden div with html2canvas
+    var canvas = await html2canvas(document.getElementById('id-card-cap'), {
+       scale: 3, // High resolution
+       backgroundColor: null,
+       useCORS: true,
+       allowTaint: true
+    });
+
+    // 7. Trigger the file download
+    var a = document.createElement('a');
+    a.download = 'OPERIX-ID-' + (CU.name || 'Staff').replace(/\s+/g,'-') + '.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    
+    // Remove the anchor element immediately after download
+    a.remove();
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ID Card downloaded!');
+
+  } catch(e) {
+    console.error(e);
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Error generating ID');
+  }
+  
+  // 8. Restore the button state
+  if(btn) { 
+    btn.disabled = false; 
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Official ID'; 
+  }
+}
+async function mCaptureReceipt(d) {
+  document.getElementById('r-plate').innerText = d.plateNum || '—';
+  document.getElementById('r-card').innerText = d.cardNum || '—';
+  document.getElementById('r-client').innerText = d.clientName || '—';
+  document.getElementById('r-amount').innerText = d.amount ? d.amount + ' SAR' : 'Free';
+  document.getElementById('r-staff').innerText = d.staffName || '—';
+  document.getElementById('r-time').innerText = new Date().toLocaleString('en-GB').replace(',', ' ·');
+  document.getElementById('r-opid').innerText = d.opID || d.ref || '—';
+  
+  // Clear and Generate the Receipt QR Code
+  var qrEl = document.getElementById('r-qr');
+  qrEl.innerHTML = '';
+  var qrVal = JSON.stringify({
+    opID: d.opID || d.ref,
+    plate: d.plateNum,
+    card: d.cardNum,
+    client: d.clientName,
+    staff: d.staffName,
+    amount: d.amount
+  });
+  
+  try {
+    new QRCode(qrEl, {
+      text: qrVal,
+      width: 256,  // Increased resolution to prevent drawing failure
+      height: 256, // Increased resolution to prevent drawing failure
+      colorDark: '#1c1a16',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.L // Low error correction allows for larger JSON payloads
+    });
+
+    // Force the generated high-res image to shrink and fit the 100x100 container perfectly
+    setTimeout(() => {
+        var qrImg = qrEl.querySelector('img');
+        var qrCanvas = qrEl.querySelector('canvas');
+        if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
+        if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
+    }, 50);
+
+  } catch(e) {
+    console.warn("QR Error:", e);
+  }
+  
+  // Wait 800ms to ensure the QR code finishes drawing and scaling before taking the picture
+  await new Promise(r => setTimeout(r, 800));
+  
+  try {
+    var canvas = await html2canvas(document.getElementById('receipt-cap'), {
+      scale: 3, // High-resolution output for the final receipt
+      backgroundColor: '#f5f4f0',
+      logging: false,
+      useCORS: true
+    });
+    var a = document.createElement('a');
+    a.download = 'Receipt-' + d.plateNum + '.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    a.remove();
+  } catch(e) {
+    toast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Receipt generated (save manually)');
+  }
+}
+// ═══════════════════════════════════════════
+// OPERIX AI CHATBOT ENGINE
+// ═══════════════════════════════════════════
+
+function toggleChat() {
+  var p = document.getElementById('chat-panel');
+  p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
+  if(p.style.display === 'flex') {
+    document.getElementById('chat-input').focus();
+    // Scroll to bottom when opened
+    var body = document.getElementById('chat-body');
+    body.scrollTop = body.scrollHeight;
+  }
+}
+
+function sendChat() {
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text) return;
+  var body = document.getElementById('chat-body');
+  
+  // 1. Append User Message
+  var uMsg = document.createElement('div');
+  uMsg.className = 'chat-msg user pop-in';
+  uMsg.innerText = text;
+  body.appendChild(uMsg);
+  input.value = '';
+  body.scrollTop = body.scrollHeight;
+
+  // 2. Add "Typing..." indicator
+  var typingDiv = document.createElement('div');
+  typingDiv.className = 'chat-msg bot pop-in';
+  typingDiv.innerHTML = '<span style="color:var(--text4);">Typing...</span>';
+  body.appendChild(typingDiv);
+  body.scrollTop = body.scrollHeight;
+
+  // 3. Process Input and Generate Response
+  setTimeout(() => {
+    // Remove typing indicator
+    typingDiv.remove();
+
+    var bMsg = document.createElement('div');
+    bMsg.className = 'chat-msg bot pop-in';
+    bMsg.innerHTML = getBotResponse(text.toLowerCase());
+    
+    body.appendChild(bMsg);
+    body.scrollTop = body.scrollHeight;
+  }, 600); // 600ms simulated delay
+}
+
+// Keyword-matching logic for HR Policy and System Navigation
+function getBotResponse(input) {
+  // --- HR & ATTENDANCE POLICIES ---
+  
+  if (input.includes('check in') || input.includes('check-in')) {
+    return `<b>Check-In Rules:</b><br>
+    • <b>On Time:</b> 15-minute grace period from shift start.<br>
+    • <b>Late (16m - 1h 59m):</b> Allowed with warning. Deduction: 30 SAR/hr (prorated).<br>
+    • <b>2+ Hours Late:</b> Marked ABSENT. Cannot check in until next shift.`;
+  }
+  
+  if (input.includes('check out') || input.includes('check-out') || input.includes('early')) {
+    return `<b>Check-Out Rules:</b><br>
+    • <b>Valid Window:</b> Up to 30 mins after shift ends.<br>
+    • <b>Early Checkout:</b> Results in NO PAY for that session.<br>
+    • <b>After 30-min Window:</b> Blocked. Contact your manager.`;
+  }
+  
+  if (input.includes('absent') || input.includes('absence') || input.includes('streak')) {
+    return `<b>Absence Deductions (Consecutive Work Days):</b><br>
+    • <b>1 Day:</b> -1 day deduction.<br>
+    • <b>2 Days:</b> -2.5 days deduction.<br>
+    • <b>3+ Days:</b> -30% of salary.<br>
+    <i>Note: Off days/weekends do not break a streak.</i>`;
+  }
+  
+  if (input.includes('salary') || input.includes('pay') || input.includes('deduction') || input.includes('calculate')) {
+    return `<b>Salary Calculation:</b><br>
+    • <b>Daily Rate:</b> Monthly ÷ Working Days<br>
+    • <b>Hourly Rate:</b> Daily ÷ 8 hours<br>
+    • <b>Earned:</b> Hours Worked × Hourly Rate<br>
+    • <b>Net Salary:</b> Earned − Deductions<br>
+    <i>Late penalty: 30 SAR/hr prorated (e.g., 45m late = -22 SAR).</i>`;
+  }
+  
+  if (input.includes('gps') || input.includes('location')) {
+    return `<b>GPS Rules:</b><br>
+    You must be on-site to check in/out. The GPS dot turns green when in range.<br>
+    <i>Tip: If it shows outside while you are inside, check location permissions and wait 10-15 seconds for the signal to update.</i>`;
+  }
+
+  // --- SYSTEM NAVIGATION ---
+  
+  if (input.includes('ops') || input.includes('operation') || input.includes('valet') || input.includes('park')) {
+    return `<b>Operations Board:</b><br>
+    Tap the 'Ops' tab at the bottom. Use 'New Entry' to log parked cars (Member = Free, External = 19 SAR). The 'Live Board' shows all currently parked cars and lets you generate receipts or mark cars as returned.`;
+  }
+
+  if (input.includes('request') || input.includes('ticket') || input.includes('leave')) {
+    return `<b>Requests:</b><br>
+    Need to ask for leave, a document, or inquire about salary? Go to the 'Requests' tab and tap 'New Request' to send a formal ticket to HR/Management.`;
+  }
+
+  if (input.includes('mail') || input.includes('message')) {
+    return `<b>Mail:</b><br>
+    Use the Mail tab to send internal messages to staff or management securely within the Operix system.`;
+  }
+
+  if (input.includes('home') || input.includes('dashboard')) {
+    return `<b>Home Dashboard:</b><br>
+    This is your main screen. It shows your active shift details, the number of days you've worked this month, and your estimated salary.`;
+  }
+
+  if (input.includes('policy') || input.includes('rules') || input.includes('hr')) {
+    return `I can help you with Mind Break Café HR policies! Ask me specifically about:<br>
+    • Check in<br>
+    • Check out<br>
+    • Absences<br>
+    • Salary<br>
+    • GPS`;
+  }
+
+  // --- DEFAULT GREETING / FALLBACK ---
+  
+  if (input.includes('hi') || input.includes('hello') || input.includes('help')) {
+    return `Hello! I'm the OPERIX AI Assistant. I can help you navigate the app or answer questions about Mind Break Café's HR policies.<br><br>Try asking:<br><i>"How does salary work?"</i><br><i>"What is the late policy?"</i><br><i>"How do I log a valet car?"</i>`;
+  }
+
+  return `I'm not quite sure about that. Try asking about specific HR policies (like 'late', 'absent', 'salary', 'check out') or how to use a specific part of the app (like 'operations' or 'requests').`;
+}
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
