@@ -657,6 +657,42 @@ var mOpsSvc = 'mb'; // 'mb' | 'ext'
 function iconTick() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`; }
 function iconCross() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`; }
 
+
+// ═══════════════════════════════════════════
+// DEVICE & SESSION LOGGING
+// ═══════════════════════════════════════════
+async function getDevFP() {
+  var c = [navigator.userAgent, navigator.language, screen.width + 'x' + screen.height, new Date().getTimezoneOffset(), navigator.platform].join('|');
+  var h = 0; 
+  for(var i=0; i < c.length; i++){ h = ((h << 5) - h) + c.charCodeAt(i); h |= 0; } 
+  return 'dev_' + Math.abs(h).toString(36);
+}
+
+function getDevName() { 
+  var ua = navigator.userAgent; 
+  return /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : 'PC'; 
+}
+
+async function logSession(action) {
+  if(!CU) return;
+  try {
+    var fp = await getDevFP();
+    await sb('operix_sessions', {
+      method: 'POST', 
+      body: JSON.stringify({
+        account_email: CU.email,
+        account_name: CU.name,
+        device_id: fp,
+        device_name: getDevName(),
+        action: action, // logs 'login' or 'logout'
+        user_agent: navigator.userAgent.slice(0, 200),
+        logged_at: new Date().toISOString()
+      })
+    });
+  } catch(e) { 
+    console.warn("Session log failed", e); 
+  }
+}
 // ═══════════════════════════════════════════
 // SUPABASE & GAS WRAPPERS
 // ═══════════════════════════════════════════
@@ -865,18 +901,33 @@ async function mResendOTP(){
   if(sent){for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';el.style.borderColor='var(--border)';}}startOTPTimer(300);document.getElementById('o0').focus();}
   if(btn){btn.disabled=false;btn.innerText='Resend Code';}
 }
-function finishLogin(acc){
-  CU={name:acc.name||acc.email.split('@')[0],email:acc.email,role:acc.role||'Staff',job:acc.job||'',phone:acc.phone||'',photo:acc.photo||''};
-  _pl=null;
+function finishLogin(acc) {
+  CU = {
+    name: acc.name || acc.email.split('@')[0],
+    email: acc.email,
+    role: acc.role || 'Staff',
+    job: acc.job || '',
+    phone: acc.phone || '',
+    photo: acc.photo || ''
+  };
+  _pl = null;
+  
+  // Send the login record to Supabase
+  logSession('login'); 
+  
   showScreen('screen-app');
   initApp();
 }
-async function logSession(action){
-  if(!CU)return;
-  try{var fp=await getDevFP();await sb('operix_sessions',{method:'POST',body:JSON.stringify({account_email:CU.email,account_name:CU.name,device_id:fp,device_name:getDevName(),action,user_agent:navigator.userAgent.slice(0,200),logged_at:new Date().toISOString()})});}catch{}
+async function mSignOut() {
+  // Send the logout record to Supabase
+  await logSession('logout'); 
+  
+  CU = null;
+  _pl = null;
+  showScreen('screen-login');
+  document.getElementById('l-email').value = '';
+  document.getElementById('l-pass').value = '';
 }
-function mSignOut(){logSession('logout');CU=null;_pl=null;showScreen('screen-login');document.getElementById('l-email').value='';document.getElementById('l-pass').value='';}
-
 // ═══════════════════════════════════════════
 // FORGOT PASSWORD
 // ═══════════════════════════════════════════
