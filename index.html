@@ -208,420 +208,420 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 <div id="screen-login" class="screen active">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;" class="fade-up">
-     <div style="text-align:center;margin-bottom:36px;">
-       <div style="display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:26px;background:var(--navy);border:1.5px solid var(--border);box-shadow:var(--shadow-md);margin-bottom:18px;">
-         <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:60px;height:60px;object-fit:contain;border-radius:16px;" onerror="this.style.display='none'">
-       </div>
-       <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--navy);letter-spacing:-.02em;">OPERIX</div>
-       <div style="font-size:10px;color:var(--text-muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-top:5px;">Field Operations</div>
-     </div>
-      
-     <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
-        <div><label class="field-label">Email Address</label><input id="l-email" type="email" class="field" placeholder="you@operix.com" autocomplete="email" inputmode="email" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()"></div>
-        <div><label class="field-label">Password</label><input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()"></div>
-     </div>
-     <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px;text-align:center;line-height:1.4;"></div>
-     
-     <button class="btn btn-dark hover-lift" onclick="mLogin()" id="l-btn" style="margin-bottom:16px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-        Sign In
-     </button>
-     <button onclick="showScreen('screen-forgot')" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
-    </div>
+	<div style="width:100%;max-width:340px;" class="fade-up">
+	 <div style="text-align:center;margin-bottom:36px;">
+	   <div style="display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:26px;background:var(--navy);border:1.5px solid var(--border);box-shadow:var(--shadow-md);margin-bottom:18px;">
+		 <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:60px;height:60px;object-fit:contain;border-radius:16px;" onerror="this.style.display='none'">
+	   </div>
+	   <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--navy);letter-spacing:-.02em;">OPERIX</div>
+	   <div style="font-size:10px;color:var(--text-muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-top:5px;">Field Operations</div>
+	 </div>
+	  
+	 <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+		<div><label class="field-label">Email Address</label><input id="l-email" type="email" class="field" placeholder="you@operix.com" autocomplete="email" inputmode="email" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()"></div>
+		<div><label class="field-label">Password</label><input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()"></div>
+	 </div>
+	 <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px;text-align:center;line-height:1.4;"></div>
+	 
+	 <button class="btn btn-dark hover-lift" onclick="mLogin()" id="l-btn" style="margin-bottom:16px;">
+		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+		Sign In
+	 </button>
+	 <button onclick="showScreen('screen-forgot')" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
+	</div>
   </div>
 </div>
 
 <div id="screen-otp" class="screen">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;" class="fade-up">
-      <div style="text-align:center;margin-bottom:28px;">
-        <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
-        </div>
-        <div style="font-size:24px;font-weight:800;">Verify Identity</div>
-        <div id="otp-sub" style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
-      </div>
-      <div class="otp-row" id="otp-inputs">
-        <input type="tel" maxlength="1" class="otp-digit" id="o0" oninput="oI(this,0)" onkeydown="oK(event,0)">
-        <input type="tel" maxlength="1" class="otp-digit" id="o1" oninput="oI(this,1)" onkeydown="oK(event,1)">
-        <input type="tel" maxlength="1" class="otp-digit" id="o2" oninput="oI(this,2)" onkeydown="oK(event,2)">
-        <input type="tel" maxlength="1" class="otp-digit" id="o3" oninput="oI(this,3)" onkeydown="oK(event,3)">
-        <input type="tel" maxlength="1" class="otp-digit" id="o4" oninput="oI(this,4)" onkeydown="oK(event,4)">
-        <input type="tel" maxlength="1" class="otp-digit" id="o5" oninput="oI(this,5)" onkeydown="oK(event,5)">
-      </div>
-      <div style="text-align:center;margin-bottom:16px;"><span id="otp-timer" style="font-size:14px;font-weight:700;color:var(--navy);">05:00</span></div>
-      <div id="otp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
-      <button class="btn btn-dark hover-lift" onclick="mVerifyOTP()" id="otp-btn" style="margin-bottom:12px;">Verify Code</button>
-      <button id="otp-resend" onclick="mResendOTP()" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;">Resend Code</button>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back to Sign In</button>
-    </div>
+	<div style="width:100%;max-width:340px;" class="fade-up">
+	  <div style="text-align:center;margin-bottom:28px;">
+		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
+		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
+		</div>
+		<div style="font-size:24px;font-weight:800;">Verify Identity</div>
+		<div id="otp-sub" style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
+	  </div>
+	  <div class="otp-row" id="otp-inputs">
+		<input type="tel" maxlength="1" class="otp-digit" id="o0" oninput="oI(this,0)" onkeydown="oK(event,0)">
+		<input type="tel" maxlength="1" class="otp-digit" id="o1" oninput="oI(this,1)" onkeydown="oK(event,1)">
+		<input type="tel" maxlength="1" class="otp-digit" id="o2" oninput="oI(this,2)" onkeydown="oK(event,2)">
+		<input type="tel" maxlength="1" class="otp-digit" id="o3" oninput="oI(this,3)" onkeydown="oK(event,3)">
+		<input type="tel" maxlength="1" class="otp-digit" id="o4" oninput="oI(this,4)" onkeydown="oK(event,4)">
+		<input type="tel" maxlength="1" class="otp-digit" id="o5" oninput="oI(this,5)" onkeydown="oK(event,5)">
+	  </div>
+	  <div style="text-align:center;margin-bottom:16px;"><span id="otp-timer" style="font-size:14px;font-weight:700;color:var(--navy);">05:00</span></div>
+	  <div id="otp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+	  <button class="btn btn-dark hover-lift" onclick="mVerifyOTP()" id="otp-btn" style="margin-bottom:12px;">Verify Code</button>
+	  <button id="otp-resend" onclick="mResendOTP()" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;">Resend Code</button>
+	  <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back to Sign In</button>
+	</div>
   </div>
 </div>
 
 <div id="screen-newdev" class="screen">
   <div class="auth-wrap">
-    <div style="width:100%;max-width:340px;" class="fade-up">
-      <div style="text-align:center;margin-bottom:24px;">
-        <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--blue-bg);border:1.5px solid var(--blue-border);margin-bottom:14px;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        </div>
-        <div style="font-size:22px;font-weight:800;">New Device</div>
-        <div style="font-size:13px;color:var(--text3);margin-top:6px;">Answer your security questions</div>
-      </div>
-      <div id="nd-container" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div>
-      <div id="nd-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
-      <button class="btn btn-dark hover-lift" onclick="mVerifySecQ()" style="margin-bottom:12px;">Verify & Continue</button>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back</button>
-    </div>
+	<div style="width:100%;max-width:340px;" class="fade-up">
+	  <div style="text-align:center;margin-bottom:24px;">
+		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--blue-bg);border:1.5px solid var(--blue-border);margin-bottom:14px;">
+		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+		</div>
+		<div style="font-size:22px;font-weight:800;">New Device</div>
+		<div style="font-size:13px;color:var(--text3);margin-top:6px;">Answer your security questions</div>
+	  </div>
+	  <div id="nd-container" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div>
+	  <div id="nd-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+	  <button class="btn btn-dark hover-lift" onclick="mVerifySecQ()" style="margin-bottom:12px;">Verify & Continue</button>
+	  <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back</button>
+	</div>
   </div>
 </div>
 
 <div id="screen-setup-sq" class="screen">
   <div class="auth-wrap" style="overflow-y:auto;">
-    <div style="width:100%;max-width:340px;" class="fade-up">
-      <div style="text-align:center;margin-bottom:22px;">
-        <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div style="font-size:21px;font-weight:800;">Security Questions</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px;">Set once. Used to verify new devices.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;">
-        <div><label class="field-label">Question 1</label><select id="sq1" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa1" class="field" placeholder="Your answer" autocomplete="off"></div>
-        <div><label class="field-label">Question 2</label><select id="sq2" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa2" class="field" placeholder="Your answer" autocomplete="off"></div>
-        <div><label class="field-label">Question 3</label><select id="sq3" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa3" class="field" placeholder="Your answer" autocomplete="off"></div>
-      </div>
-      <div id="sq-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
-      <button class="btn btn-dark hover-lift" onclick="mSaveSecQ()">Save & Continue</button>
-    </div>
+	<div style="width:100%;max-width:340px;" class="fade-up">
+	  <div style="text-align:center;margin-bottom:22px;">
+		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
+		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+		</div>
+		<div style="font-size:21px;font-weight:800;">Security Questions</div>
+		<div style="font-size:12px;color:var(--text3);margin-top:6px;">Set once. Used to verify new devices.</div>
+	  </div>
+	  <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;">
+		<div><label class="field-label">Question 1</label><select id="sq1" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa1" class="field" placeholder="Your answer" autocomplete="off"></div>
+		<div><label class="field-label">Question 2</label><select id="sq2" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa2" class="field" placeholder="Your answer" autocomplete="off"></div>
+		<div><label class="field-label">Question 3</label><select id="sq3" class="field" style="margin-bottom:8px;"><option value="">— Select —</option><option>What is your mother's maiden name?</option><option>What was your first pet's name?</option><option>What city were you born in?</option><option>What was your primary school's name?</option><option>What was the make of your first car?</option></select><input id="sa3" class="field" placeholder="Your answer" autocomplete="off"></div>
+	  </div>
+	  <div id="sq-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin-bottom:16px;"></div>
+	  <button class="btn btn-dark hover-lift" onclick="mSaveSecQ()">Save & Continue</button>
+	</div>
   </div>
 </div>
 
 <div id="screen-forgot" class="screen">
   <div class="auth-wrap" style="overflow-y:auto;">
-    <div style="width:100%;max-width:340px;" class="fade-up">
-      <div style="text-align:center;margin-bottom:24px;">
-        <div style="font-size:24px;font-weight:800;">Reset Password</div>
-        <div id="fp-sub" style="font-size:13px;color:var(--text3);margin-top:6px;"></div>
-      </div>
-      <div id="fp-s1"><input id="fp-email" type="email" class="field" placeholder="your@email.com" style="margin-bottom:16px;"><button class="btn btn-dark hover-lift" onclick="fpS1()" style="margin-bottom:12px;">Continue →</button></div>
-      <div id="fp-s2" style="display:none;"><div id="fp-qs" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div><button class="btn btn-dark hover-lift" onclick="fpS2()" style="margin-bottom:12px;">Verify Answers →</button></div>
-      <div id="fp-s3" style="display:none;"><div class="otp-row"><input type="tel" maxlength="1" class="otp-digit" id="fp0" oninput="fpOI(this,0)" onkeydown="fpOK(event,0)"><input type="tel" maxlength="1" class="otp-digit" id="fp1" oninput="fpOI(this,1)" onkeydown="fpOK(event,1)"><input type="tel" maxlength="1" class="otp-digit" id="fp2" oninput="fpOI(this,2)" onkeydown="fpOK(event,2)"><input type="tel" maxlength="1" class="otp-digit" id="fp3" oninput="fpOI(this,3)" onkeydown="fpOK(event,3)"><input type="tel" maxlength="1" class="otp-digit" id="fp4" oninput="fpOI(this,4)" onkeydown="fpOK(event,4)"><input type="tel" maxlength="1" class="otp-digit" id="fp5" oninput="fpOI(this,5)" onkeydown="fpOK(event,5)"></div><button class="btn btn-dark hover-lift" onclick="fpS3()" style="margin-bottom:12px;">Verify Code →</button></div>
-      <div id="fp-s4" style="display:none;"><input id="fp-np" type="password" class="field" placeholder="New password" style="margin-bottom:12px;"><input id="fp-cp" type="password" class="field" placeholder="Confirm password" style="margin-bottom:16px;"><button class="btn btn-dark hover-lift" onclick="fpS4()">Set New Password</button></div>
-      <div id="fp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin:16px 0;"></div>
-      <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back to Sign In</button>
-    </div>
+	<div style="width:100%;max-width:340px;" class="fade-up">
+	  <div style="text-align:center;margin-bottom:24px;">
+		<div style="font-size:24px;font-weight:800;">Reset Password</div>
+		<div id="fp-sub" style="font-size:13px;color:var(--text3);margin-top:6px;"></div>
+	  </div>
+	  <div id="fp-s1"><input id="fp-email" type="email" class="field" placeholder="your@email.com" style="margin-bottom:16px;"><button class="btn btn-dark hover-lift" onclick="fpS1()" style="margin-bottom:12px;">Continue →</button></div>
+	  <div id="fp-s2" style="display:none;"><div id="fp-qs" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div><button class="btn btn-dark hover-lift" onclick="fpS2()" style="margin-bottom:12px;">Verify Answers →</button></div>
+	  <div id="fp-s3" style="display:none;"><div class="otp-row"><input type="tel" maxlength="1" class="otp-digit" id="fp0" oninput="fpOI(this,0)" onkeydown="fpOK(event,0)"><input type="tel" maxlength="1" class="otp-digit" id="fp1" oninput="fpOI(this,1)" onkeydown="fpOK(event,1)"><input type="tel" maxlength="1" class="otp-digit" id="fp2" oninput="fpOI(this,2)" onkeydown="fpOK(event,2)"><input type="tel" maxlength="1" class="otp-digit" id="fp3" oninput="fpOI(this,3)" onkeydown="fpOK(event,3)"><input type="tel" maxlength="1" class="otp-digit" id="fp4" oninput="fpOI(this,4)" onkeydown="fpOK(event,4)"><input type="tel" maxlength="1" class="otp-digit" id="fp5" oninput="fpOI(this,5)" onkeydown="fpOK(event,5)"></div><button class="btn btn-dark hover-lift" onclick="fpS3()" style="margin-bottom:12px;">Verify Code →</button></div>
+	  <div id="fp-s4" style="display:none;"><input id="fp-np" type="password" class="field" placeholder="New password" style="margin-bottom:12px;"><input id="fp-cp" type="password" class="field" placeholder="Confirm password" style="margin-bottom:16px;"><button class="btn btn-dark hover-lift" onclick="fpS4()">Set New Password</button></div>
+	  <div id="fp-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px;font-size:13px;font-weight:600;color:var(--red);text-align:center;margin:16px 0;"></div>
+	  <button onclick="showScreen('screen-login')" style="background:none;border:none;color:var(--text4);font-size:12px;font-weight:600;cursor:pointer;width:100%;padding:10px;">← Back to Sign In</button>
+	</div>
   </div>
 </div>
 
 <div id="screen-app" class="screen">
 
   <div class="topbar">
-    <div>
-      <div class="topbar-title" id="pg-title">Home</div>
-      <div class="topbar-sub" id="pg-sub">Field Operations</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div id="top-av" class="topbar-icon hover-lift" onclick="goTab('profile')"></div>
-    </div>
+	<div>
+	  <div class="topbar-title" id="pg-title">Home</div>
+	  <div class="topbar-sub" id="pg-sub">Field Operations</div>
+	</div>
+	<div style="display:flex;align-items:center;gap:12px;">
+	  <div id="top-av" class="topbar-icon hover-lift" onclick="goTab('profile')"></div>
+	</div>
   </div>
 
   <div id="pages" style="flex:1;overflow:hidden;position:relative;">
 
-    <div id="pg-home" class="page active" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad fade-up">
-        <div id="hm-greeting" style="font-size:26px;font-weight:900;margin-bottom:4px;"></div>
-        <div id="hm-name" style="font-size:14px;color:var(--text3);margin-bottom:24px;"></div>
+	<div id="pg-home" class="page active" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="page-pad fade-up">
+		<div id="hm-greeting" style="font-size:26px;font-weight:900;margin-bottom:4px;"></div>
+		<div id="hm-name" style="font-size:14px;color:var(--text3);margin-bottom:24px;"></div>
 
-        <div id="hm-shift" class="shift-banner hover-lift" style="display:none;">
-          <div style="font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Active Shift</div>
-          <div id="hm-shift-proj" style="font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;"></div>
-          <div id="hm-shift-time" style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:12px;"></div>
-          <div id="hm-shift-loc" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span id="hm-loc-text"></span>
-          </div>
-        </div>
+		<div id="hm-shift" class="shift-banner hover-lift" style="display:none;">
+		  <div style="font-size:10px;color:var(--gold);font-weight:800;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Active Shift</div>
+		  <div id="hm-shift-proj" style="font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;"></div>
+		  <div id="hm-shift-time" style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:12px;"></div>
+		  <div id="hm-shift-loc" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+			<span id="hm-loc-text"></span>
+		  </div>
+		</div>
 
-        <div class="kpi-row">
-          <div class="kpi-tile"><div class="kpi-val" id="kpi-days">--</div><div class="kpi-lbl">Days Present</div></div>
-          <div class="kpi-tile"><div class="kpi-val" id="kpi-salary" style="font-size:22px;">--</div><div class="kpi-lbl">Salary (SAR)</div></div>
-        </div>
+		<div class="kpi-row">
+		  <div class="kpi-tile"><div class="kpi-val" id="kpi-days">--</div><div class="kpi-lbl">Days Present</div></div>
+		  <div class="kpi-tile"><div class="kpi-val" id="kpi-salary" style="font-size:22px;">--</div><div class="kpi-lbl">Salary (SAR)</div></div>
+		</div>
 
-        <div style="font-size:15px;font-weight:800;margin-bottom:12px;margin-top:24px;">Quick Actions</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <button class="card-sm hover-lift" onclick="goTab('ops')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
-            <div style="width:52px;height:52px;border-radius:16px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            </div>
-            <span style="font-size:13px;font-weight:800;color:var(--text);">Operations</span>
-          </button>
-          <button class="card-sm hover-lift" onclick="goTab('checkin')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
-            <div style="width:52px;height:52px;border-radius:16px;background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-border);display:flex;align-items:center;justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <span style="font-size:13px;font-weight:800;color:var(--text);">Attendance</span>
-          </button>
-          <button class="card-sm hover-lift" onclick="goTab('requests')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
-            <div style="width:52px;height:52px;border-radius:16px;background:var(--blue-bg);color:var(--blue);border:1.5px solid var(--blue-border);display:flex;align-items:center;justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
-            </div>
-            <span style="font-size:13px;font-weight:800;color:var(--text);">Requests</span>
-          </button>
-          <button class="card-sm hover-lift" onclick="goTab('mail')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;cursor:pointer;">
-            <div style="width:52px;height:52px;border-radius:16px;background:var(--purple-bg);color:var(--purple);border:1.5px solid var(--purple-border);display:flex;align-items:center;justify-content:center;position:relative;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <span id="hm-mail-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;"></span>
-            </div>
-            <span style="font-size:13px;font-weight:800;color:var(--text);">Mail</span>
-          </button>
-        </div>
-      </div>
-    </div>
+		<div style="font-size:15px;font-weight:800;margin-bottom:12px;margin-top:24px;">Quick Actions</div>
+		<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+		  <button class="card-sm hover-lift" onclick="goTab('ops')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
+			<div style="width:52px;height:52px;border-radius:16px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;">
+			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+			</div>
+			<span style="font-size:13px;font-weight:800;color:var(--text);">Operations</span>
+		  </button>
+		  <button class="card-sm hover-lift" onclick="goTab('checkin')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
+			<div style="width:52px;height:52px;border-radius:16px;background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-border);display:flex;align-items:center;justify-content:center;">
+			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+			</div>
+			<span style="font-size:13px;font-weight:800;color:var(--text);">Attendance</span>
+		  </button>
+		  <button class="card-sm hover-lift" onclick="goTab('requests')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
+			<div style="width:52px;height:52px;border-radius:16px;background:var(--blue-bg);color:var(--blue);border:1.5px solid var(--blue-border);display:flex;align-items:center;justify-content:center;">
+			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+			</div>
+			<span style="font-size:13px;font-weight:800;color:var(--text);">Requests</span>
+		  </button>
+		  <button class="card-sm hover-lift" onclick="goTab('mail')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;cursor:pointer;">
+			<div style="width:52px;height:52px;border-radius:16px;background:var(--purple-bg);color:var(--purple);border:1.5px solid var(--purple-border);display:flex;align-items:center;justify-content:center;position:relative;">
+			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+			  <span id="hm-mail-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;"></span>
+			</div>
+			<span style="font-size:13px;font-weight:800;color:var(--text);">Mail</span>
+		  </button>
+		</div>
+	  </div>
+	</div>
 
-    <div id="pg-ops" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="tab-bar">
-        <button class="tab-btn active" id="ops-tab-new" onclick="opsTab('new',this)">New Entry</button>
-        <button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Live Board</button>
-        <button class="tab-btn" id="ops-tab-att" onclick="opsTab('att',this)">Staff</button>
-      </div>
-      
-      <div id="ops-pane-new" class="page-pad fade-up">
-        <div style="display:flex;gap:10px;margin-bottom:16px;">
-          <button class="btn btn-outline hover-lift active" id="mb-tab" onclick="opsSvcTab('mb',this)" style="flex:1;border-color:var(--gold);color:var(--gold);background:var(--gold-bg);">Member</button>
-          <button class="btn btn-outline hover-lift" id="ext-tab" onclick="opsSvcTab('ext',this)" style="flex:1;color:var(--text3);">External</button>
-        </div>
-        <div class="card">
-          <div id="ops-fields" style="display:flex;flex-direction:column;gap:14px;"></div>
-          <button class="btn btn-dark hover-lift" onclick="mOpsSave()" id="ops-save-btn" style="margin-top:20px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-            Save & Receipt
-          </button>
-        </div>
-      </div>
-      
-      <div id="ops-pane-reports" class="fade-up" style="display:none;padding-bottom:12px;">
-        <div style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;">
-          <div style="position:relative;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="m-rep-search" class="field" placeholder="Search plates, names..." oninput="mFilterReports()" style="padding-left:42px;">
-          </div>
-        </div>
-        <div id="m-reports-list" style="padding:16px 20px;"></div>
-      </div>
-      
-      <div id="ops-pane-att" class="fade-up" style="display:none;">
-        <div class="page-pad">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-p" style="color:var(--green);">0</div><div class="kpi-lbl">Present</div></div>
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-a" style="color:var(--red);">0</div><div class="kpi-lbl">Absent</div></div>
-            <div class="kpi-tile"><div class="kpi-val" id="m-cnt-t">0</div><div class="kpi-lbl">Total</div></div>
-          </div>
-          <div id="m-att-list"></div>
-        </div>
-      </div>
-    </div> <div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad fade-up">
-        <div style="text-align:center;padding:32px 0;">
-          <div id="m-clock" style="font-size:54px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px;"></div>
-          <div id="m-date" style="font-size:14px;font-weight:600;color:var(--text3);margin-bottom:40px;"></div>
-          <div style="position:relative;display:inline-block;margin-bottom:28px;">
-            <button id="ci-btn" class="ci-btn ci-idle" onclick="mDoCheckIn()">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-bottom:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span id="ci-label" style="letter-spacing:0.05em;text-transform:uppercase;">Check In</span>
-            </button>
-          </div>
-          <div id="gps-status" style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;color:var(--text3);margin-bottom:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span id="gps-txt">Locating...</span>
-          </div>
-          <div id="ci-msg" style="font-size:13px;font-weight:600;color:var(--text4);min-height:18px;"></div>
-        </div>
-        
-        <div class="card">
-          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Today's Log</div>
-          <div id="ci-today"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
-        </div>
-        <div class="card">
-          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Recent History</div>
-          <div id="ci-history"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
-        </div>
-      </div>
-    </div>
+	<div id="pg-ops" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="tab-bar">
+		<button class="tab-btn active" id="ops-tab-new" onclick="opsTab('new',this)">New Entry</button>
+		<button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Live Board</button>
+		<button class="tab-btn" id="ops-tab-att" onclick="opsTab('att',this)">Staff</button>
+	  </div>
+	  
+	  <div id="ops-pane-new" class="page-pad fade-up">
+		<div style="display:flex;gap:10px;margin-bottom:16px;">
+		  <button class="btn btn-outline hover-lift active" id="mb-tab" onclick="opsSvcTab('mb',this)" style="flex:1;border-color:var(--gold);color:var(--gold);background:var(--gold-bg);">Member</button>
+		  <button class="btn btn-outline hover-lift" id="ext-tab" onclick="opsSvcTab('ext',this)" style="flex:1;color:var(--text3);">External</button>
+		</div>
+		<div class="card">
+		  <div id="ops-fields" style="display:flex;flex-direction:column;gap:14px;"></div>
+		  <button class="btn btn-dark hover-lift" onclick="mOpsSave()" id="ops-save-btn" style="margin-top:20px;">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+			Save & Receipt
+		  </button>
+		</div>
+	  </div>
+	  
+	  <div id="ops-pane-reports" class="fade-up" style="display:none;padding-bottom:12px;">
+		<div style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;">
+		  <div style="position:relative;">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+			<input type="text" id="m-rep-search" class="field" placeholder="Search plates, names..." oninput="mFilterReports()" style="padding-left:42px;">
+		  </div>
+		</div>
+		<div id="m-reports-list" style="padding:16px 20px;"></div>
+	  </div>
+	  
+	  <div id="ops-pane-att" class="fade-up" style="display:none;">
+		<div class="page-pad">
+		  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-p" style="color:var(--green);">0</div><div class="kpi-lbl">Present</div></div>
+			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-a" style="color:var(--red);">0</div><div class="kpi-lbl">Absent</div></div>
+			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-t">0</div><div class="kpi-lbl">Total</div></div>
+		  </div>
+		  <div id="m-att-list"></div>
+		</div>
+	  </div>
+	</div> <div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="page-pad fade-up">
+		<div style="text-align:center;padding:32px 0;">
+		  <div id="m-clock" style="font-size:54px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px;"></div>
+		  <div id="m-date" style="font-size:14px;font-weight:600;color:var(--text3);margin-bottom:40px;"></div>
+		  <div style="position:relative;display:inline-block;margin-bottom:28px;">
+			<button id="ci-btn" class="ci-btn ci-idle" onclick="mDoCheckIn()">
+			  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-bottom:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+			  <span id="ci-label" style="letter-spacing:0.05em;text-transform:uppercase;">Check In</span>
+			</button>
+		  </div>
+		  <div id="gps-status" style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;color:var(--text3);margin-bottom:8px;">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+			<span id="gps-txt">Locating...</span>
+		  </div>
+		  <div id="ci-msg" style="font-size:13px;font-weight:600;color:var(--text4);min-height:18px;"></div>
+		</div>
+		
+		<div class="card">
+		  <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Today's Log</div>
+		  <div id="ci-today"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
+		</div>
+		<div class="card">
+		  <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Recent History</div>
+		  <div id="ci-history"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
+		</div>
+	  </div>
+	</div>
 
-    <div id="pg-requests" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad fade-up">
-        <button class="btn btn-dark hover-lift" onclick="openReqModal()" style="margin-bottom:20px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          New Request
-        </button>
-        <div style="font-size:15px;font-weight:800;margin-bottom:12px;">My Requests</div>
-        <div id="req-list"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:32px;">Loading...</div></div>
-      </div>
-    </div>
+	<div id="pg-requests" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="page-pad fade-up">
+		<button class="btn btn-dark hover-lift" onclick="openReqModal()" style="margin-bottom:20px;">
+		  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+		  New Request
+		</button>
+		<div style="font-size:15px;font-weight:800;margin-bottom:12px;">My Requests</div>
+		<div id="req-list"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:32px;">Loading...</div></div>
+	  </div>
+	</div>
 
-    <div id="pg-mail" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="tab-bar">
-        <button class="tab-btn active" id="mf-inbox" onclick="mMailTab('inbox',this)">Inbox <span id="m-inbox-ct" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px;"></span></button>
-        <button class="tab-btn" id="mf-sent" onclick="mMailTab('sent',this)">Sent</button>
-        <button class="tab-btn" id="mf-compose" onclick="openComposeModal()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Compose
-        </button>
-      </div>
-      <div id="m-mail-list" style="background:transparent;min-height:200px;"></div>
-    </div>
+	<div id="pg-mail" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="tab-bar">
+		<button class="tab-btn active" id="mf-inbox" onclick="mMailTab('inbox',this)">Inbox <span id="m-inbox-ct" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px;"></span></button>
+		<button class="tab-btn" id="mf-sent" onclick="mMailTab('sent',this)">Sent</button>
+		<button class="tab-btn" id="mf-compose" onclick="openComposeModal()">
+		  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Compose
+		</button>
+	  </div>
+	  <div id="m-mail-list" style="background:transparent;min-height:200px;"></div>
+	</div>
 
-    <div id="pg-profile" class="page" style="padding-bottom:calc(72px + var(--sb));">
-      <div class="page-pad fade-up">
-        <div class="card" style="text-align:center;padding:32px 20px;">
-          <div id="p-av" style="width:84px;height:84px;border-radius:24px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 16px;overflow:hidden;"></div>
-          <div id="p-name" style="font-size:22px;font-weight:800;"></div>
-          <div id="p-role" style="font-size:14px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
-          <div id="p-email" style="font-size:12px;font-weight:500;color:var(--text4);margin-top:6px;font-family:'Fira Code',monospace;"></div>
-          <button id="btn-export-id" class="btn btn-dark hover-lift" onclick="mExportID()" style="margin-top:24px; padding:12px 20px; font-size:13px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export Official ID
-          </button>
-        </div>
-        <div class="card">
-          <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Trusted Devices</div>
-          <div id="p-devices"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
-        </div>
-        <button class="btn btn-outline hover-lift" onclick="mSignOut()" style="border-color:var(--red-border);color:var(--red);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Sign Out
-        </button>
-      </div>
-    </div>
+	<div id="pg-profile" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	  <div class="page-pad fade-up">
+		<div class="card" style="text-align:center;padding:32px 20px;">
+		  <div id="p-av" style="width:84px;height:84px;border-radius:24px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 16px;overflow:hidden;"></div>
+		  <div id="p-name" style="font-size:22px;font-weight:800;"></div>
+		  <div id="p-role" style="font-size:14px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
+		  <div id="p-email" style="font-size:12px;font-weight:500;color:var(--text4);margin-top:6px;font-family:'Fira Code',monospace;"></div>
+		  <button id="btn-export-id" class="btn btn-dark hover-lift" onclick="mExportID()" style="margin-top:24px; padding:12px 20px; font-size:13px;">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+			Export Official ID
+		  </button>
+		</div>
+		<div class="card">
+		  <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Trusted Devices</div>
+		  <div id="p-devices"><div style="font-size:13px;font-weight:600;color:var(--text4);text-align:center;padding:16px;">Loading...</div></div>
+		</div>
+		<button class="btn btn-outline hover-lift" onclick="mSignOut()" style="border-color:var(--red-border);color:var(--red);">
+		  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+		  Sign Out
+		</button>
+	  </div>
+	</div>
 
   </div> <div class="fab-chat hover-lift" onclick="toggleChat()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
   </div>
 
   <div id="chat-panel">
-    <div class="chat-hdr">
-      <div style="font-weight:800; font-size:16px; display:flex; align-items:center; gap:8px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12 2.1 7.1"/></svg>
-        OPERIX AI
-      </div>
-      <svg onclick="toggleChat()" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="cursor:pointer;" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </div>
-    <div class="chat-body" id="chat-body">
-      <div class="chat-msg bot pop-in">Hello! I'm your Operix assistant. How can I help you with your operations today?</div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chat-input" class="field" placeholder="Ask something..." style="padding:12px 16px; font-size:14px;" onkeydown="if(event.key==='Enter') sendChat()">
-      <button class="btn btn-dark hover-lift" style="padding:12px; border-radius:14px; width:auto;" onclick="sendChat()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-      </button>
-    </div>
+	<div class="chat-hdr">
+	  <div style="font-weight:800; font-size:16px; display:flex; align-items:center; gap:8px;">
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12 2.1 7.1"/></svg>
+		OPERIX AI
+	  </div>
+	  <svg onclick="toggleChat()" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="cursor:pointer;" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+	</div>
+	<div class="chat-body" id="chat-body">
+	  <div class="chat-msg bot pop-in">Hello! I'm your Operix assistant. How can I help you with your operations today?</div>
+	</div>
+	<div class="chat-input-area">
+	  <input type="text" id="chat-input" class="field" placeholder="Ask something..." style="padding:12px 16px; font-size:14px;" onkeydown="if(event.key==='Enter') sendChat()">
+	  <button class="btn btn-dark hover-lift" style="padding:12px; border-radius:14px; width:auto;" onclick="sendChat()">
+		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+	  </button>
+	</div>
   </div>
 
   <nav class="bottom-nav">
-    <button class="nav-btn active" id="nav-home" onclick="goTab('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home
-    </button>
-    <button class="nav-btn" id="nav-ops" onclick="goTab('ops')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Ops
-    </button>
-    <button class="nav-btn" id="nav-checkin" onclick="goTab('checkin')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Check In
-    </button>
-    <button class="nav-btn" id="nav-requests" onclick="goTab('requests')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Requests
-    </button>
-    <button class="nav-btn" id="nav-mail" onclick="goTab('mail')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Mail
-      <span id="nav-mail-badge" class="nav-badge"></span>
-    </button>
+	<button class="nav-btn active" id="nav-home" onclick="goTab('home')">
+	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home
+	</button>
+	<button class="nav-btn" id="nav-ops" onclick="goTab('ops')">
+	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Ops
+	</button>
+	<button class="nav-btn" id="nav-checkin" onclick="goTab('checkin')">
+	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Check In
+	</button>
+	<button class="nav-btn" id="nav-requests" onclick="goTab('requests')">
+	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Requests
+	</button>
+	<button class="nav-btn" id="nav-mail" onclick="goTab('mail')">
+	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Mail
+	  <span id="nav-mail-badge" class="nav-badge"></span>
+	</button>
   </nav>
 </div>
 
 <div id="req-modal" class="modal">
   <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr"><div class="modal-title">New Request</div><button onclick="closeModal('req-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
-      <div><label class="field-label">Request Type</label><select id="rm-type" class="field"><option value="Leave Request">Leave Request</option><option value="Salary Inquiry">Salary Inquiry</option><option value="Document Request">Document Request</option><option value="Complaint">Complaint</option><option value="Other">Other</option></select></div>
-      <div><label class="field-label">Details</label><textarea id="rm-details" class="field" rows="4" style="resize:none;" placeholder="Describe your request…"></textarea></div>
-      <button class="btn btn-dark hover-lift" onclick="mSubmitReq()">Submit Request</button>
-      <button class="btn btn-outline hover-lift" onclick="closeModal('req-modal')">Cancel</button>
-    </div>
+	<div class="modal-handle"></div>
+	<div class="modal-hdr"><div class="modal-title">New Request</div><button onclick="closeModal('req-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
+	  <div><label class="field-label">Request Type</label><select id="rm-type" class="field"><option value="Leave Request">Leave Request</option><option value="Salary Inquiry">Salary Inquiry</option><option value="Document Request">Document Request</option><option value="Complaint">Complaint</option><option value="Other">Other</option></select></div>
+	  <div><label class="field-label">Details</label><textarea id="rm-details" class="field" rows="4" style="resize:none;" placeholder="Describe your request…"></textarea></div>
+	  <button class="btn btn-dark hover-lift" onclick="mSubmitReq()">Submit Request</button>
+	  <button class="btn btn-outline hover-lift" onclick="closeModal('req-modal')">Cancel</button>
+	</div>
   </div>
 </div>
 
 <div id="mail-read-modal" class="modal">
   <div class="modal-box" style="max-height:92vh;">
-    <div class="modal-handle"></div>
-    <div id="mail-read-content" style="padding:0 20px 12px;"></div>
-    <div style="padding:0 20px;"><button class="btn btn-outline hover-lift" onclick="closeModal('mail-read-modal')">Close</button></div>
+	<div class="modal-handle"></div>
+	<div id="mail-read-content" style="padding:0 20px 12px;"></div>
+	<div style="padding:0 20px;"><button class="btn btn-outline hover-lift" onclick="closeModal('mail-read-modal')">Close</button></div>
   </div>
 </div>
 
 <div id="compose-modal" class="modal">
   <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr"><div class="modal-title">New Message</div><button onclick="closeModal('compose-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
-      <div><label class="field-label">To</label><input id="cm-to" class="field" placeholder="email or name" list="cm-to-list"><datalist id="cm-to-list"></datalist></div>
-      <div><label class="field-label">Subject</label><input id="cm-sub" class="field" placeholder="Subject"></div>
-      <div><label class="field-label">Message</label><textarea id="cm-body" class="field" rows="5" style="resize:none;" placeholder="Write your message…"></textarea></div>
-      <button class="btn btn-dark hover-lift" onclick="mSendMail()">Send Message</button>
-      <button class="btn btn-outline hover-lift" onclick="closeModal('compose-modal')">Cancel</button>
-    </div>
+	<div class="modal-handle"></div>
+	<div class="modal-hdr"><div class="modal-title">New Message</div><button onclick="closeModal('compose-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
+	  <div><label class="field-label">To</label><input id="cm-to" class="field" placeholder="email or name" list="cm-to-list"><datalist id="cm-to-list"></datalist></div>
+	  <div><label class="field-label">Subject</label><input id="cm-sub" class="field" placeholder="Subject"></div>
+	  <div><label class="field-label">Message</label><textarea id="cm-body" class="field" rows="5" style="resize:none;" placeholder="Write your message…"></textarea></div>
+	  <button class="btn btn-dark hover-lift" onclick="mSendMail()">Send Message</button>
+	  <button class="btn btn-outline hover-lift" onclick="closeModal('compose-modal')">Cancel</button>
+	</div>
   </div>
 </div>
 
 <div id="receipt-cap" style="position:fixed;left:-9999px;top:0;width:320px;background:#ffffff;padding:20px;font-family:'Space Grotesk',sans-serif;z-index:-1;box-sizing:border-box;">
   <div style="text-align:center;margin-bottom:16px;border-bottom:1.5px dashed #1e2d40;padding-bottom:16px;">
-    <div style="font-size:22px;font-weight:900;color:#1e2d40;text-transform:uppercase;line-height:1.1;letter-spacing:-0.02em;">OPERIX</div>
-    <div style="font-size:10px;color:#7c788f;font-weight:900;letter-spacing:0.25em;text-transform:uppercase;margin-top:8px;">Valet Service Receipt</div>
+	<div style="font-size:22px;font-weight:900;color:#1e2d40;text-transform:uppercase;line-height:1.1;letter-spacing:-0.02em;">OPERIX</div>
+	<div style="font-size:10px;color:#7c788f;font-weight:900;letter-spacing:0.25em;text-transform:uppercase;margin-top:8px;">Valet Service Receipt</div>
   </div>
   <div style="background:#f8f9fa;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.03);border:1px solid #e5e7eb;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Plate</div><div id="r-plate" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1e2d40;"></div></div>
-      <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Card</div><div id="r-card" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1e2d40;"></div></div>
-      <div style="grid-column: span 2;"><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Client</div><div id="r-client" style="font-size:13px;font-weight:700;color:#18161f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
-      <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Amount</div><div id="r-amount" style="font-size:13px;font-weight:800;color:#1e2d40;"></div></div>
-      <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Staff</div><div id="r-staff" style="font-size:13px;font-weight:700;color:#18161f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
-      <div style="grid-column: span 2;"><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Time</div><div id="r-time" style="font-size:10px;font-weight:600;color:#7c788f;font-family:'Plus Jakarta Sans',sans-serif;"></div></div>
-    </div>
+	<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+	  <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Plate</div><div id="r-plate" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1e2d40;"></div></div>
+	  <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Card</div><div id="r-card" style="font-family:'Fira Code',monospace;font-size:18px;font-weight:800;color:#1e2d40;"></div></div>
+	  <div style="grid-column: span 2;"><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Client</div><div id="r-client" style="font-size:13px;font-weight:700;color:#18161f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
+	  <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Amount</div><div id="r-amount" style="font-size:13px;font-weight:800;color:#1e2d40;"></div></div>
+	  <div><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Staff</div><div id="r-staff" style="font-size:13px;font-weight:700;color:#18161f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div></div>
+	  <div style="grid-column: span 2;"><div style="font-size:8px;color:#7c788f;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Time</div><div id="r-time" style="font-size:10px;font-weight:600;color:#7c788f;font-family:'Plus Jakarta Sans',sans-serif;"></div></div>
+	</div>
   </div>
   <div style="text-align:center;">
-    <div id="r-opid" style="font-family:'Fira Code',monospace;font-size:10px;color:#7c788f;margin-bottom:12px;font-weight:500;"></div>
-    <div id="r-qr" style="width:110px; height:110px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fff; padding:6px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06); border:1px solid #e5e7eb;"></div>
+	<div id="r-opid" style="font-family:'Fira Code',monospace;font-size:10px;color:#7c788f;margin-bottom:12px;font-weight:500;"></div>
+	<div id="r-qr" style="width:110px; height:110px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fff; padding:6px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06); border:1px solid #e5e7eb;"></div>
   </div>
 </div>
 
 <div id="id-card-cap" style="position:fixed;left:-9999px;top:0;width:340px;background:#1e2d40;color:#ffffff;border-radius:24px;padding:24px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;border:2px solid #3b82f6;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.5);z-index:-1;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative;z-index:1;width:100%;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div>
-        <div style="font-size:18px;font-weight:900;letter-spacing:-0.02em;color:#fff;line-height:1.2;">OPERIX</div>
-        <div style="font-size:9px;color:#93c5fd;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;">Official ID Card</div>
-      </div>
-    </div>
+	<div style="display:flex;align-items:center;gap:12px;">
+	  <div>
+		<div style="font-size:18px;font-weight:900;letter-spacing:-0.02em;color:#fff;line-height:1.2;">OPERIX</div>
+		<div style="font-size:9px;color:#93c5fd;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;">Official ID Card</div>
+	  </div>
+	</div>
   </div>
   <div style="display:flex;gap:16px;margin-bottom:24px;position:relative;z-index:1;width:100%;">
-    <div id="id-photo" style="width:84px;height:84px;border-radius:20px;background:#2a3f5c;border:2px solid #93c5fd;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;overflow:hidden;flex-shrink:0;"></div>
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">
-      <div id="id-name" style="font-size:22px;font-weight:800;margin-bottom:4px;line-height:1.1;color:#fff;word-break:break-word;"></div>
-      <div id="id-job" style="font-size:12px;color:#93c5fd;font-weight:700;margin-bottom:10px;"></div>
-      <div style="font-size:10px;font-weight:600;color:#9ca3af;margin-bottom:3px;display:flex;align-items:center;gap:4px;">
-        <span id="id-email" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-      </div>
-      <div style="font-size:10px;font-weight:600;color:#9ca3af;display:flex;align-items:center;gap:4px;">
-        <span id="id-phone" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-      </div>
-    </div>
+	<div id="id-photo" style="width:84px;height:84px;border-radius:20px;background:#2a3f5c;border:2px solid #93c5fd;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;overflow:hidden;flex-shrink:0;"></div>
+	<div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">
+	  <div id="id-name" style="font-size:22px;font-weight:800;margin-bottom:4px;line-height:1.1;color:#fff;word-break:break-word;"></div>
+	  <div id="id-job" style="font-size:12px;color:#93c5fd;font-weight:700;margin-bottom:10px;"></div>
+	  <div style="font-size:10px;font-weight:600;color:#9ca3af;margin-bottom:3px;display:flex;align-items:center;gap:4px;">
+		<span id="id-email" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+	  </div>
+	  <div style="font-size:10px;font-weight:600;color:#9ca3af;display:flex;align-items:center;gap:4px;">
+		<span id="id-phone" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+	  </div>
+	</div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;background:rgba(255,255,255,0.06);padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,0.1);width:100%;box-sizing:border-box;">
-    <div style="flex:1;min-width:0;padding-right:10px;">
-      <div style="font-size:9px;color:#9ca3af;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;">Employee ID</div>
-      <div id="id-empid" style="font-family:'Fira Code',monospace;font-size:16px;font-weight:800;color:#93c5fd;"></div>
-    </div>
-    <div id="id-qr" style="background:#fff;padding:6px;border-radius:10px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"></div>
+	<div style="flex:1;min-width:0;padding-right:10px;">
+	  <div style="font-size:9px;color:#9ca3af;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;">Employee ID</div>
+	  <div id="id-empid" style="font-family:'Fira Code',monospace;font-size:16px;font-weight:800;color:#93c5fd;"></div>
+	</div>
+	<div id="id-qr" style="background:#fff;padding:6px;border-radius:10px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"></div>
   </div>
 </div>
 
@@ -629,6 +629,18 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+// Add this at the top of your script
+var currentExternalFee = 19; 
+
+async function loadSystemSettings() {
+	try {
+		const rows = await sb('operix_settings?key=eq.external_service_fee', { method: 'GET' });
+		if (rows && rows.length > 0) {
+			currentExternalFee = parseFloat(rows[0].value);
+		}
+	} catch (e) { console.warn("Fee fetch error:", e); }
+}
+
 'use strict';
 
 // Setup PWA Manifest dynamically
@@ -640,16 +652,16 @@ const manifestObj = {
   "background_color": "#f0eff5",
   "theme_color": "#1e2d40",
   "icons": [
-    {
-      "src": "https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+	{
+	  "src": "https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png",
+	  "sizes": "192x192",
+	  "type": "image/png"
+	},
+	{
+	  "src": "https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png",
+	  "sizes": "512x512",
+	  "type": "image/png"
+	}
   ]
 };
 const manifestBlob = new Blob([JSON.stringify(manifestObj)], {type: 'application/json'});
@@ -658,6 +670,19 @@ document.getElementById('pwa-manifest').href = URL.createObjectURL(manifestBlob)
 const OPS_API = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgIFFXUoKip3yeEkQqzbugfJtUsK7YHj8Ma0eMxDl6lLDtzL8f/exec';
 const SUPABASE_URL = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
+
+var currentExternalFee = 19; // Default fallback
+
+async function loadSystemSettings() {
+	try {
+		const rows = await sb('operix_settings?key=eq.external_service_fee', { method: 'GET' });
+		if (rows && rows.length > 0) {
+			currentExternalFee = parseFloat(rows[0].value);
+		}
+	} catch (e) {
+		console.warn("Could not load external fee setting:", e);
+	}
+}
 
 var CU = null; 
 var _pl = null; 
@@ -689,32 +714,32 @@ function getDevName() {
 async function logSession(action) {
   if(!CU) return;
   try {
-    var fp = await getDevFP();
-    await sb('operix_sessions', {
-      method: 'POST', 
-      body: JSON.stringify({
-        account_email: CU.email,
-        account_name: CU.name,
-        device_id: fp,
-        device_name: getDevName(),
-        action: action, 
-        user_agent: navigator.userAgent.slice(0, 200),
-        logged_at: new Date().toISOString()
-      })
-    });
+	var fp = await getDevFP();
+	await sb('operix_sessions', {
+	  method: 'POST', 
+	  body: JSON.stringify({
+		account_email: CU.email,
+		account_name: CU.name,
+		device_id: fp,
+		device_name: getDevName(),
+		action: action, 
+		user_agent: navigator.userAgent.slice(0, 200),
+		logged_at: new Date().toISOString()
+	  })
+	});
   } catch(e) { console.warn("Session log failed", e); }
 }
 
 async function sb(path, opts={}) {
   var res = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
-    ...opts,
-    headers: {
-      'Content-Type':'application/json',
-      'apikey':SUPABASE_ANON,
-      'Authorization':'Bearer '+SUPABASE_ANON,
-      'Prefer': opts.prefer || (opts.method==='GET'?'count=exact':'return=representation'),
-      ...(opts.headers||{})
-    }
+	...opts,
+	headers: {
+	  'Content-Type':'application/json',
+	  'apikey':SUPABASE_ANON,
+	  'Authorization':'Bearer '+SUPABASE_ANON,
+	  'Prefer': opts.prefer || (opts.method==='GET'?'count=exact':'return=representation'),
+	  ...(opts.headers||{})
+	}
   });
   if(!res.ok){ var t=await res.text().catch(()=>''); throw new Error('SB '+res.status+': '+t.slice(0,100)); }
   if(res.status===204||opts.method==='DELETE') return null;
@@ -724,19 +749,19 @@ async function sb(path, opts={}) {
 async function gas(payload) {
   var ctrl=new AbortController(); var t=setTimeout(()=>ctrl.abort(),15000);
   try{
-    var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify(payload),redirect:'follow',signal:ctrl.signal});
-    clearTimeout(t); return JSON.parse(await res.text());
+	var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify(payload),redirect:'follow',signal:ctrl.signal});
+	clearTimeout(t); return JSON.parse(await res.text());
   }catch(e){ clearTimeout(t); return {success:false,error:e.message}; }
 }
 
 async function isTrusted(email){
   try{
-    var fp=await getDevFP();
-    var r=await sb('operix_trusted_devices?account_email=eq.'+encodeURIComponent(email)+'&device_id=eq.'+encodeURIComponent(fp)+'&limit=1',{method:'GET'});
-    if(Array.isArray(r)&&r.length){
-      sb('operix_trusted_devices?id=eq.'+r[0].id,{method:'PATCH',body:JSON.stringify({last_used:new Date().toISOString()}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
-      return true;
-    } return false;
+	var fp=await getDevFP();
+	var r=await sb('operix_trusted_devices?account_email=eq.'+encodeURIComponent(email)+'&device_id=eq.'+encodeURIComponent(fp)+'&limit=1',{method:'GET'});
+	if(Array.isArray(r)&&r.length){
+	  sb('operix_trusted_devices?id=eq.'+r[0].id,{method:'PATCH',body:JSON.stringify({last_used:new Date().toISOString()}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
+	  return true;
+	} return false;
   }catch{return false;}
 }
 async function trustDev(email){
@@ -752,34 +777,34 @@ function goTab(tab){
   var tabs=['home','ops','checkin','requests','mail','profile'];
   
   tabs.forEach(function(t){
-    var p=document.getElementById('pg-'+t); 
-    if(p) {
-      p.classList.toggle('active',t===tab);
-      p.style.display=t===tab?'block':'none';
-    }
+	var p=document.getElementById('pg-'+t); 
+	if(p) {
+	  p.classList.toggle('active',t===tab);
+	  p.style.display=t===tab?'block':'none';
+	}
   });
 
   var navMap = {
-    'home':'nav-home', 
-    'ops':'nav-ops',
-    'checkin':'nav-checkin', 
-    'requests':'nav-requests', 
-    'mail':'nav-mail'
+	'home':'nav-home', 
+	'ops':'nav-ops',
+	'checkin':'nav-checkin', 
+	'requests':'nav-requests', 
+	'mail':'nav-mail'
   };
   
   document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
   var activeNavId = navMap[tab];
   if(activeNavId && document.getElementById(activeNavId)) {
-    document.getElementById(activeNavId).classList.add('active');
+	document.getElementById(activeNavId).classList.add('active');
   }
 
   var titles={
-    home:'Home',
-    ops:'Operations',
-    checkin:'Attendance',
-    requests:'Requests',
-    mail:'Mail',
-    profile:'Profile'
+	home:'Home',
+	ops:'Operations',
+	checkin:'Attendance',
+	requests:'Requests',
+	mail:'Mail',
+	profile:'Profile'
   };
   
   document.getElementById('pg-title').innerText=titles[tab]||'OPERIX';
@@ -807,20 +832,20 @@ async function mLogin(){
   if(!email||!pass){errEl.innerHTML=iconCross()+' Please enter email and password.';errEl.style.display='block';return;}
   btn.disabled=true; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…';
   try{
-    var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&password=eq.'+encodeURIComponent(pass)+'&select=id,name,email,role,job,phone,photo,otp_email&limit=1',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){errEl.innerHTML=iconCross()+' Wrong email or password.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-    var acc=rows[0];
-    if((acc.role||'').toLowerCase()==='pending'){errEl.innerHTML=iconCross()+' Account pending approval.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-    _pl=acc;
-    if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
-    if(!acc.otp_email){errEl.innerHTML=iconCross()+' 2-step verification not configured.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-    btn.innerHTML='Checking device…';
-    var trusted=await isTrusted(acc.email);
-    if(trusted){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
-    btn.disabled=false;btn.innerHTML='Sign In';
-    var hasSQ=await hasSecQ(acc.email);
-    if(!hasSQ){showScreen('screen-setup-sq');}
-    else{await showNDScreen(acc.email);showScreen('screen-newdev');}
+	var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&password=eq.'+encodeURIComponent(pass)+'&select=id,name,email,role,job,phone,photo,otp_email&limit=1',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){errEl.innerHTML=iconCross()+' Wrong email or password.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
+	var acc=rows[0];
+	if((acc.role||'').toLowerCase()==='pending'){errEl.innerHTML=iconCross()+' Account pending approval.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
+	_pl=acc;
+	if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+	if(!acc.otp_email){errEl.innerHTML=iconCross()+' 2-step verification not configured.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
+	btn.innerHTML='Checking device…';
+	var trusted=await isTrusted(acc.email);
+	if(trusted){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+	btn.disabled=false;btn.innerHTML='Sign In';
+	var hasSQ=await hasSecQ(acc.email);
+	if(!hasSQ){showScreen('screen-setup-sq');}
+	else{await showNDScreen(acc.email);showScreen('screen-newdev');}
   }catch(e){errEl.innerHTML=iconCross()+' Connection error: '+e.message;errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';}
 }
 
@@ -864,13 +889,13 @@ async function sendAndShowOTP(acc){
 }
 async function sendOTPCode(accEmail,otpEmail,name){
   try{
-    var code=String(Math.floor(100000+Math.random()*900000));
-    var exp=new Date(Date.now()+5*60*1000).toISOString();
-    await sb('operix_otp?email=eq.'+encodeURIComponent(accEmail)+'&used=eq.false',{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
-    await sb('operix_otp',{method:'POST',body:JSON.stringify({email:accEmail,code,expires_at:exp,used:false})});
-    var r=await gas({action:'sendOTPEmail',otpEmail,name:name||'User',code,expiresIn:'5 minutes'});
-    if(!r||!r.success){alert('Failed to send OTP: '+(r?.error||'Try again.'));return false;}
-    return true;
+	var code=String(Math.floor(100000+Math.random()*900000));
+	var exp=new Date(Date.now()+5*60*1000).toISOString();
+	await sb('operix_otp?email=eq.'+encodeURIComponent(accEmail)+'&used=eq.false',{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
+	await sb('operix_otp',{method:'POST',body:JSON.stringify({email:accEmail,code,expires_at:exp,used:false})});
+	var r=await gas({action:'sendOTPEmail',otpEmail,name:name||'User',code,expiresIn:'5 minutes'});
+	if(!r||!r.success){alert('Failed to send OTP: '+(r?.error||'Try again.'));return false;}
+	return true;
   }catch(e){alert('OTP error: '+e.message);return false;}
 }
 function startOTPTimer(sec){
@@ -878,10 +903,10 @@ function startOTPTimer(sec){
   var rem=sec,el=document.getElementById('otp-timer'),rb=document.getElementById('otp-resend');
   if(rb)rb.disabled=true;
   var tick=function(){
-    if(!el)return;
-    el.innerText=String(Math.floor(rem/60)).padStart(2,'0')+':'+String(rem%60).padStart(2,'0');
-    if(rem<=0){clearInterval(_otpTimer);el.innerText='Expired';if(rb)rb.disabled=false;}
-    rem--;
+	if(!el)return;
+	el.innerText=String(Math.floor(rem/60)).padStart(2,'0')+':'+String(rem%60).padStart(2,'0');
+	if(rem<=0){clearInterval(_otpTimer);el.innerText='Expired';if(rb)rb.disabled=false;}
+	rem--;
   };
   tick();_otpTimer=setInterval(tick,1000);
 }
@@ -901,17 +926,17 @@ async function mVerifyOTP(){
   var btn=document.getElementById('otp-btn'); btn.disabled=true; btn.innerHTML='Verifying…';
   document.getElementById('otp-err').style.display='none';
   try{
-    var now=new Date().toISOString();
-    var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_pl.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){
-      document.getElementById('otp-err').innerHTML=iconCross()+' Invalid or expired code.';document.getElementById('otp-err').style.display='block';
-      btn.disabled=false;btn.innerHTML='Verify Code';return;
-    }
-    await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
-    if(_otpTimer)clearInterval(_otpTimer);
-    await trustDev(_pl.email);
-    await logSession('login');
-    finishLogin(_pl);
+	var now=new Date().toISOString();
+	var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_pl.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){
+	  document.getElementById('otp-err').innerHTML=iconCross()+' Invalid or expired code.';document.getElementById('otp-err').style.display='block';
+	  btn.disabled=false;btn.innerHTML='Verify Code';return;
+	}
+	await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
+	if(_otpTimer)clearInterval(_otpTimer);
+	await trustDev(_pl.email);
+	await logSession('login');
+	finishLogin(_pl);
   }catch(e){document.getElementById('otp-err').innerHTML=iconCross()+' Error: '+e.message;document.getElementById('otp-err').style.display='block';}
   btn.disabled=false;btn.innerHTML='Verify Code';
 }
@@ -924,12 +949,12 @@ async function mResendOTP(){
 }
 function finishLogin(acc) {
   CU = {
-    name: acc.name || acc.email.split('@')[0],
-    email: acc.email,
-    role: acc.role || 'Staff',
-    job: acc.job || '',
-    phone: acc.phone || '',
-    photo: acc.photo || ''
+	name: acc.name || acc.email.split('@')[0],
+	email: acc.email,
+	role: acc.role || 'Staff',
+	job: acc.job || '',
+	phone: acc.phone || '',
+	photo: acc.photo || ''
   };
   _pl = null;
   logSession('login'); 
@@ -950,17 +975,17 @@ async function fpS1(){
   document.getElementById('fp-err').style.display='none';
   if(!email){fpErr('Enter your email.');return;}
   try{
-    var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&select=id,name,email,otp_email&limit=1',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){fpErr('No account found.');return;}
-    _fpAcc=rows[0];
-    var sq=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});
-    if(!Array.isArray(sq)||!sq.length){fpErr('No security questions. Contact admin.');return;}
-    _sqd=sq[0];
-    var c=document.getElementById('fp-qs');c.innerHTML='';
-    ['q1','q2','q3'].forEach(function(k){c.innerHTML+='<div><label class="field-label">'+_sqd[k]+'</label><input class="field" id="fpq-'+k+'" placeholder="Your answer" autocomplete="off"></div>';});
-    document.getElementById('fp-s1').style.display='none';
-    document.getElementById('fp-s2').style.display='block';
-    document.getElementById('fp-sub').innerText='Answer your security questions.';
+	var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&select=id,name,email,otp_email&limit=1',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){fpErr('No account found.');return;}
+	_fpAcc=rows[0];
+	var sq=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});
+	if(!Array.isArray(sq)||!sq.length){fpErr('No security questions. Contact admin.');return;}
+	_sqd=sq[0];
+	var c=document.getElementById('fp-qs');c.innerHTML='';
+	['q1','q2','q3'].forEach(function(k){c.innerHTML+='<div><label class="field-label">'+_sqd[k]+'</label><input class="field" id="fpq-'+k+'" placeholder="Your answer" autocomplete="off"></div>';});
+	document.getElementById('fp-s1').style.display='none';
+	document.getElementById('fp-s2').style.display='block';
+	document.getElementById('fp-sub').innerText='Answer your security questions.';
   }catch(e){fpErr('Error: '+e.message);}
 }
 async function fpS2(){
@@ -983,13 +1008,13 @@ async function fpS3(){
   var code='';for(var i=0;i<6;i++)code+=(document.getElementById('fp'+i)?.value||'');
   if(code.length<6){fpErr('Enter all 6 digits.');return;}
   try{
-    var now=new Date().toISOString();
-    var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_fpAcc.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){fpErr('Invalid or expired code.');return;}
-    await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
-    document.getElementById('fp-s3').style.display='none';
-    document.getElementById('fp-s4').style.display='block';
-    document.getElementById('fp-sub').innerText='Set your new password.';
+	var now=new Date().toISOString();
+	var rows=await sb('operix_otp?email=eq.'+encodeURIComponent(_fpAcc.email)+'&code=eq.'+encodeURIComponent(code)+'&used=eq.false&expires_at=gt.'+encodeURIComponent(now)+'&limit=1',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){fpErr('Invalid or expired code.');return;}
+	await sb('operix_otp?id=eq.'+rows[0].id,{method:'PATCH',body:JSON.stringify({used:true}),headers:{'Prefer':'return=minimal'}});
+	document.getElementById('fp-s3').style.display='none';
+	document.getElementById('fp-s4').style.display='block';
+	document.getElementById('fp-sub').innerText='Set your new password.';
   }catch(e){fpErr('Error: '+e.message);}
 }
 async function fpS4(){
@@ -998,13 +1023,18 @@ async function fpS4(){
   if(!np||np.length<6){fpErr('Min 6 characters.');return;}
   if(np!==cp){fpErr('Passwords do not match.');return;}
   try{
-    await sb('accounts?email=eq.'+encodeURIComponent(_fpAcc.email),{method:'PATCH',body:JSON.stringify({password:np}),headers:{'Prefer':'return=minimal'}});
-    _fpAcc=null;toast('Password updated. Sign in.');showScreen('screen-login');
+	await sb('accounts?email=eq.'+encodeURIComponent(_fpAcc.email),{method:'PATCH',body:JSON.stringify({password:np}),headers:{'Prefer':'return=minimal'}});
+	_fpAcc=null;toast('Password updated. Sign in.');showScreen('screen-login');
   }catch(e){fpErr('Error: '+e.message);}
 }
 
-function initApp(){
-  var av=document.getElementById('top-av');if(av)av.innerText=(CU.name||'?').charAt(0).toUpperCase();
+async function initApp(){
+  var av=document.getElementById('top-av');
+  if(av) av.innerText=(CU.name||'?').charAt(0).toUpperCase();
+  
+  // FETCH SETTINGS FIRST
+  await loadSystemSettings(); 
+  
   startClock();
   goTab('home');
   updateMailBadge();
@@ -1012,12 +1042,12 @@ function initApp(){
 }
 function startClock(){
   var tick=function(){
-    var now=new Date();
-    var cl=document.getElementById('m-clock');var dt=document.getElementById('m-date');
-    if(cl)cl.innerText=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    if(dt)dt.innerText=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-    var hr=now.getHours();var gr=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
-    var ge=document.getElementById('hm-greeting');if(ge)ge.innerText=gr;
+	var now=new Date();
+	var cl=document.getElementById('m-clock');var dt=document.getElementById('m-date');
+	if(cl)cl.innerText=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+	if(dt)dt.innerText=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+	var hr=now.getHours();var gr=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+	var ge=document.getElementById('hm-greeting');if(ge)ge.innerText=gr;
   };
   tick();setInterval(tick,1000);
 }
@@ -1025,21 +1055,21 @@ function startClock(){
 async function loadHome(){
   var nn=document.getElementById('hm-name');if(nn)nn.innerText=CU.name+' · '+CU.role;
   try{
-    var rows=await sb('operix_shifts?employee_name=eq.'+encodeURIComponent(CU.name)+'&limit=1',{method:'GET'});
-    if(Array.isArray(rows)&&rows.length){
-      var s=rows[0];myShift=s;
-      CAFE_LAT=parseFloat(s.lat)||CAFE_LAT;CAFE_LNG=parseFloat(s.lng)||CAFE_LNG;GPS_RADIUS=parseInt(s.radius)||GPS_RADIUS;
-      var sc=document.getElementById('hm-shift');if(sc)sc.style.display='block';
-      var sp=document.getElementById('hm-shift-proj');if(sp)sp.innerText=s.project||'';
-      var st=document.getElementById('hm-shift-time');if(st)st.innerText=(s.shift_start||'')+(s.shift_end?' – '+s.shift_end:'');
-      var sl=document.getElementById('hm-loc-text');if(sl)sl.innerText=s.location_name||'';
-      var sal=document.getElementById('kpi-salary');if(sal&&s.monthly_salary)sal.innerText=parseInt(s.monthly_salary).toLocaleString();
-    }
+	var rows=await sb('operix_shifts?employee_name=eq.'+encodeURIComponent(CU.name)+'&limit=1',{method:'GET'});
+	if(Array.isArray(rows)&&rows.length){
+	  var s=rows[0];myShift=s;
+	  CAFE_LAT=parseFloat(s.lat)||CAFE_LAT;CAFE_LNG=parseFloat(s.lng)||CAFE_LNG;GPS_RADIUS=parseInt(s.radius)||GPS_RADIUS;
+	  var sc=document.getElementById('hm-shift');if(sc)sc.style.display='block';
+	  var sp=document.getElementById('hm-shift-proj');if(sp)sp.innerText=s.project||'';
+	  var st=document.getElementById('hm-shift-time');if(st)st.innerText=(s.shift_start||'')+(s.shift_end?' – '+s.shift_end:'');
+	  var sl=document.getElementById('hm-loc-text');if(sl)sl.innerText=s.location_name||'';
+	  var sal=document.getElementById('kpi-salary');if(sal&&s.monthly_salary)sal.innerText=parseInt(s.monthly_salary).toLocaleString();
+	}
   }catch{}
   try{
-    var now=new Date();var monthStart=new Date(now.getFullYear(),now.getMonth(),1).toISOString();
-    var att=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(monthStart)+'&type=eq.Check-In&select=id',{method:'GET'}).catch(()=>[]);
-    var dd=document.getElementById('kpi-days');if(dd)dd.innerText=Array.isArray(att)?att.length:0;
+	var now=new Date();var monthStart=new Date(now.getFullYear(),now.getMonth(),1).toISOString();
+	var att=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(monthStart)+'&type=eq.Check-In&select=id',{method:'GET'}).catch(()=>[]);
+	var dd=document.getElementById('kpi-days');if(dd)dd.innerText=Array.isArray(att)?att.length:0;
   }catch{}
 }
 
@@ -1061,16 +1091,16 @@ function opsSvcTab(svc,btn){
   mOpsSvc=svc;
   var btns = document.querySelectorAll('#pg-ops .btn-outline');
   btns.forEach(b => {
-      b.classList.remove('active'); 
-      b.style.borderColor = 'var(--border)'; 
-      b.style.color = 'var(--text3)'; 
-      b.style.background = 'transparent';
+	  b.classList.remove('active'); 
+	  b.style.borderColor = 'var(--border)'; 
+	  b.style.color = 'var(--text3)'; 
+	  b.style.background = 'transparent';
   });
   if(btn){
-      btn.classList.add('active'); 
-      btn.style.borderColor = 'var(--gold)'; 
-      btn.style.color = 'var(--gold)'; 
-      btn.style.background = 'var(--gold-bg)';
+	  btn.classList.add('active'); 
+	  btn.style.borderColor = 'var(--gold)'; 
+	  btn.style.color = 'var(--gold)'; 
+	  btn.style.background = 'var(--gold-bg)';
   }
   buildOpsFields();
 }
@@ -1079,18 +1109,18 @@ function buildOpsFields(){
   var isMB=mOpsSvc==='mb';
   c.innerHTML='';
   var fields=[
-    {id:'m-f-plate',label:'Plate Number',type:'text',ph:'e.g. ABC 1234',upper:true},
-    {id:'m-f-card',label:'Card Number',type:'text',ph:'e.g. 042'},
+	{id:'m-f-plate',label:'Plate Number',type:'text',ph:'e.g. ABC 1234',upper:true},
+	{id:'m-f-card',label:'Card Number',type:'text',ph:'e.g. 042'},
   ];
   if(!isMB)fields.splice(1,0,{id:'m-f-name',label:'Client Name',type:'text',ph:'Full name'},{id:'m-f-phone',label:'Phone',type:'tel',ph:'+966 5X XXX XXXX'});
   fields.forEach(function(f){
-    var div=document.createElement('div');
-    div.innerHTML='<label class="field-label">'+f.label+'</label><input id="'+f.id+'" type="'+f.type+'" class="field" placeholder="'+f.ph+'"'+(f.upper?' style="text-transform:uppercase;"':'')+' autocomplete="off">';
-    c.appendChild(div);
+	var div=document.createElement('div');
+	div.innerHTML='<label class="field-label">'+f.label+'</label><input id="'+f.id+'" type="'+f.type+'" class="field" placeholder="'+f.ph+'"'+(f.upper?' style="text-transform:uppercase;"':'')+' autocomplete="off">';
+	c.appendChild(div);
   });
   var info=document.createElement('div');
   info.style.cssText='background:var(--surface2);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between; margin-top: 4px; border: 1px solid var(--border);';
-  info.innerHTML='<span style="font-size:13px;font-weight:800;color:var(--text);">Service Fee</span><span class="chip '+(isMB?'chip-green':'chip-gold')+'">'+(isMB?'Free (Member)':'19 SAR')+'</span>';
+info.innerHTML='<span style="font-size:13px;font-weight:800;color:var(--text);">Service Fee</span><span class="chip '+(isMB?'chip-green':'chip-gold')+'">'+(isMB?'Free (Member)': currentExternalFee + ' SAR')+'</span>';
   c.appendChild(info);
 }
 
@@ -1109,27 +1139,27 @@ async function mOpsSave(){
   
   var ref=genRef();
   var payload = {
-      plate_num: plate,
-      card_num: card,
-      client_name: name,
-      valet_name: CU.name,
-      service_type: mOpsSvc === 'mb' ? 'Free' : 'Paid',
-      amount: mOpsSvc === 'mb' ? 0 : 19,
-      phone: phone,
-      vehicle_status: 'Parked', 
-      ref: ref,
-      op_id: ref,
-      date: new Date().toISOString()
+	  plate_num: plate,
+	  card_num: card,
+	  client_name: name,
+	  valet_name: CU.name,
+	  service_type: mOpsSvc === 'mb' ? 'Free' : 'Paid',
+	  amount: mOpsSvc === 'mb' ? 0 : currentExternalFee,
+	  phone: phone,
+	  vehicle_status: 'Parked', 
+	  ref: ref,
+	  op_id: ref,
+	  date: new Date().toISOString()
   };
 
   try{
-    await sb('operix_invoices', { method: 'POST', body: JSON.stringify(payload) });
-    var recPayload = { plateNum: plate, cardNum: card, clientName: name, staffName: CU.name, amount: payload.amount, opID: ref, ref: ref };
-    await mCaptureReceipt(recPayload);
-    toast('Saved! ID: ' + ref);
-    buildOpsFields();
+	await sb('operix_invoices', { method: 'POST', body: JSON.stringify(payload) });
+	var recPayload = { plateNum: plate, cardNum: card, clientName: name, staffName: CU.name, amount: payload.amount, opID: ref, ref: ref };
+	await mCaptureReceipt(recPayload);
+	toast('Saved! ID: ' + ref);
+	buildOpsFields();
   }catch(e){
-    toast('Error: ' + e.message);
+	toast('Error: ' + e.message);
   }
   btn.disabled=false;
   btn.innerHTML='Save & Receipt';
@@ -1148,51 +1178,51 @@ async function mCaptureReceipt(d) {
   qrEl.innerHTML = '';
   
   var qrData = JSON.stringify({
-    opID: d.opID || d.ref,
-    plate: d.plateNum,
-    card: d.cardNum,
-    client: d.clientName,
-    staff: d.staffName,
-    amount: d.amount
+	opID: d.opID || d.ref,
+	plate: d.plateNum,
+	card: d.cardNum,
+	client: d.clientName,
+	staff: d.staffName,
+	amount: d.amount
   });
   
   var safeQrData = unescape(encodeURIComponent(qrData));
   
   try {
-    new QRCode(qrEl, {
-      text: safeQrData,
-      width: 256,
-      height: 256,
-      colorDark: '#1e2d40',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.L
-    });
+	new QRCode(qrEl, {
+	  text: safeQrData,
+	  width: 256,
+	  height: 256,
+	  colorDark: '#1e2d40',
+	  colorLight: '#ffffff',
+	  correctLevel: QRCode.CorrectLevel.L
+	});
 
-    setTimeout(() => {
-        var qrImg = qrEl.querySelector('img');
-        var qrCanvas = qrEl.querySelector('canvas');
-        if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
-        if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
-    }, 50);
+	setTimeout(() => {
+		var qrImg = qrEl.querySelector('img');
+		var qrCanvas = qrEl.querySelector('canvas');
+		if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
+		if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
+	}, 50);
 
   } catch(e) { }
   
   await new Promise(r => setTimeout(r, 800));
   
   try {
-    var canvas = await html2canvas(document.getElementById('receipt-cap'), {
-      scale: 3, 
-      backgroundColor: '#f5f4f0',
-      logging: false,
-      useCORS: true
-    });
-    var a = document.createElement('a');
-    a.download = 'Receipt-' + d.plateNum + '.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-    a.remove();
+	var canvas = await html2canvas(document.getElementById('receipt-cap'), {
+	  scale: 3, 
+	  backgroundColor: '#f5f4f0',
+	  logging: false,
+	  useCORS: true
+	});
+	var a = document.createElement('a');
+	a.download = 'Receipt-' + d.plateNum + '.png';
+	a.href = canvas.toDataURL('image/png');
+	a.click();
+	a.remove();
   } catch(e) {
-    toast('Receipt generated (save manually)');
+	toast('Receipt generated (save manually)');
   }
 }
 
@@ -1201,30 +1231,30 @@ async function mLoadReports(){
   el.innerHTML='<div style="text-align:center;padding:32px;color:var(--text3);font-size:14px;font-weight:600;">Loading Board...</div>';
   
   try{
-    var query = 'operix_invoices?order=created_at.desc';
-    var role = (CU.role || '').toLowerCase();
-    if(role !== 'admin' && role !== 'manager') {
-       query += '&valet_name=eq.' + encodeURIComponent(CU.name);
-    }
+	var query = 'operix_invoices?order=created_at.desc';
+	var role = (CU.role || '').toLowerCase();
+	if(role !== 'admin' && role !== 'manager') {
+	   query += '&valet_name=eq.' + encodeURIComponent(CU.name);
+	}
 
-    var rows = await sb(query, { method: 'GET' });
-    
-    mReportsData = rows.map(r => ({
-      plateNum: r.plate_num,
-      cardNum: r.card_num,
-      clientName: r.client_name,
-      valetName: r.valet_name,
-      serviceType: r.service_type,
-      amount: r.amount,
-      phone: r.phone,
-      vehicleStatus: r.vehicle_status,
-      opID: r.op_id || r.ref,
-      ref: r.ref
-    }));
-    
-    mRenderReports(mReportsData);
+	var rows = await sb(query, { method: 'GET' });
+	
+	mReportsData = rows.map(r => ({
+	  plateNum: r.plate_num,
+	  cardNum: r.card_num,
+	  clientName: r.client_name,
+	  valetName: r.valet_name,
+	  serviceType: r.service_type,
+	  amount: r.amount,
+	  phone: r.phone,
+	  vehicleStatus: r.vehicle_status,
+	  opID: r.op_id || r.ref,
+	  ref: r.ref
+	}));
+	
+	mRenderReports(mReportsData);
   }catch(e){
-    el.innerHTML='<div style="color:var(--red);text-align:center;">Connection failed.</div>';
+	el.innerHTML='<div style="color:var(--red);text-align:center;">Connection failed.</div>';
   }
 }
 function mFilterReports(){
@@ -1238,30 +1268,35 @@ function mRenderReports(rows){
   if(!rows||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--text4);font-size:14px;font-weight:600;">No records found</div>';return;}
   el.innerHTML='';
   rows.slice(0,100).forEach(function(r,i){
-    var ip=String(r.vehicleStatus||'')==='Parked';
-    window._mRpt=window._mRpt||{};window._mRpt[i]=r;
-    var div=document.createElement('div');
-    div.className='inv-card hover-lift pop-in';
-    div.innerHTML='<div style="display:flex;">'
-      +'<div class="'+(ip?'inv-stripe-parked':'inv-stripe-done')+'"></div>'
-      +'<div style="padding:16px;flex:1;">'
-        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
-          +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
-          +'<span class="chip '+(ip?'chip-amber':'chip-green')+'">'+(ip?'Parked':'Returned')+'</span>'
-        +'</div>'
-        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">'
-          +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
-          +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free'?'Free':'19 SAR')+'</div></div>'
-          +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
-          +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
-        +'</div>'
-        +'<div style="display:flex;gap:10px;">'
-          +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;">Receipt</button>'
-          +(ip?'<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>':'')
-        +'</div>'
-      +'</div>'
-    +'</div>';
-    el.appendChild(div);
+	var ip=String(r.vehicleStatus||'')==='Parked';
+	window._mRpt=window._mRpt||{};window._mRpt[i]=r;
+	var div=document.createElement('div');
+	div.className='inv-card hover-lift pop-in';
+	div.innerHTML='<div style="display:flex;">'
+	  +'<div class="'+(ip?'inv-stripe-parked':'inv-stripe-done')+'"></div>'
+	  +'<div style="padding:16px;flex:1;">'
+		+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+		  +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
+		  +'<span class="chip '+(ip?'chip-amber':'chip-green')+'">'+(ip?'Parked':'Returned')+'</span>'
+		+'</div>'
+		+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;">'
+			  +'<div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div>'
+			  +'<div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'
+				  +(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')
+			  +'</div>'
+		  +'</div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
+		+'</div>'
+		+'<div style="display:flex;gap:10px;">'
+		  +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;">Receipt</button>'
+		  +(ip?'<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>':'')
+		+'</div>'
+	  +'</div>'
+	+'</div>';
+	el.appendChild(div);
   });
 }
 function mReExport(r){mCaptureReceipt({...r,staffName:r.valetName||'—',amount:r.amount||0,ref:r.ref||genRef()});}
@@ -1269,34 +1304,34 @@ function mReExport(r){mCaptureReceipt({...r,staffName:r.valetName||'—',amount:
 async function mUpdateVehicle(plate, card, status){
   if(!confirm('Confirm vehicle returned?')) return;
   try {
-    await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
-      method: 'PATCH', 
-      body: JSON.stringify({ vehicle_status: status })
-    });
-    toast('Status Updated');
-    setTimeout(mLoadReports, 500);
+	await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
+	  method: 'PATCH', 
+	  body: JSON.stringify({ vehicle_status: status })
+	});
+	toast('Status Updated');
+	setTimeout(mLoadReports, 500);
   } catch(e) { 
-    toast('Failed to update'); 
+	toast('Failed to update'); 
   }
 }
 async function mLoadAttendanceList(){
   var el=document.getElementById('m-att-list');if(!el)return;
   el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px;">Loading…</div>';
   try{
-    var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify({action:'getEmployees'})});
-    var emps=await res.json();
-    document.getElementById('m-cnt-t').innerText=emps.length;
-    el.innerHTML='';var present=0;
-    emps.forEach(function(emp){
-      var row=document.createElement('div');
-      row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;';
-      row.innerHTML='<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy);flex-shrink:0;">'+(emp.name||'?').charAt(0).toUpperCase()+'</div>'
-        +'<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text);">'+emp.name+'</div><div style="font-size:11px;color:var(--text3);">'+emp.job+'</div></div>'
-        +'<span class="chip chip-gray">Staff</span>';
-      el.appendChild(row);
-    });
-    document.getElementById('m-cnt-p').innerText=present;
-    document.getElementById('m-cnt-a').innerText=Math.max(0,emps.length-present);
+	var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify({action:'getEmployees'})});
+	var emps=await res.json();
+	document.getElementById('m-cnt-t').innerText=emps.length;
+	el.innerHTML='';var present=0;
+	emps.forEach(function(emp){
+	  var row=document.createElement('div');
+	  row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;';
+	  row.innerHTML='<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy);flex-shrink:0;">'+(emp.name||'?').charAt(0).toUpperCase()+'</div>'
+		+'<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text);">'+emp.name+'</div><div style="font-size:11px;color:var(--text3);">'+emp.job+'</div></div>'
+		+'<span class="chip chip-gray">Staff</span>';
+	  el.appendChild(row);
+	});
+	document.getElementById('m-cnt-p').innerText=present;
+	document.getElementById('m-cnt-a').innerText=Math.max(0,emps.length-present);
   }catch(e){el.innerHTML='<div style="color:var(--red);padding:16px;font-size:12px;">Error: '+e.message+'</div>';}
 }
 
@@ -1311,27 +1346,27 @@ function startGPS(){
   var el=document.getElementById('gps-txt');if(el)el.innerText='Locating…';el&&(el.style.color='var(--text3)');
   if(!navigator.geolocation){if(el){el.innerText='GPS unavailable';el.style.color='var(--red)';}return;}
   navigator.geolocation.getCurrentPosition(function(pos){
-    myLat=pos.coords.latitude;myLng=pos.coords.longitude;
-    myDist=Math.round(haversine(myLat,myLng,CAFE_LAT,CAFE_LNG));
-    var inRange=myDist<=GPS_RADIUS;
-    if(el){el.innerText=(inRange?'✓ In range':'✗ Out of range')+' ('+myDist+'m)';el.style.color=inRange?'var(--green)':'var(--red)';}
-    updateCIBtn();
+	myLat=pos.coords.latitude;myLng=pos.coords.longitude;
+	myDist=Math.round(haversine(myLat,myLng,CAFE_LAT,CAFE_LNG));
+	var inRange=myDist<=GPS_RADIUS;
+	if(el){el.innerText=(inRange?'✓ In range':'✗ Out of range')+' ('+myDist+'m)';el.style.color=inRange?'var(--green)':'var(--red)';}
+	updateCIBtn();
   },function(err){if(el){el.innerText='GPS error';el.style.color='var(--red)';}},{enableHighAccuracy:true,timeout:12000});
 }
 async function updateCIBtn(){
   var btn=document.getElementById('ci-btn');var lbl=document.getElementById('ci-label');var msg=document.getElementById('ci-msg');if(!btn)return;
   try{
-    var today=new Date().toISOString().slice(0,10);
-    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.desc&limit=1',{method:'GET'});
-    var last=(Array.isArray(rows)&&rows.length)?rows[0].type:'';
-    var normLast=(last||'').toLowerCase().includes('out')?'Check-Out':'Check-In';
-    if(normLast==='Check-In'&&rows.length){
-      btn.className='ci-btn ci-out';if(lbl)lbl.innerText='Check Out';
-      if(msg)msg.innerText='Checked in · tap to check out';
-    }else{
-      btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';
-      if(msg)msg.innerText=rows.length?'Last checked out · ready':'Ready to check in';
-    }
+	var today=new Date().toISOString().slice(0,10);
+	var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.desc&limit=1',{method:'GET'});
+	var last=(Array.isArray(rows)&&rows.length)?rows[0].type:'';
+	var normLast=(last||'').toLowerCase().includes('out')?'Check-Out':'Check-In';
+	if(normLast==='Check-In'&&rows.length){
+	  btn.className='ci-btn ci-out';if(lbl)lbl.innerText='Check Out';
+	  if(msg)msg.innerText='Checked in · tap to check out';
+	}else{
+	  btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';
+	  if(msg)msg.innerText=rows.length?'Last checked out · ready':'Ready to check in';
+	}
   }catch{btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';}
 }
 async function mDoCheckIn(){
@@ -1344,9 +1379,9 @@ async function mDoCheckIn(){
   var type=(Array.isArray(rows)&&rows.length&&normLast==='Check-In')?'Check-Out':'Check-In';
   var btn=document.getElementById('ci-btn');btn.disabled=true;
   try{
-    await sb('operix_attendance',{method:'POST',body:JSON.stringify({employee:CU.name,type,project:myShift?.project||'',submitted_at:new Date().toISOString(),distance_m:myDist,coords:myLat+','+myLng})});
-    toast(type==='Check-In'?'✓ Checked in!':'✓ Checked out!');
-    updateCIBtn();loadTodayAtt();loadAttHistory();
+	await sb('operix_attendance',{method:'POST',body:JSON.stringify({employee:CU.name,type,project:myShift?.project||'',submitted_at:new Date().toISOString(),distance_m:myDist,coords:myLat+','+myLng})});
+	toast(type==='Check-In'?'✓ Checked in!':'✓ Checked out!');
+	updateCIBtn();loadTodayAtt();loadAttHistory();
   }catch(e){toast('Error: '+e.message);}
   btn.disabled=false;
 }
@@ -1360,18 +1395,18 @@ function normRow(r){
 async function loadTodayAtt(){
   var el=document.getElementById('ci-today');if(!el)return;
   try{
-    var today=new Date().toISOString().slice(0,10);
-    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.asc',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No entries today</div>';return;}
-    el.innerHTML=rows.map(function(r){var n=normRow(r);var isIn=n.type==='Check-In';return'<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'" style="min-width:62px;justify-content:center;">'+(isIn?'→ In':'← Out')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+n.time+'</span><span style="font-size:11px;color:var(--text4);">'+(n.project||'')+'</span></div>';}).join('');
+	var today=new Date().toISOString().slice(0,10);
+	var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&submitted_at=gte.'+encodeURIComponent(today+'T00:00:00Z')+'&order=submitted_at.asc',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No entries today</div>';return;}
+	el.innerHTML=rows.map(function(r){var n=normRow(r);var isIn=n.type==='Check-In';return'<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'" style="min-width:62px;justify-content:center;">'+(isIn?'→ In':'← Out')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+n.time+'</span><span style="font-size:11px;color:var(--text4);">'+(n.project||'')+'</span></div>';}).join('');
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:8px;">'+e.message+'</div>';}
 }
 async function loadAttHistory(){
   var el=document.getElementById('ci-history');if(!el)return;
   try{
-    var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&order=submitted_at.desc&limit=30',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No history</div>';return;}
-    el.innerHTML=rows.map(function(r){var n=normRow(r);var isIn=n.type==='Check-In';return'<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'" style="min-width:44px;justify-content:center;font-size:10px;">'+(isIn?'In':'Out')+'</span><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text);">'+n.time+'</div><div style="font-size:10px;color:var(--text4);">'+n.date+'</div></div><span style="font-size:11px;color:var(--text4);">'+(n.project||'')+'</span></div>';}).join('');
+	var rows=await sb('operix_attendance?employee=eq.'+encodeURIComponent(CU.name)+'&order=submitted_at.desc&limit=30',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No history</div>';return;}
+	el.innerHTML=rows.map(function(r){var n=normRow(r);var isIn=n.type==='Check-In';return'<div class="att-row"><span class="chip '+(isIn?'chip-green':'chip-red')+'" style="min-width:44px;justify-content:center;font-size:10px;">'+(isIn?'In':'Out')+'</span><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text);">'+n.time+'</div><div style="font-size:10px;color:var(--text4);">'+n.date+'</div></div><span style="font-size:11px;color:var(--text4);">'+(n.project||'')+'</span></div>';}).join('');
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:8px;">'+e.message+'</div>';}
 }
 
@@ -1379,26 +1414,26 @@ async function loadRequests(){
   var el=document.getElementById('req-list');if(!el)return;
   el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:28px;">Loading…</div>';
   try{
-    var myEmail=CU.email.toLowerCase();
-    var rows=await sb('operix_requests?employee_email=eq.'+encodeURIComponent(myEmail)+'&order=created_at.desc',{method:'GET'}).catch(()=>[]);
-    if(!Array.isArray(rows)||!rows.length){
-      var all=await sb('operix_requests?order=created_at.desc&limit=200',{method:'GET'}).catch(()=>[]);
-      rows=(all||[]).filter(function(r){return(r.employee_name||'').toLowerCase()===(CU.name||'').toLowerCase();});
-    }
-    if(!rows.length){el.innerHTML='<div style="font-size:13px;color:var(--text4);text-align:center;padding:36px;">No requests yet.<br><span style="font-size:12px;">Tap + New Request to submit one.</span></div>';return;}
-    var sc={Approved:'chip-green',Rejected:'chip-red',Pending:'chip-amber',Reviewed:'chip-blue'};
-    el.innerHTML=rows.map(function(r){
-      var d=new Date(r.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-      return'<div class="card-sm">'
-        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
-          +'<span style="font-size:13px;font-weight:700;color:var(--text);">'+(r.type||'Request')+'</span>'
-          +'<span class="chip '+(sc[r.status]||'chip-amber')+'">'+(r.status||'Pending')+'</span>'
-        +'</div>'
-        +'<div style="font-size:12px;color:var(--text3);margin-bottom:5px;line-height:1.5;">'+(r.details||'').slice(0,120)+'</div>'
-        +'<div style="font-size:10px;color:var(--text4);">'+d+'</div>'
-        +(r.reply?'<div style="margin-top:9px;padding:10px;background:var(--blue-bg);border-radius:9px;border:1px solid var(--blue-border);"><div style="font-size:9px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Admin Reply</div><div style="font-size:12px;color:var(--text);line-height:1.5;">'+r.reply+'</div></div>':'')
-        +'</div>';
-    }).join('');
+	var myEmail=CU.email.toLowerCase();
+	var rows=await sb('operix_requests?employee_email=eq.'+encodeURIComponent(myEmail)+'&order=created_at.desc',{method:'GET'}).catch(()=>[]);
+	if(!Array.isArray(rows)||!rows.length){
+	  var all=await sb('operix_requests?order=created_at.desc&limit=200',{method:'GET'}).catch(()=>[]);
+	  rows=(all||[]).filter(function(r){return(r.employee_name||'').toLowerCase()===(CU.name||'').toLowerCase();});
+	}
+	if(!rows.length){el.innerHTML='<div style="font-size:13px;color:var(--text4);text-align:center;padding:36px;">No requests yet.<br><span style="font-size:12px;">Tap + New Request to submit one.</span></div>';return;}
+	var sc={Approved:'chip-green',Rejected:'chip-red',Pending:'chip-amber',Reviewed:'chip-blue'};
+	el.innerHTML=rows.map(function(r){
+	  var d=new Date(r.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+	  return'<div class="card-sm">'
+		+'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
+		  +'<span style="font-size:13px;font-weight:700;color:var(--text);">'+(r.type||'Request')+'</span>'
+		  +'<span class="chip '+(sc[r.status]||'chip-amber')+'">'+(r.status||'Pending')+'</span>'
+		+'</div>'
+		+'<div style="font-size:12px;color:var(--text3);margin-bottom:5px;line-height:1.5;">'+(r.details||'').slice(0,120)+'</div>'
+		+'<div style="font-size:10px;color:var(--text4);">'+d+'</div>'
+		+(r.reply?'<div style="margin-top:9px;padding:10px;background:var(--blue-bg);border-radius:9px;border:1px solid var(--blue-border);"><div style="font-size:9px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Admin Reply</div><div style="font-size:12px;color:var(--text);line-height:1.5;">'+r.reply+'</div></div>':'')
+		+'</div>';
+	}).join('');
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:16px;">Error: '+e.message+'</div>';}
 }
 function openReqModal(){document.getElementById('rm-details').value='';document.getElementById('req-modal').classList.add('open');}
@@ -1407,8 +1442,8 @@ async function mSubmitReq(){
   var details=(document.getElementById('rm-details').value||'').trim();
   if(!details){toast('Please describe your request.');return;}
   try{
-    await sb('operix_requests',{method:'POST',body:JSON.stringify({employee_name:CU.name,employee_email:CU.email.toLowerCase(),type,details,status:'Pending',created_at:new Date().toISOString()})});
-    closeModal('req-modal');toast('Request submitted!');loadRequests();
+	await sb('operix_requests',{method:'POST',body:JSON.stringify({employee_name:CU.name,employee_email:CU.email.toLowerCase(),type,details,status:'Pending',created_at:new Date().toISOString()})});
+	closeModal('req-modal');toast('Request submitted!');loadRequests();
   }catch(e){toast('Error: '+e.message);}
 }
 
@@ -1417,30 +1452,30 @@ async function loadMail(folder){
   var el=document.getElementById('m-mail-list');if(!el)return;
   el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:36px;">Loading…</div>';
   try{
-    var myEmail=CU.email.toLowerCase();
-    var q=folder==='inbox'?'folder=eq.inbox&recipient_emails=cs.{'+myEmail+'}&order=created_at.desc&select=*':'folder=eq.sent&sender_email=eq.'+myEmail+'&order=created_at.desc&select=*';
-    var rows=await sb('operix_emails?'+q,{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--text4);"><div style="font-size:13px;font-weight:600;">No messages</div></div>';return;}
-    el.innerHTML='';
-    rows.forEach(function(em){
-      var isUnread=!em.is_read&&em.sender_email!==myEmail;
-      var dt=new Date(em.created_at);var now=new Date();
-      var ts=dt.toDateString()===now.toDateString()?dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-      var preview=(em.body||'').replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s{2,}/g,' ').trim().slice(0,70);
-      var row=document.createElement('div');
-      row.style.cssText='display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--surface);transition:background .15s;'+(isUnread?'border-left:3px solid var(--navy);background:#f8f9fa;':'');
-      row.innerHTML='<div style="width:40px;height:40px;border-radius:12px;background:'+(isUnread?'var(--navy)':'var(--surface2)')+';color:'+(isUnread?'#fff':'var(--text3)')+';display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
-        +'<div style="flex:1;min-width:0;">'
-          +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
-            +'<div style="font-size:13px;font-weight:'+(isUnread?'700':'600')+';color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;">'+(em.sender_name||em.sender_email)+'</div>'
-            +'<div style="font-size:10px;color:var(--text4);flex-shrink:0;">'+ts+'</div>'
-          +'</div>'
-          +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
-          +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
-        +'</div>';
-      row.onclick=function(){mOpenMail(em);};
-      el.appendChild(row);
-    });
+	var myEmail=CU.email.toLowerCase();
+	var q=folder==='inbox'?'folder=eq.inbox&recipient_emails=cs.{'+myEmail+'}&order=created_at.desc&select=*':'folder=eq.sent&sender_email=eq.'+myEmail+'&order=created_at.desc&select=*';
+	var rows=await sb('operix_emails?'+q,{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--text4);"><div style="font-size:13px;font-weight:600;">No messages</div></div>';return;}
+	el.innerHTML='';
+	rows.forEach(function(em){
+	  var isUnread=!em.is_read&&em.sender_email!==myEmail;
+	  var dt=new Date(em.created_at);var now=new Date();
+	  var ts=dt.toDateString()===now.toDateString()?dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+	  var preview=(em.body||'').replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s{2,}/g,' ').trim().slice(0,70);
+	  var row=document.createElement('div');
+	  row.style.cssText='display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--surface);transition:background .15s;'+(isUnread?'border-left:3px solid var(--navy);background:#f8f9fa;':'');
+	  row.innerHTML='<div style="width:40px;height:40px;border-radius:12px;background:'+(isUnread?'var(--navy)':'var(--surface2)')+';color:'+(isUnread?'#fff':'var(--text3)')+';display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
+		+'<div style="flex:1;min-width:0;">'
+		  +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
+			+'<div style="font-size:13px;font-weight:'+(isUnread?'700':'600')+';color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;">'+(em.sender_name||em.sender_email)+'</div>'
+			+'<div style="font-size:10px;color:var(--text4);flex-shrink:0;">'+ts+'</div>'
+		  +'</div>'
+		  +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
+		  +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
+		+'</div>';
+	  row.onclick=function(){mOpenMail(em);};
+	  el.appendChild(row);
+	});
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:16px;">Error: '+e.message+'</div>';}
 }
 function mMailTab(folder,btn){
@@ -1451,29 +1486,29 @@ function mMailTab(folder,btn){
 function mOpenMail(em){
   var myEmail=CU.email.toLowerCase();
   if(!em.is_read&&em.sender_email!==myEmail){
-    em.is_read=true;
-    sb('operix_emails?id=eq.'+em.id,{method:'PATCH',body:JSON.stringify({is_read:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
-    updateMailBadge();
+	em.is_read=true;
+	sb('operix_emails?id=eq.'+em.id,{method:'PATCH',body:JSON.stringify({is_read:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
+	updateMailBadge();
   }
   var dt=new Date(em.created_at).toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
   var bodyHtml=(/<[a-z][\s\S]{0,20}>/i.test(em.body||''))?em.body:(em.body||'').replace(/\n/g,'<br>');
   document.getElementById('mail-read-content').innerHTML=
-    '<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">'
-      +'<div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">'+(em.subject||'(No Subject)')+'</div>'
-      +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
-        +'<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--navy);">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
-        +'<div><div style="font-size:13px;font-weight:700;color:var(--text);">'+(em.sender_name||em.sender_email)+'</div>'
-        +'<div style="font-size:10px;color:var(--text4);">'+dt+'</div></div>'
-      +'</div>'
-      +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
-    +'</div>'
-    +'<div style="font-size:14px;line-height:1.8;color:var(--text);overflow-x:auto;">'+bodyHtml+'</div>';
+	'<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">'
+	  +'<div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">'+(em.subject||'(No Subject)')+'</div>'
+	  +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+		+'<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--navy);">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
+		+'<div><div style="font-size:13px;font-weight:700;color:var(--text);">'+(em.sender_name||em.sender_email)+'</div>'
+		+'<div style="font-size:10px;color:var(--text4);">'+dt+'</div></div>'
+	  +'</div>'
+	  +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
+	+'</div>'
+	+'<div style="font-size:14px;line-height:1.8;color:var(--text);overflow-x:auto;">'+bodyHtml+'</div>';
   document.getElementById('mail-read-modal').classList.add('open');
 }
 function openComposeModal(){
   sb('accounts?select=name,email&order=name.asc',{method:'GET'}).then(function(rows){
-    var dl=document.getElementById('cm-to-list');
-    if(dl&&Array.isArray(rows))dl.innerHTML=rows.map(function(r){return'<option value="'+r.email+'">'+r.name+'</option>';}).join('');
+	var dl=document.getElementById('cm-to-list');
+	if(dl&&Array.isArray(rows))dl.innerHTML=rows.map(function(r){return'<option value="'+r.email+'">'+r.name+'</option>';}).join('');
   }).catch(()=>{});
   document.getElementById('cm-to').value='';document.getElementById('cm-sub').value='';document.getElementById('cm-body').value='';
   document.getElementById('compose-modal').classList.add('open');
@@ -1484,24 +1519,24 @@ async function mSendMail(){
   var body=(document.getElementById('cm-body').value||'').trim();
   if(!to||!sub||!body){toast('Fill all fields.');return;}
   try{
-    var recRows=await sb('accounts?email=eq.'+encodeURIComponent(to)+'&select=name&limit=1',{method:'GET'}).catch(()=>[]);
-    var recName=(Array.isArray(recRows)&&recRows.length)?recRows[0].name:to;
-    var p={sender_name:CU.name,sender_email:CU.email.toLowerCase(),recipient_names:[recName],recipient_emails:[to],cc_emails:[],subject:sub,body:body.replace(/\n/g,'<br>'),folder:'sent',is_read:true,thread_id:null,attachments:[]};
-    await sb('operix_emails',{method:'POST',body:JSON.stringify(p)});
-    await sb('operix_emails',{method:'POST',body:JSON.stringify({...p,folder:'inbox',is_read:false})});
-    closeModal('compose-modal');toast('Message sent!');
-    if(mMailFolder==='sent')loadMail('sent');
+	var recRows=await sb('accounts?email=eq.'+encodeURIComponent(to)+'&select=name&limit=1',{method:'GET'}).catch(()=>[]);
+	var recName=(Array.isArray(recRows)&&recRows.length)?recRows[0].name:to;
+	var p={sender_name:CU.name,sender_email:CU.email.toLowerCase(),recipient_names:[recName],recipient_emails:[to],cc_emails:[],subject:sub,body:body.replace(/\n/g,'<br>'),folder:'sent',is_read:true,thread_id:null,attachments:[]};
+	await sb('operix_emails',{method:'POST',body:JSON.stringify(p)});
+	await sb('operix_emails',{method:'POST',body:JSON.stringify({...p,folder:'inbox',is_read:false})});
+	closeModal('compose-modal');toast('Message sent!');
+	if(mMailFolder==='sent')loadMail('sent');
   }catch(e){toast('Error: '+e.message);}
 }
 async function updateMailBadge(){
   try{
-    var myEmail=CU.email.toLowerCase();
-    var rows=await sb('operix_emails?folder=eq.inbox&is_read=eq.false&recipient_emails=cs.{'+myEmail+'}&select=id',{method:'GET'});
-    var n=Array.isArray(rows)?rows.length:0;
-    ['nav-mail-badge','m-inbox-ct','hm-mail-badge'].forEach(function(id){
-      var el=document.getElementById(id);if(!el)return;
-      el.innerText=n||'';el.style.display=n?'inline-block':'none';
-    });
+	var myEmail=CU.email.toLowerCase();
+	var rows=await sb('operix_emails?folder=eq.inbox&is_read=eq.false&recipient_emails=cs.{'+myEmail+'}&select=id',{method:'GET'});
+	var n=Array.isArray(rows)?rows.length:0;
+	['nav-mail-badge','m-inbox-ct','hm-mail-badge'].forEach(function(id){
+	  var el=document.getElementById(id);if(!el)return;
+	  el.innerText=n||'';el.style.display=n?'inline-block':'none';
+	});
   }catch{}
 }
 
@@ -1516,121 +1551,121 @@ async function loadProfile(){
 async function loadDevices(){
   var el=document.getElementById('p-devices');if(!el)return;
   try{
-    var myFP=await getDevFP();
-    var rows=await sb('operix_trusted_devices?account_email=eq.'+encodeURIComponent(CU.email)+'&order=last_used.desc',{method:'GET'});
-    if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No trusted devices</div>';return;}
-    el.innerHTML='';
-    rows.forEach(function(dev){
-      var isC=dev.device_id===myFP;
-      var lastUsed=new Date(dev.last_used||dev.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-      var row=document.createElement('div');
-      row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);';
-      row.innerHTML='<div style="width:36px;height:36px;border-radius:9px;background:'+(isC?'var(--navy)':'var(--surface2)')+';border:1px solid '+(isC?'var(--navy)':'var(--border)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
-        +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+(isC?'#fff':'var(--text3)')+'" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>'
-        +'</div>'
-        +'<div style="flex:1;min-width:0;">'
-          +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+(dev.device_name||'Device')+(isC?' <span style="font-size:9px;background:var(--blue-bg);color:var(--blue);padding:2px 7px;border-radius:6px;">This device</span>':'')+'</div>'
-          +'<div style="font-size:11px;color:var(--text4);">Last used: '+lastUsed+'</div>'
-        +'</div>';
-      if(!isC){
-        var rm=document.createElement('button');
-        rm.style.cssText='padding:5px 10px;background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;flex-shrink:0;';
-        rm.innerText='Remove';
-        (function(id,r){rm.onclick=function(){rmDevice(id,r);};})(dev.id,row);
-        row.appendChild(rm);
-      }
-      el.appendChild(row);
-    });
+	var myFP=await getDevFP();
+	var rows=await sb('operix_trusted_devices?account_email=eq.'+encodeURIComponent(CU.email)+'&order=last_used.desc',{method:'GET'});
+	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No trusted devices</div>';return;}
+	el.innerHTML='';
+	rows.forEach(function(dev){
+	  var isC=dev.device_id===myFP;
+	  var lastUsed=new Date(dev.last_used||dev.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+	  var row=document.createElement('div');
+	  row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);';
+	  row.innerHTML='<div style="width:36px;height:36px;border-radius:9px;background:'+(isC?'var(--navy)':'var(--surface2)')+';border:1px solid '+(isC?'var(--navy)':'var(--border)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+		+'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+(isC?'#fff':'var(--text3)')+'" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>'
+		+'</div>'
+		+'<div style="flex:1;min-width:0;">'
+		  +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+(dev.device_name||'Device')+(isC?' <span style="font-size:9px;background:var(--blue-bg);color:var(--blue);padding:2px 7px;border-radius:6px;">This device</span>':'')+'</div>'
+		  +'<div style="font-size:11px;color:var(--text4);">Last used: '+lastUsed+'</div>'
+		+'</div>';
+	  if(!isC){
+		var rm=document.createElement('button');
+		rm.style.cssText='padding:5px 10px;background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;flex-shrink:0;';
+		rm.innerText='Remove';
+		(function(id,r){rm.onclick=function(){rmDevice(id,r);};})(dev.id,row);
+		row.appendChild(rm);
+	  }
+	  el.appendChild(row);
+	});
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);">Error: '+e.message+'</div>';}
 }
 async function rmDevice(id,rowEl){
   if(!confirm('Remove this device?'))return;
   try{
-    await sb('operix_trusted_devices?id=eq.'+id,{method:'DELETE',headers:{'Prefer':'return=minimal'}});
-    if(rowEl){rowEl.style.opacity='0';rowEl.style.transition='opacity .3s';setTimeout(function(){rowEl.remove();},300);}
-    toast('Device removed.');
+	await sb('operix_trusted_devices?id=eq.'+id,{method:'DELETE',headers:{'Prefer':'return=minimal'}});
+	if(rowEl){rowEl.style.opacity='0';rowEl.style.transition='opacity .3s';setTimeout(function(){rowEl.remove();},300);}
+	toast('Device removed.');
   }catch(e){toast('Error: '+e.message);}
 }
 
 async function mExportID() {
   var btn = document.getElementById('btn-export-id');
   if(btn) { 
-    btn.disabled = true; 
-    btn.innerHTML = 'Generating...'; 
+	btn.disabled = true; 
+	btn.innerHTML = 'Generating...'; 
   }
   
   try {
-    document.getElementById('id-name').innerText = CU.name || 'Unknown';
-    document.getElementById('id-job').innerText = (CU.role || 'Staff') + (CU.job ? ' · ' + CU.job : '');
-    document.getElementById('id-email').innerText = CU.email || 'No email';
-    document.getElementById('id-phone').innerText = CU.phone || 'No phone on record';
-    
-    var photoEl = document.getElementById('id-photo');
-    if(CU.photo) {
-      photoEl.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous">';
-    } else {
-      photoEl.innerText = (CU.name || '?').charAt(0).toUpperCase();
-    }
+	document.getElementById('id-name').innerText = CU.name || 'Unknown';
+	document.getElementById('id-job').innerText = (CU.role || 'Staff') + (CU.job ? ' · ' + CU.job : '');
+	document.getElementById('id-email').innerText = CU.email || 'No email';
+	document.getElementById('id-phone').innerText = CU.phone || 'No phone on record';
+	
+	var photoEl = document.getElementById('id-photo');
+	if(CU.photo) {
+	  photoEl.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous">';
+	} else {
+	  photoEl.innerText = (CU.name || '?').charAt(0).toUpperCase();
+	}
 
-    var empHash = 0;
-    var emStr = (CU.email || CU.name || 'unknown').toLowerCase();
-    for(var i=0; i < emStr.length; i++) {
-      empHash = ((empHash << 5) - empHash) + emStr.charCodeAt(i);
-      empHash |= 0;
-    }
-    var empID = 'MBX-' + Math.abs(empHash).toString(16).toUpperCase().slice(0,6).padStart(6,'0');
-    document.getElementById('id-empid').innerText = empID;
+	var empHash = 0;
+	var emStr = (CU.email || CU.name || 'unknown').toLowerCase();
+	for(var i=0; i < emStr.length; i++) {
+	  empHash = ((empHash << 5) - empHash) + emStr.charCodeAt(i);
+	  empHash |= 0;
+	}
+	var empID = 'MBX-' + Math.abs(empHash).toString(16).toUpperCase().slice(0,6).padStart(6,'0');
+	document.getElementById('id-empid').innerText = empID;
 
-    var qrEl = document.getElementById('id-qr');
-    qrEl.innerHTML = '';
-    var qrData = JSON.stringify({
-       emp_id: empID,
-       name: CU.name,
-       role: CU.role,
-       email: CU.email,
-       status: "Active"
-    });
-    
-    new QRCode(qrEl, {
-       text: qrData,
-       width: 256,
-       height: 256, 
-       colorDark: "#1e2d40",
-       colorLight: "#ffffff",
-       correctLevel: QRCode.CorrectLevel.L 
-    });
+	var qrEl = document.getElementById('id-qr');
+	qrEl.innerHTML = '';
+	var qrData = JSON.stringify({
+	   emp_id: empID,
+	   name: CU.name,
+	   role: CU.role,
+	   email: CU.email,
+	   status: "Active"
+	});
+	
+	new QRCode(qrEl, {
+	   text: qrData,
+	   width: 256,
+	   height: 256, 
+	   colorDark: "#1e2d40",
+	   colorLight: "#ffffff",
+	   correctLevel: QRCode.CorrectLevel.L 
+	});
 
-    setTimeout(() => {
-        var qrImg = qrEl.querySelector('img');
-        var qrCanvas = qrEl.querySelector('canvas');
-        if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
-        if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
-    }, 50);
+	setTimeout(() => {
+		var qrImg = qrEl.querySelector('img');
+		var qrCanvas = qrEl.querySelector('canvas');
+		if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
+		if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
+	}, 50);
 
-    await new Promise(r => setTimeout(r, 800));
+	await new Promise(r => setTimeout(r, 800));
 
-    var canvas = await html2canvas(document.getElementById('id-card-cap'), {
-       scale: 3, 
-       backgroundColor: null,
-       useCORS: true,
-       allowTaint: true
-    });
+	var canvas = await html2canvas(document.getElementById('id-card-cap'), {
+	   scale: 3, 
+	   backgroundColor: null,
+	   useCORS: true,
+	   allowTaint: true
+	});
 
-    var a = document.createElement('a');
-    a.download = 'OPERIX-ID-' + (CU.name || 'Staff').replace(/\s+/g,'-') + '.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-    
-    a.remove();
-    toast('ID Card downloaded!');
+	var a = document.createElement('a');
+	a.download = 'OPERIX-ID-' + (CU.name || 'Staff').replace(/\s+/g,'-') + '.png';
+	a.href = canvas.toDataURL('image/png');
+	a.click();
+	
+	a.remove();
+	toast('ID Card downloaded!');
 
   } catch(e) {
-    toast('Error generating ID');
+	toast('Error generating ID');
   }
   
   if(btn) { 
-    btn.disabled = false; 
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Official ID'; 
+	btn.disabled = false; 
+	btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Official ID'; 
   }
 }
 
@@ -1638,9 +1673,9 @@ function toggleChat() {
   var p = document.getElementById('chat-panel');
   p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
   if(p.style.display === 'flex') {
-    document.getElementById('chat-input').focus();
-    var body = document.getElementById('chat-body');
-    body.scrollTop = body.scrollHeight;
+	document.getElementById('chat-input').focus();
+	var body = document.getElementById('chat-body');
+	body.scrollTop = body.scrollHeight;
   }
 }
 
@@ -1664,86 +1699,86 @@ function sendChat() {
   body.scrollTop = body.scrollHeight;
 
   setTimeout(() => {
-    typingDiv.remove();
+	typingDiv.remove();
 
-    var bMsg = document.createElement('div');
-    bMsg.className = 'chat-msg bot pop-in';
-    bMsg.innerHTML = getBotResponse(text.toLowerCase());
-    
-    body.appendChild(bMsg);
-    body.scrollTop = body.scrollHeight;
+	var bMsg = document.createElement('div');
+	bMsg.className = 'chat-msg bot pop-in';
+	bMsg.innerHTML = getBotResponse(text.toLowerCase());
+	
+	body.appendChild(bMsg);
+	body.scrollTop = body.scrollHeight;
   }, 600); 
 }
 
 function getBotResponse(input) {
   if (input.includes('check in') || input.includes('check-in')) {
-    return `<b>Check-In Rules:</b><br>
-    • <b>On Time:</b> 15-minute grace period from shift start.<br>
-    • <b>Late (16m - 1h 59m):</b> Allowed with warning. Deduction: 30 SAR/hr (prorated).<br>
-    • <b>2+ Hours Late:</b> Marked ABSENT. Cannot check in until next shift.`;
+	return `<b>Check-In Rules:</b><br>
+	• <b>On Time:</b> 15-minute grace period from shift start.<br>
+	• <b>Late (16m - 1h 59m):</b> Allowed with warning. Deduction: 30 SAR/hr (prorated).<br>
+	• <b>2+ Hours Late:</b> Marked ABSENT. Cannot check in until next shift.`;
   }
   
   if (input.includes('check out') || input.includes('check-out') || input.includes('early')) {
-    return `<b>Check-Out Rules:</b><br>
-    • <b>Valid Window:</b> Up to 30 mins after shift ends.<br>
-    • <b>Early Checkout:</b> Results in NO PAY for that session.<br>
-    • <b>After 30-min Window:</b> Blocked. Contact your manager.`;
+	return `<b>Check-Out Rules:</b><br>
+	• <b>Valid Window:</b> Up to 30 mins after shift ends.<br>
+	• <b>Early Checkout:</b> Results in NO PAY for that session.<br>
+	• <b>After 30-min Window:</b> Blocked. Contact your manager.`;
   }
   
   if (input.includes('absent') || input.includes('absence') || input.includes('streak')) {
-    return `<b>Absence Deductions (Consecutive Work Days):</b><br>
-    • <b>1 Day:</b> -1 day deduction.<br>
-    • <b>2 Days:</b> -2.5 days deduction.<br>
-    • <b>3+ Days:</b> -30% of salary.<br>
-    <i>Note: Off days/weekends do not break a streak.</i>`;
+	return `<b>Absence Deductions (Consecutive Work Days):</b><br>
+	• <b>1 Day:</b> -1 day deduction.<br>
+	• <b>2 Days:</b> -2.5 days deduction.<br>
+	• <b>3+ Days:</b> -30% of salary.<br>
+	<i>Note: Off days/weekends do not break a streak.</i>`;
   }
   
   if (input.includes('salary') || input.includes('pay') || input.includes('deduction') || input.includes('calculate')) {
-    return `<b>Salary Calculation:</b><br>
-    • <b>Daily Rate:</b> Monthly ÷ Working Days<br>
-    • <b>Hourly Rate:</b> Daily ÷ 8 hours<br>
-    • <b>Earned:</b> Hours Worked × Hourly Rate<br>
-    • <b>Net Salary:</b> Earned − Deductions<br>
-    <i>Late penalty: 30 SAR/hr prorated (e.g., 45m late = -22 SAR).</i>`;
+	return `<b>Salary Calculation:</b><br>
+	• <b>Daily Rate:</b> Monthly ÷ Working Days<br>
+	• <b>Hourly Rate:</b> Daily ÷ 8 hours<br>
+	• <b>Earned:</b> Hours Worked × Hourly Rate<br>
+	• <b>Net Salary:</b> Earned − Deductions<br>
+	<i>Late penalty: 30 SAR/hr prorated (e.g., 45m late = -22 SAR).</i>`;
   }
   
   if (input.includes('gps') || input.includes('location')) {
-    return `<b>GPS Rules:</b><br>
-    You must be on-site to check in/out. The GPS dot turns green when in range.<br>
-    <i>Tip: If it shows outside while you are inside, check location permissions and wait 10-15 seconds for the signal to update.</i>`;
+	return `<b>GPS Rules:</b><br>
+	You must be on-site to check in/out. The GPS dot turns green when in range.<br>
+	<i>Tip: If it shows outside while you are inside, check location permissions and wait 10-15 seconds for the signal to update.</i>`;
   }
 
   if (input.includes('ops') || input.includes('operation') || input.includes('valet') || input.includes('park')) {
-    return `<b>Operations Board:</b><br>
-    Tap the 'Ops' tab at the bottom. Select your specific module to get started.`;
+	return `<b>Operations Board:</b><br>
+	Tap the 'Ops' tab at the bottom. Select your specific module to get started.`;
   }
 
   if (input.includes('request') || input.includes('ticket') || input.includes('leave')) {
-    return `<b>Requests:</b><br>
-    Need to ask for leave, a document, or inquire about salary? Go to the 'Requests' tab and tap 'New Request' to send a formal ticket to HR/Management.`;
+	return `<b>Requests:</b><br>
+	Need to ask for leave, a document, or inquire about salary? Go to the 'Requests' tab and tap 'New Request' to send a formal ticket to HR/Management.`;
   }
 
   if (input.includes('mail') || input.includes('message')) {
-    return `<b>Mail:</b><br>
-    Use the Mail tab to send internal messages to staff or management securely within the Operix system.`;
+	return `<b>Mail:</b><br>
+	Use the Mail tab to send internal messages to staff or management securely within the Operix system.`;
   }
 
   if (input.includes('home') || input.includes('dashboard')) {
-    return `<b>Home Dashboard:</b><br>
-    This is your main screen. It shows your active shift details, the number of days you've worked this month, and your estimated salary.`;
+	return `<b>Home Dashboard:</b><br>
+	This is your main screen. It shows your active shift details, the number of days you've worked this month, and your estimated salary.`;
   }
 
   if (input.includes('policy') || input.includes('rules') || input.includes('hr')) {
-    return `I can help you with HR policies! Ask me specifically about:<br>
-    • Check in<br>
-    • Check out<br>
-    • Absences<br>
-    • Salary<br>
-    • GPS`;
+	return `I can help you with HR policies! Ask me specifically about:<br>
+	• Check in<br>
+	• Check out<br>
+	• Absences<br>
+	• Salary<br>
+	• GPS`;
   }
 
   if (input.includes('hi') || input.includes('hello') || input.includes('help')) {
-    return `Hello! I'm the OPERIX AI Assistant. I can help you navigate the app or answer questions about HR policies.<br><br>Try asking:<br><i>"How does salary work?"</i><br><i>"What is the late policy?"</i><br><i>"How do I use operations?"</i>`;
+	return `Hello! I'm the OPERIX AI Assistant. I can help you navigate the app or answer questions about HR policies.<br><br>Try asking:<br><i>"How does salary work?"</i><br><i>"What is the late policy?"</i><br><i>"How do I use operations?"</i>`;
   }
 
   return `I'm not quite sure about that. Try asking about specific HR policies (like 'late', 'absent', 'salary', 'check out') or how to use a specific part of the app (like 'operations' or 'requests').`;
