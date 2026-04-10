@@ -997,51 +997,75 @@ function finishLogin(acc) {
   initApp();
 }
 let radarInterval = null;
-let currentRadarRecordId = null;
+let currentRadarReq = null;
+let answeredRequests = new Set(); // Local memory to stop double-ringing
 
 function startRadarLoop() {
-  if (radarInterval) clearInterval(radarInterval); // Prevent duplicates
+  if (radarInterval) clearInterval(radarInterval); 
   
-  // Run this check every 7 seconds
   radarInterval = setInterval(async () => {
-	// Stop if radar is disabled (e.g. they logged out)
 	if (localStorage.getItem('radar_enabled') !== 'true') return;
-	
-	// If the modal is already open and ringing, don't fetch again
 	if (document.getElementById('radar-modal').style.display === 'flex') return;
 
 	try {
-	  // ** ADJUST THIS QUERY to match your database **
-	  // Example: Looking for an invoice where status is 'Requested' assigned to this valet
-	  let rows = await sb('operix_invoices?vehicle_status=eq.Requested&limit=1', {method: 'GET'});
+	  // Find cars that are requested
+	  let rows = await sb('operix_invoices?vehicle_status=eq.Requested', {method: 'GET'});
 	  
 	  if (rows && rows.length > 0) {
-		let req = rows[0];
-		currentRadarRecordId = req.id; // Save the ID to update it later
+		// Find the first requested car that we HAVEN'T answered yet
+		let req = rows.find(r => !answeredRequests.has(r.plate_num));
 		
-		// Trigger the alarm
-		document.getElementById('radar-client-info').innerText = req.plate_num + " - " + (req.client_name || 'Client');
-		document.getElementById('radar-modal').style.display = 'flex';
-		
-		// Play sound
-		document.getElementById('radar-audio').play().catch(e => console.log("Audio blocked"));
+		if (req) {
+		  currentRadarReq = req; 
+		  
+		  // Trigger the alarm
+		  document.getElementById('radar-client-info').innerText = req.plate_num + " - " + (req.client_name || 'Client');
+		  document.getElementById('radar-modal').style.display = 'flex';
+		  document.getElementById('radar-audio').play().catch(e => console.log("Audio blocked"));
 
-		// Trigger phone notification (vibrates phone if in background)
-		if ('Notification' in window && Notification.permission === 'granted') {
-		  navigator.serviceWorker.ready.then(function(reg) {
-			reg.showNotification('🚨 Car Requested!', {
-			  body: req.plate_num + ' is waiting!',
-			  icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
-			  vibrate: [200, 100, 200, 100, 200, 100, 200],
-			  requireInteraction: true
+		  if ('Notification' in window && Notification.permission === 'granted') {
+			navigator.serviceWorker.ready.then(function(reg) {
+			  reg.showNotification('🚨 Car Requested!', {
+				body: req.plate_num + ' is waiting!',
+				icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
+				vibrate: [200, 100, 200, 100, 200, 100, 200],
+				requireInteraction: true
+			  });
 			});
-		  });
+		  }
 		}
 	  }
+	} catch(e) {}
+  }, 7000); 
+}
+
+async function answerRadar() {
+  let audio = document.getElementById('radar-audio');
+  audio.pause();
+  audio.currentTime = 0;
+  document.getElementById('radar-modal').style.display = 'none';
+  
+  if (currentRadarReq) {
+	// Instantly add to memory so it NEVER rings again for this car
+	answeredRequests.add(currentRadarReq.plate_num); 
+	
+	try {
+	  // Update database status via Plate Number and Card Number
+	  await sb(`operix_invoices?plate_num=eq.${encodeURIComponent(currentRadarReq.plate_num)}&card_num=eq.${encodeURIComponent(currentRadarReq.card_num)}`, {
+		method: 'PATCH', 
+		body: JSON.stringify({ vehicle_status: 'In Progress' })
+	  });
+	  
+	  toast("Request Accepted! Status: In Progress");
+	  
+	  // Auto-refresh the Live Board so the card changes color immediately!
+	  mLoadReports(); 
+	  
 	} catch(e) {
-	  console.warn("Radar check error", e);
+	  toast("Error updating status.");
 	}
-  }, 7000); // 7000 ms = 7 seconds
+	currentRadarReq = null;
+  }
 }
 
 async function answerRadar() {
@@ -1366,31 +1390,42 @@ function mRenderReports(rows){
   if(!rows||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--text4);font-size:14px;font-weight:600;">No records found</div>';return;}
   el.innerHTML='';
   rows.slice(0,100).forEach(function(r,i){
-	var ip=String(r.vehicleStatus||'')==='Parked';
+	
+	// Calculate dynamic status and colors
+	var status = String(r.vehicleStatus || 'Returned');
+	var chipColor = 'chip-green';
+	var stripeBg = 'var(--green)';
+	
+	if(status === 'Parked') { chipColor = 'chip-amber'; stripeBg = 'var(--amber)'; }
+	if(status === 'Requested') { chipColor = 'chip-red'; stripeBg = 'var(--red)'; }
+	if(status === 'In Progress') { chipColor = 'chip-blue'; stripeBg = 'var(--blue)'; }
+
 	window._mRpt=window._mRpt||{};window._mRpt[i]=r;
 	var div=document.createElement('div');
 	div.className='inv-card hover-lift pop-in';
+	
 	div.innerHTML='<div style="display:flex;">'
-	  +'<div class="'+(ip?'inv-stripe-parked':'inv-stripe-done')+'"></div>'
+	  +'<div style="width:5px; flex-shrink:0; background:'+stripeBg+';"></div>' // Dynamic left stripe
 	  +'<div style="padding:16px;flex:1;">'
 		+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
 		  +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
-		  +'<span class="chip '+(ip?'chip-amber':'chip-green')+'">'+(ip?'Parked':'Returned')+'</span>'
+		  +'<span class="chip '+chipColor+'">'+status+'</span>' // Dynamic Chip
 		+'</div>'
 		+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">'
 		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;">'
-			  +'<div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div>'
-			  +'<div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'
-				  +(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')
-			  +'</div>'
-		  +'</div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')+'</div></div>'
 		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
 		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
 		+'</div>'
 		+'<div style="display:flex;gap:10px;">'
 		  +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;">Receipt</button>'
-		  +(ip?'<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>':'')
+		  
+		  // Show "Accept" button ONLY if it is currently Requested
+		  + (status === 'Requested' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'In Progress\')" style="flex:1;padding:12px;background:var(--blue-bg);border:1.5px solid var(--blue-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--blue);display:flex;align-items:center;justify-content:center;gap:6px;">Accept</button>' : '')
+		  
+		  // Show "Return" button if it is Parked or In Progress
+		  + (status === 'Parked' || status === 'In Progress' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>' : '')
+		  
 		+'</div>'
 	  +'</div>'
 	+'</div>';
