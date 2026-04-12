@@ -17,7 +17,6 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
 :root {
-  /* Aligned with the new Main Suite Theme */
   --navy: #1e2d40; 
   --navy-hover: #2a3f5c; 
   --gold: #9a6f28; 
@@ -48,13 +47,21 @@
   --st: env(safe-area-inset-top, 0px);
 }
 
+/* FIX: Global Box Sizing to prevent unwanted horizontal scrolling */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* Modernized Base & Background */
 html, body {
   height: 100%; 
+  width: 100%;
+  max-width: 100vw;
   background: var(--bg); 
   font-family: 'Space Grotesk', sans-serif; 
   color: var(--text); 
-  overflow: hidden; 
+  overflow-x: hidden; /* FIX: Prevents horizontal scrolling */
+  overflow-y: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -101,10 +108,10 @@ html, body {
 .nav-badge{position:absolute;top:2px;right:22%;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:9px;min-width:16px;text-align:center;display:none;}
 
 /* Screens & Pages */
-.screen{display:none;position:fixed;inset:0;overflow:hidden;flex-direction:column;}
+.screen{display:none;position:fixed;inset:0;overflow-x:hidden;overflow-y:hidden;flex-direction:column;}
 .screen.active{display:flex;animation:fadeUp .3s ease-out;}
 .auth-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;background:var(--bg);}
-.page{display:none;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;}
+.page{display:none;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:16px;}
 .page.active{display:block;}
 .page-pad{padding:16px;}
 
@@ -240,12 +247,12 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 		<div><label class="field-label">Password</label><input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()"></div>
 	 </div>
 	 <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px;text-align:center;line-height:1.4;"></div>
-	 
+	
 	 <button class="btn btn-dark hover-lift" onclick="mLogin()" id="l-btn" style="margin-bottom:16px;">
 		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
 		Sign In
 	 </button>
-	 <button onclick="showScreen('screen-forgot')" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
+	 <button onclick="openForgotScreen()" style="background:none;border:none;color:var(--text3);font-size:13px;font-weight:600;cursor:pointer;width:100%;padding:10px;font-family:'Plus Jakarta Sans',sans-serif;">Forgot password?</button>
 	</div>
   </div>
 </div>
@@ -647,18 +654,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-// Add this at the top of your script
-var currentExternalFee = 19; 
-
-async function loadSystemSettings() {
-	try {
-		const rows = await sb('operix_settings?key=eq.external_service_fee', { method: 'GET' });
-		if (rows && rows.length > 0) {
-			currentExternalFee = parseFloat(rows[0].value);
-		}
-	} catch (e) { console.warn("Fee fetch error:", e); }
-}
-
 'use strict';
 
 // Setup PWA Manifest dynamically
@@ -789,6 +784,21 @@ async function trustDev(email){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');s.style.display='none';});
   var el=document.getElementById(id); if(el){el.style.display='flex';el.classList.add('active');}
+}
+
+// FIX: Added function to completely reset the Forgot Password view when opened
+function openForgotScreen() {
+	document.getElementById('fp-s1').style.display = 'block';
+	document.getElementById('fp-s2').style.display = 'none';
+	document.getElementById('fp-s3').style.display = 'none';
+	document.getElementById('fp-s4').style.display = 'none';
+	document.getElementById('fp-email').value = '';
+	document.getElementById('fp-np').value = '';
+	document.getElementById('fp-cp').value = '';
+	document.getElementById('fp-err').style.display = 'none';
+	document.getElementById('fp-sub').innerText = '';
+	_fpAcc = null;
+	showScreen('screen-forgot');
 }
 
 function goTab(tab){
@@ -1068,29 +1078,6 @@ async function answerRadar() {
   }
 }
 
-async function answerRadar() {
-  // 1. Stop the alarm sound
-  let audio = document.getElementById('radar-audio');
-  audio.pause();
-  audio.currentTime = 0;
-  
-  // 2. Hide the modal
-  document.getElementById('radar-modal').style.display = 'none';
-  
-  // 3. Update the database so it stops ringing for everyone else
-  if (currentRadarRecordId) {
-	try {
-	  // Change status from 'Requested' to 'Bringing' or 'In Progress'
-	  await sb(`operix_invoices?id=eq.${currentRadarRecordId}`, {
-		method: 'PATCH', 
-		body: JSON.stringify({ vehicle_status: 'In Progress' })
-	  });
-	  toast("Request Accepted!");
-	} catch(e) {
-	  toast("Error updating status.");
-	}
-  }
-}
 function fpErr(msg){var e=document.getElementById('fp-err');e.innerHTML=iconCross()+' '+msg;e.style.display='block';}
 async function fpS1(){
   var email=(document.getElementById('fp-email').value||'').trim().toLowerCase();
@@ -1101,7 +1088,7 @@ async function fpS1(){
 	if(!Array.isArray(rows)||!rows.length){fpErr('No account found.');return;}
 	_fpAcc=rows[0];
 	var sq=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});
-	if(!Array.isArray(sq)||!sq.length){fpErr('No security questions. Contact admin.');return;}
+	if(!Array.isArray(sq)||!sq.length){fpErr('No security questions configured. Contact admin.');return;}
 	_sqd=sq[0];
 	var c=document.getElementById('fp-qs');c.innerHTML='';
 	['q1','q2','q3'].forEach(function(k){c.innerHTML+='<div><label class="field-label">'+_sqd[k]+'</label><input class="field" id="fpq-'+k+'" placeholder="Your answer" autocomplete="off"></div>';});
@@ -1146,7 +1133,13 @@ async function fpS4(){
   if(np!==cp){fpErr('Passwords do not match.');return;}
   try{
 	await sb('accounts?email=eq.'+encodeURIComponent(_fpAcc.email),{method:'PATCH',body:JSON.stringify({password:np}),headers:{'Prefer':'return=minimal'}});
-	_fpAcc=null;toast('Password updated. Sign in.');showScreen('screen-login');
+	toast('Password updated. Sign in.');
+	// FIX: Clear variables and send back to clean login
+	_fpAcc=null; 
+	document.getElementById('fp-email').value = '';
+	document.getElementById('fp-np').value = '';
+	document.getElementById('fp-cp').value = '';
+	showScreen('screen-login');
   }catch(e){fpErr('Error: '+e.message);}
 }
 
@@ -1312,12 +1305,12 @@ async function mCaptureReceipt(d) {
   
   try {
 	new QRCode(qrEl, {
-	  text: safeQrData,
-	  width: 256,
-	  height: 256,
-	  colorDark: '#1e2d40',
-	  colorLight: '#ffffff',
-	  correctLevel: QRCode.CorrectLevel.L
+	 text: safeQrData,
+	 width: 256,
+	 height: 256,
+	 colorDark: '#1e2d40',
+	 colorLight: '#ffffff',
+	 correctLevel: QRCode.CorrectLevel.L
 	});
 
 	setTimeout(() => {
@@ -1333,10 +1326,10 @@ async function mCaptureReceipt(d) {
   
   try {
 	var canvas = await html2canvas(document.getElementById('receipt-cap'), {
-	  scale: 3, 
-	  backgroundColor: '#f5f4f0',
-	  logging: false,
-	  useCORS: true
+	 scale: 3, 
+	 backgroundColor: '#f5f4f0',
+	 logging: false,
+	 useCORS: true
 	});
 	var a = document.createElement('a');
 	a.download = 'Receipt-' + d.plateNum + '.png';
@@ -1354,24 +1347,23 @@ async function mLoadReports(){
   
   try{
 	var query = 'operix_invoices?order=created_at.desc';
-	var role = (CU.role || '').toLowerCase();
-	if(role !== 'admin' && role !== 'manager') {
-	   query += '&valet_name=eq.' + encodeURIComponent(CU.name);
-	}
+	
+	// FIX: Removed the restrictive role check here!
+	// Now ALL staff will fetch ALL current records, allowing any valet to interact with the cars.
 
 	var rows = await sb(query, { method: 'GET' });
 	
 	mReportsData = rows.map(r => ({
-	  plateNum: r.plate_num,
-	  cardNum: r.card_num,
-	  clientName: r.client_name,
-	  valetName: r.valet_name,
-	  serviceType: r.service_type,
-	  amount: r.amount,
-	  phone: r.phone,
-	  vehicleStatus: r.vehicle_status,
-	  opID: r.op_id || r.ref,
-	  ref: r.ref
+	 plateNum: r.plate_num,
+	 cardNum: r.card_num,
+	 clientName: r.client_name,
+	 valetName: r.valet_name,
+	 serviceType: r.service_type,
+	 amount: r.amount,
+	 phone: r.phone,
+	 vehicleStatus: r.vehicle_status,
+	 opID: r.op_id || r.ref,
+	 ref: r.ref
 	}));
 	
 	mRenderReports(mReportsData);
@@ -1405,29 +1397,29 @@ function mRenderReports(rows){
 	div.className='inv-card hover-lift pop-in';
 	
 	div.innerHTML='<div style="display:flex;">'
-	  +'<div style="width:5px; flex-shrink:0; background:'+stripeBg+';"></div>' // Dynamic left stripe
-	  +'<div style="padding:16px;flex:1;">'
+	 +'<div style="width:5px; flex-shrink:0; background:'+stripeBg+';"></div>' // Dynamic left stripe
+	 +'<div style="padding:16px;flex:1;">'
 		+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
-		  +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
-		  +'<span class="chip '+chipColor+'">'+status+'</span>' // Dynamic Chip
+		 +'<span style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);">'+r.plateNum+'</span>'
+		 +'<span class="chip '+chipColor+'">'+status+'</span>' // Dynamic Chip
 		+'</div>'
 		+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
+		 +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
+		 +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')+'</div></div>'
+		 +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
+		 +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
 		+'</div>'
 		+'<div style="display:flex;gap:10px;">'
-		  +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;">Receipt</button>'
-		  
-		  // Show "Accept" button ONLY if it is currently Requested
-		  + (status === 'Requested' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'In Progress\')" style="flex:1;padding:12px;background:var(--blue-bg);border:1.5px solid var(--blue-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--blue);display:flex;align-items:center;justify-content:center;gap:6px;">Accept</button>' : '')
-		  
-		  // Show "Return" button if it is Parked or In Progress
-		  + (status === 'Parked' || status === 'In Progress' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>' : '')
-		  
+		 +'<button class="hover-lift" onclick="mReExport(window._mRpt['+i+'])" style="flex:1;padding:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;">Receipt</button>'
+		 
+		 // Show "Accept" button ONLY if it is currently Requested
+		 + (status === 'Requested' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'In Progress\')" style="flex:1;padding:12px;background:var(--blue-bg);border:1.5px solid var(--blue-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--blue);display:flex;align-items:center;justify-content:center;gap:6px;">Accept</button>' : '')
+		 
+		 // Show "Return" button if it is Parked or In Progress
+		 + (status === 'Parked' || status === 'In Progress' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>' : '')
+		 
 		+'</div>'
-	  +'</div>'
+	 +'</div>'
 	+'</div>';
 	el.appendChild(div);
   });
@@ -1438,8 +1430,8 @@ async function mUpdateVehicle(plate, card, status){
   if(!confirm('Confirm vehicle returned?')) return;
   try {
 	await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
-	  method: 'PATCH', 
-	  body: JSON.stringify({ vehicle_status: status })
+	 method: 'PATCH', 
+	 body: JSON.stringify({ vehicle_status: status })
 	});
 	toast('Status Updated');
 	setTimeout(mLoadReports, 500);
@@ -1456,12 +1448,12 @@ async function mLoadAttendanceList(){
 	document.getElementById('m-cnt-t').innerText=emps.length;
 	el.innerHTML='';var present=0;
 	emps.forEach(function(emp){
-	  var row=document.createElement('div');
-	  row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;';
-	  row.innerHTML='<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy);flex-shrink:0;">'+(emp.name||'?').charAt(0).toUpperCase()+'</div>'
+	 var row=document.createElement('div');
+	 row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;';
+	 row.innerHTML='<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy);flex-shrink:0;">'+(emp.name||'?').charAt(0).toUpperCase()+'</div>'
 		+'<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text);">'+emp.name+'</div><div style="font-size:11px;color:var(--text3);">'+emp.job+'</div></div>'
 		+'<span class="chip chip-gray">Staff</span>';
-	  el.appendChild(row);
+	 el.appendChild(row);
 	});
 	document.getElementById('m-cnt-p').innerText=present;
 	document.getElementById('m-cnt-a').innerText=Math.max(0,emps.length-present);
@@ -1494,11 +1486,11 @@ async function updateCIBtn(){
 	var last=(Array.isArray(rows)&&rows.length)?rows[0].type:'';
 	var normLast=(last||'').toLowerCase().includes('out')?'Check-Out':'Check-In';
 	if(normLast==='Check-In'&&rows.length){
-	  btn.className='ci-btn ci-out';if(lbl)lbl.innerText='Check Out';
-	  if(msg)msg.innerText='Checked in · tap to check out';
+	 btn.className='ci-btn ci-out';if(lbl)lbl.innerText='Check Out';
+	 if(msg)msg.innerText='Checked in · tap to check out';
 	}else{
-	  btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';
-	  if(msg)msg.innerText=rows.length?'Last checked out · ready':'Ready to check in';
+	 btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';
+	 if(msg)msg.innerText=rows.length?'Last checked out · ready':'Ready to check in';
 	}
   }catch{btn.className='ci-btn ci-in';if(lbl)lbl.innerText='Check In';}
 }
@@ -1559,8 +1551,8 @@ async function loadRequests(){
 	  var d=new Date(r.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 	  return'<div class="card-sm">'
 		+'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'
-		  +'<span style="font-size:13px;font-weight:700;color:var(--text);">'+(r.type||'Request')+'</span>'
-		  +'<span class="chip '+(sc[r.status]||'chip-amber')+'">'+(r.status||'Pending')+'</span>'
+		 +'<span style="font-size:13px;font-weight:700;color:var(--text);">'+(r.type||'Request')+'</span>'
+		 +'<span class="chip '+(sc[r.status]||'chip-amber')+'">'+(r.status||'Pending')+'</span>'
 		+'</div>'
 		+'<div style="font-size:12px;color:var(--text3);margin-bottom:5px;line-height:1.5;">'+(r.details||'').slice(0,120)+'</div>'
 		+'<div style="font-size:10px;color:var(--text4);">'+d+'</div>'
@@ -1612,12 +1604,12 @@ async function loadMail(folder){
 	  row.style.cssText='display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--surface);transition:background .15s;'+(isUnread?'border-left:3px solid var(--navy);background:#f8f9fa;':'');
 	  row.innerHTML='<div style="width:40px;height:40px;border-radius:12px;background:'+(isUnread?'var(--navy)':'var(--surface2)')+';color:'+(isUnread?'#fff':'var(--text3)')+';display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
 		+'<div style="flex:1;min-width:0;">'
-		  +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
+		 +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
 			+'<div style="font-size:13px;font-weight:'+(isUnread?'700':'600')+';color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;">'+(em.sender_name||em.sender_email)+'</div>'
 			+'<div style="font-size:10px;color:var(--text4);flex-shrink:0;">'+ts+'</div>'
-		  +'</div>'
-		  +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
-		  +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
+		 +'</div>'
+		 +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
+		 +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
 		+'</div>';
 	  row.onclick=function(){mOpenMail(em);};
 	  el.appendChild(row);
@@ -1640,13 +1632,13 @@ function mOpenMail(em){
   var bodyHtml=(/<[a-z][\s\S]{0,20}>/i.test(em.body||''))?em.body:(em.body||'').replace(/\n/g,'<br>');
   document.getElementById('mail-read-content').innerHTML=
 	'<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">'
-	  +'<div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">'+(em.subject||'(No Subject)')+'</div>'
-	  +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+	 +'<div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">'+(em.subject||'(No Subject)')+'</div>'
+	 +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
 		+'<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--navy);">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
 		+'<div><div style="font-size:13px;font-weight:700;color:var(--text);">'+(em.sender_name||em.sender_email)+'</div>'
 		+'<div style="font-size:10px;color:var(--text4);">'+dt+'</div></div>'
-	  +'</div>'
-	  +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
+	 +'</div>'
+	 +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
 	+'</div>'
 	+'<div style="font-size:14px;line-height:1.8;color:var(--text);overflow-x:auto;">'+bodyHtml+'</div>';
   document.getElementById('mail-read-modal').classList.add('open');
@@ -1680,8 +1672,8 @@ async function updateMailBadge(){
 	var rows=await sb('operix_emails?folder=eq.inbox&is_read=eq.false&recipient_emails=cs.{'+myEmail+'}&select=id',{method:'GET'});
 	var n=Array.isArray(rows)?rows.length:0;
 	['nav-mail-badge','m-inbox-ct','hm-mail-badge'].forEach(function(id){
-	  var el=document.getElementById(id);if(!el)return;
-	  el.innerText=n||'';el.style.display=n?'inline-block':'none';
+	 var el=document.getElementById(id);if(!el)return;
+	 el.innerText=n||'';el.style.display=n?'inline-block':'none';
 	});
   }catch{}
 }
@@ -1702,25 +1694,25 @@ async function loadDevices(){
 	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:12px;">No trusted devices</div>';return;}
 	el.innerHTML='';
 	rows.forEach(function(dev){
-	  var isC=dev.device_id===myFP;
-	  var lastUsed=new Date(dev.last_used||dev.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-	  var row=document.createElement('div');
-	  row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);';
-	  row.innerHTML='<div style="width:36px;height:36px;border-radius:9px;background:'+(isC?'var(--navy)':'var(--surface2)')+';border:1px solid '+(isC?'var(--navy)':'var(--border)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+	 var isC=dev.device_id===myFP;
+	 var lastUsed=new Date(dev.last_used||dev.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+	 var row=document.createElement('div');
+	 row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);';
+	 row.innerHTML='<div style="width:36px;height:36px;border-radius:9px;background:'+(isC?'var(--navy)':'var(--surface2)')+';border:1px solid '+(isC?'var(--navy)':'var(--border)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
 		+'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+(isC?'#fff':'var(--text3)')+'" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>'
 		+'</div>'
 		+'<div style="flex:1;min-width:0;">'
-		  +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+(dev.device_name||'Device')+(isC?' <span style="font-size:9px;background:var(--blue-bg);color:var(--blue);padding:2px 7px;border-radius:6px;">This device</span>':'')+'</div>'
-		  +'<div style="font-size:11px;color:var(--text4);">Last used: '+lastUsed+'</div>'
+		 +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+(dev.device_name||'Device')+(isC?' <span style="font-size:9px;background:var(--blue-bg);color:var(--blue);padding:2px 7px;border-radius:6px;">This device</span>':'')+'</div>'
+		 +'<div style="font-size:11px;color:var(--text4);">Last used: '+lastUsed+'</div>'
 		+'</div>';
-	  if(!isC){
+	 if(!isC){
 		var rm=document.createElement('button');
 		rm.style.cssText='padding:5px 10px;background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;flex-shrink:0;';
 		rm.innerText='Remove';
 		(function(id,r){rm.onclick=function(){rmDevice(id,r);};})(dev.id,row);
 		row.appendChild(rm);
-	  }
-	  el.appendChild(row);
+	 }
+	 el.appendChild(row);
 	});
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);">Error: '+e.message+'</div>';}
 }
@@ -1748,16 +1740,16 @@ async function mExportID() {
 	
 	var photoEl = document.getElementById('id-photo');
 	if(CU.photo) {
-	  photoEl.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous">';
+	 photoEl.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous">';
 	} else {
-	  photoEl.innerText = (CU.name || '?').charAt(0).toUpperCase();
+	 photoEl.innerText = (CU.name || '?').charAt(0).toUpperCase();
 	}
 
 	var empHash = 0;
 	var emStr = (CU.email || CU.name || 'unknown').toLowerCase();
 	for(var i=0; i < emStr.length; i++) {
-	  empHash = ((empHash << 5) - empHash) + emStr.charCodeAt(i);
-	  empHash |= 0;
+	 empHash = ((empHash << 5) - empHash) + emStr.charCodeAt(i);
+	 empHash |= 0;
 	}
 	var empID = 'MBX-' + Math.abs(empHash).toString(16).toUpperCase().slice(0,6).padStart(6,'0');
 	document.getElementById('id-empid').innerText = empID;
@@ -1855,54 +1847,8 @@ function sendChat() {
 	body.scrollTop = body.scrollHeight;
   }, 600); 
 }
-// 1. Request Background Notification Permissions
-function requestNotificationPermission() {
-  if ('Notification' in window && Notification.permission !== 'granted') {
-	Notification.requestPermission();
-  }
-}
 
-// 2. Trigger the Radar Alarm
-function triggerRadar(clientDetails) {
-  // Set cookie/local storage flag so we know an alarm is active
-  localStorage.setItem('active_radar_cookie', 'true');
-  
-  document.getElementById('radar-client-info').innerText = clientDetails;
-  document.getElementById('radar-modal').style.display = 'flex';
-  
-  // Play looping audio
-  let audio = document.getElementById('radar-audio');
-  audio.play().catch(e => console.log("Audio blocked until user interacts"));
-
-  // Trigger background notification if app is minimized
-  if ('Notification' in window && Notification.permission === 'granted') {
-	navigator.serviceWorker.ready.then(function(registration) {
-	  registration.showNotification('🚨 Car Requested!', {
-		body: clientDetails,
-		icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
-		vibrate: [200, 100, 200, 100, 200, 100, 200], // Vibrate pattern
-		requireInteraction: true // Keeps notification on screen until clicked
-	  });
-	});
-  }
-}
-
-// 3. Stop the Radar Alarm (When Valet answers)
-function answerRadar() {
-  let audio = document.getElementById('radar-audio');
-  audio.pause();
-  audio.currentTime = 0; // Reset audio
-  
-  document.getElementById('radar-modal').style.display = 'none';
-  
-  // Disable the cookie/flag so it doesn't trigger again
-  localStorage.setItem('active_radar_cookie', 'false');
-  document.cookie = "radar_active=false; path=/";
-  
-  toast("Request Answered. Client notified.");
-  
-  // Here you would add your backend SB fetch to update the request status to "Answered"
-}
+// FIX: Duplicate code blocks removed! (Your script originally duplicated all these functions, breaking the app)
 
 function getBotResponse(input) {
   if (input.includes('check in') || input.includes('check-in')) {
@@ -1982,6 +1928,7 @@ window.addEventListener('DOMContentLoaded',function(){
   showScreen('screen-login');
 });
 </script>
+
 <audio id="radar-audio" loop preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
 </audio>
