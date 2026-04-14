@@ -17,7 +17,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
-  /* Aligned with the new Main Suite Theme */
   --navy: #1e2d40; 
   --navy-hover: #2a3f5c; 
   --gold: #9a6f28; 
@@ -48,7 +47,6 @@
   --st: env(safe-area-inset-top, 0px);
 }
 
-/* Modernized Base & Background */
 html, body {
   height: 100%; 
   background: var(--bg); 
@@ -58,7 +56,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{0%{opacity:0;transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
 @keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(30, 45, 64, 0.4)}70%{box-shadow:0 0 0 10px rgba(30, 45, 64, 0)}100%{box-shadow:0 0 0 0 rgba(30, 45, 64, 0)}}
@@ -67,7 +64,6 @@ html, body {
 .hover-lift{transition:transform .2s cubic-bezier(0.16,1,0.3,1),box-shadow .2s ease;}
 .hover-lift:active{transform:scale(.97);}
 
-/* Clean, Solid Navbars */
 .topbar {
   background: var(--surface); 
   padding: calc(var(--st) + 12px) 16px 12px;
@@ -98,9 +94,7 @@ html, body {
 .nav-btn svg{width:22px;height:22px;transition:all .25s;}
 .nav-btn.active{color:var(--navy);}
 .nav-btn.active svg{transform:translateY(-2px);stroke-width:2.5;}
-.nav-badge{position:absolute;top:2px;right:22%;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:9px;min-width:16px;text-align:center;display:none;}
 
-/* Screens & Pages */
 .screen{display:none;position:fixed;inset:0;overflow:hidden;flex-direction:column;}
 .screen.active{display:flex;animation:fadeUp .3s ease-out;}
 .auth-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;background:var(--bg);}
@@ -108,7 +102,6 @@ html, body {
 .page.active{display:block;}
 .page-pad{padding:16px;}
 
-/* Modernized Cards */
 .card, .card-sm {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -122,20 +115,17 @@ html, body {
 .card-sm{padding:14px 16px;margin-bottom:12px;}
 .card-title{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 
-/* Fields */
 .field{width:100%;padding:14px 16px;background:var(--surface2);border:1.5px solid var(--border);border-radius:14px;font-size:15px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:all .2s;-webkit-appearance:none;}
 .field:focus{border-color:var(--navy);background:#fff;box-shadow:0 0 0 4px rgba(30, 45, 64,.1);}
 .field-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px;margin-left:2px;}
 select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a09890' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 
-/* Updated Buttons */
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;border-radius:14px;transition:all .2s;padding:16px 20px;font-size:15px;width:100%;}
 .btn:active{transform:scale(.96);}
 .btn-dark {background: var(--navy); color: #fff; box-shadow: 0 4px 12px rgba(30, 45, 64, 0.2);}
 .btn-gold {background: var(--gold); color: #fff; box-shadow: 0 4px 12px rgba(154, 111, 40, 0.2);}
 .btn-outline {background: var(--surface); color: var(--text); border: 1.5px solid var(--border);}
 
-/* Tags/chips */
 .chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
 .chip-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border);}
 .chip-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
@@ -144,33 +134,27 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .chip-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
 .chip-gray{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 
-/* KPI tiles */
 .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 .kpi-tile{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .2s;}
 .kpi-val{font-size:26px;font-weight:900;color:var(--navy);letter-spacing:-.02em;}
 .kpi-lbl{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;}
 
-/* Shift banner */
 .shift-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-hover) 100%);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
 
-/* Invoice card */
 .inv-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm);}
 .inv-stripe-parked{width:5px;background:var(--amber);flex-shrink:0;}
 .inv-stripe-done{width:5px;background:var(--green);flex-shrink:0;}
 
-/* OTP inputs */
 .otp-row{display:flex;gap:8px;justify-content:center;margin:16px 0;}
 .otp-digit{width:46px;height:56px;text-align:center;font-size:24px;font-weight:800;border:2px solid var(--border);border-radius:14px;background:var(--surface2);color:var(--text);outline:none;transition:all .2s;}
 .otp-digit:focus{border-color:var(--navy);background:#fff;}
 
-/* Check-in button */
 .ci-btn{width:170px;height:170px;border-radius:50%;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:0 auto;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;color:#fff;transition:all .3s;}
 .ci-btn:active{transform:scale(.93);}
 .ci-idle{background:var(--navy);box-shadow:0 16px 40px rgba(30,45,64,.25);animation:pulseGlow 3s infinite;}
 .ci-in{background:var(--green);box-shadow:0 16px 40px rgba(34,197,94,.3);}
 .ci-out{background:var(--red);box-shadow:0 16px 40px rgba(239,68,68,.3);}
 
-/* Modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
 .modal.open{display:flex;animation:popIn .3s;}
 .modal-box{background:var(--surface);border-radius:24px 24px 0 0;padding:0 0 calc(20px + var(--sb));width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 -10px 40px rgba(0,0,0,.1);}
@@ -179,10 +163,8 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .modal-title{font-size:18px;font-weight:800;}
 .modal-body{padding:20px;}
 
-/* Toast */
 #toast{position:fixed;bottom:calc(90px + var(--sb));left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:14px;font-weight:700;padding:14px 24px;border-radius:16px;z-index:999;box-shadow:var(--shadow-md);display:none;align-items:center;gap:8px;white-space:nowrap;transition:opacity .3s;}
 
-/* Layout & Misc */
 *::-webkit-scrollbar{display:none;}
 *{scrollbar-width:none;}
 .tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;padding:0 8px;}
@@ -191,7 +173,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .list-row{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface);border-bottom:1px solid var(--border);cursor:pointer;}
 .att-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
 
-/* Chatbot UI */
 .fab-chat{position:fixed;bottom:calc(100px + var(--sb));right:20px;width:56px;height:56px;background:var(--navy);border-radius:50%;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;transition:transform .3s;}
 .fab-chat:hover{transform:scale(1.1);}
 .fab-chat svg{color:#fff;width:24px;height:24px;}
@@ -219,7 +200,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
   70% { transform: scale(1); box-shadow: 0 0 0 40px rgba(239, 68, 68, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
-
 </style>
 </head>
 <body>
@@ -234,13 +214,13 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	   <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--navy);letter-spacing:-.02em;">OPERIX</div>
 	   <div style="font-size:10px;color:var(--text-muted);font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-top:5px;">Field Operations</div>
 	 </div>
-	  
+	 
 	 <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
 		<div><label class="field-label">Email Address</label><input id="l-email" type="email" class="field" placeholder="you@operix.com" autocomplete="email" inputmode="email" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()"></div>
 		<div><label class="field-label">Password</label><input id="l-pass" type="password" class="field" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')mLogin()"></div>
 	 </div>
 	 <div id="l-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--red);margin-bottom:16px;text-align:center;line-height:1.4;"></div>
-	 
+	
 	 <button class="btn btn-dark hover-lift" onclick="mLogin()" id="l-btn" style="margin-bottom:16px;">
 		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
 		Sign In
@@ -255,7 +235,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	<div style="width:100%;max-width:340px;" class="fade-up">
 	  <div style="text-align:center;margin-bottom:28px;">
 		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
-		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
+		 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
 		</div>
 		<div style="font-size:24px;font-weight:800;">Verify Identity</div>
 		<div id="otp-sub" style="font-size:13px;font-weight:600;color:var(--text3);margin-top:6px;"></div>
@@ -282,7 +262,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	<div style="width:100%;max-width:340px;" class="fade-up">
 	  <div style="text-align:center;margin-bottom:24px;">
 		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--blue-bg);border:1.5px solid var(--blue-border);margin-bottom:14px;">
-		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+		 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
 		</div>
 		<div style="font-size:22px;font-weight:800;">New Device</div>
 		<div style="font-size:13px;color:var(--text3);margin-top:6px;">Answer your security questions</div>
@@ -300,7 +280,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	<div style="width:100%;max-width:340px;" class="fade-up">
 	  <div style="text-align:center;margin-bottom:22px;">
 		<div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;margin-bottom:14px;">
-		  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+		 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
 		</div>
 		<div style="font-size:21px;font-weight:800;">Security Questions</div>
 		<div style="font-size:12px;color:var(--text3);margin-top:6px;">Set once. Used to verify new devices.</div>
@@ -381,18 +361,11 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 			</div>
 			<span style="font-size:13px;font-weight:800;color:var(--text);">Attendance</span>
 		  </button>
-		  <button class="card-sm hover-lift" onclick="goTab('requests')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;">
+		  <button class="card-sm hover-lift" onclick="goTab('requests')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer; grid-column: span 2;">
 			<div style="width:52px;height:52px;border-radius:16px;background:var(--blue-bg);color:var(--blue);border:1.5px solid var(--blue-border);display:flex;align-items:center;justify-content:center;">
 			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
 			</div>
 			<span style="font-size:13px;font-weight:800;color:var(--text);">Requests</span>
-		  </button>
-		  <button class="card-sm hover-lift" onclick="goTab('mail')" style="border:none;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;cursor:pointer;">
-			<div style="width:52px;height:52px;border-radius:16px;background:var(--purple-bg);color:var(--purple);border:1.5px solid var(--purple-border);display:flex;align-items:center;justify-content:center;position:relative;">
-			  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-			  <span id="hm-mail-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;"></span>
-			</div>
-			<span style="font-size:13px;font-weight:800;color:var(--text);">Mail</span>
 		  </button>
 		</div>
 	  </div>
@@ -402,7 +375,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  <div class="tab-bar">
 		<button class="tab-btn active" id="ops-tab-new" onclick="opsTab('new',this)">New Entry</button>
 		<button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Live Board</button>
-		<button class="tab-btn" id="ops-tab-att" onclick="opsTab('att',this)">Staff</button>
 	  </div>
 	  
 	  <div id="ops-pane-new" class="page-pad fade-up">
@@ -428,18 +400,9 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 		</div>
 		<div id="m-reports-list" style="padding:16px 20px;"></div>
 	  </div>
-	  
-	  <div id="ops-pane-att" class="fade-up" style="display:none;">
-		<div class="page-pad">
-		  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
-			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-p" style="color:var(--green);">0</div><div class="kpi-lbl">Present</div></div>
-			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-a" style="color:var(--red);">0</div><div class="kpi-lbl">Absent</div></div>
-			<div class="kpi-tile"><div class="kpi-val" id="m-cnt-t">0</div><div class="kpi-lbl">Total</div></div>
-		  </div>
-		  <div id="m-att-list"></div>
-		</div>
-	  </div>
-	</div> <div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	</div> 
+
+	<div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
 	  <div class="page-pad fade-up">
 		<div style="text-align:center;padding:32px 0;">
 		  <div id="m-clock" style="font-size:54px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px;"></div>
@@ -479,17 +442,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  </div>
 	</div>
 
-	<div id="pg-mail" class="page" style="padding-bottom:calc(72px + var(--sb));">
-	  <div class="tab-bar">
-		<button class="tab-btn active" id="mf-inbox" onclick="mMailTab('inbox',this)">Inbox <span id="m-inbox-ct" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px;"></span></button>
-		<button class="tab-btn" id="mf-sent" onclick="mMailTab('sent',this)">Sent</button>
-		<button class="tab-btn" id="mf-compose" onclick="openComposeModal()">
-		  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Compose
-		</button>
-	  </div>
-	  <div id="m-mail-list" style="background:transparent;min-height:200px;"></div>
-	</div>
-
 	<div id="pg-profile" class="page" style="padding-bottom:calc(72px + var(--sb));">
 	  <div class="page-pad fade-up">
 		<div class="card" style="text-align:center;padding:32px 20px;">
@@ -513,7 +465,9 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  </div>
 	</div>
 
-  </div> <div class="fab-chat hover-lift" onclick="toggleChat()">
+  </div> 
+
+  <div class="fab-chat hover-lift" onclick="toggleChat()">
 	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
   </div>
 
@@ -549,10 +503,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	<button class="nav-btn" id="nav-requests" onclick="goTab('requests')">
 	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Requests
 	</button>
-	<button class="nav-btn" id="nav-mail" onclick="goTab('mail')">
-	  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Mail
-	  <span id="nav-mail-badge" class="nav-badge"></span>
-	</button>
   </nav>
 </div>
 
@@ -565,28 +515,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  <div><label class="field-label">Details</label><textarea id="rm-details" class="field" rows="4" style="resize:none;" placeholder="Describe your request…"></textarea></div>
 	  <button class="btn btn-dark hover-lift" onclick="mSubmitReq()">Submit Request</button>
 	  <button class="btn btn-outline hover-lift" onclick="closeModal('req-modal')">Cancel</button>
-	</div>
-  </div>
-</div>
-
-<div id="mail-read-modal" class="modal">
-  <div class="modal-box" style="max-height:92vh;">
-	<div class="modal-handle"></div>
-	<div id="mail-read-content" style="padding:0 20px 12px;"></div>
-	<div style="padding:0 20px;"><button class="btn btn-outline hover-lift" onclick="closeModal('mail-read-modal')">Close</button></div>
-  </div>
-</div>
-
-<div id="compose-modal" class="modal">
-  <div class="modal-box">
-	<div class="modal-handle"></div>
-	<div class="modal-hdr"><div class="modal-title">New Message</div><button onclick="closeModal('compose-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-	<div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
-	  <div><label class="field-label">To</label><input id="cm-to" class="field" placeholder="email or name" list="cm-to-list"><datalist id="cm-to-list"></datalist></div>
-	  <div><label class="field-label">Subject</label><input id="cm-sub" class="field" placeholder="Subject"></div>
-	  <div><label class="field-label">Message</label><textarea id="cm-body" class="field" rows="5" style="resize:none;" placeholder="Write your message…"></textarea></div>
-	  <button class="btn btn-dark hover-lift" onclick="mSendMail()">Send Message</button>
-	  <button class="btn btn-outline hover-lift" onclick="closeModal('compose-modal')">Cancel</button>
 	</div>
   </div>
 </div>
@@ -647,7 +575,6 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-// Add this at the top of your script
 var currentExternalFee = 19; 
 
 async function loadSystemSettings() {
@@ -661,7 +588,6 @@ async function loadSystemSettings() {
 
 'use strict';
 
-// Setup PWA Manifest dynamically
 const manifestObj = {
   "name": "OPERIX Field Operations",
   "short_name": "OPERIX",
@@ -689,19 +615,6 @@ const OPS_API = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgIFFX
 const SUPABASE_URL = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
 
-var currentExternalFee = 19; // Default fallback
-
-async function loadSystemSettings() {
-	try {
-		const rows = await sb('operix_settings?key=eq.external_service_fee', { method: 'GET' });
-		if (rows && rows.length > 0) {
-			currentExternalFee = parseFloat(rows[0].value);
-		}
-	} catch (e) {
-		console.warn("Could not load external fee setting:", e);
-	}
-}
-
 var CU = null; 
 var _pl = null; 
 var _sqd = null; 
@@ -711,7 +624,6 @@ var myLat = null, myLng = null, myDist = 9999;
 var CAFE_LAT = 24.7694973, CAFE_LNG = 46.7625231, GPS_RADIUS = 150;
 var myShift = null;
 var mReportsData = [];
-var mMailFolder = 'inbox';
 var mOpsSvc = 'mb'; 
 
 function iconTick() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`; }
@@ -792,7 +704,7 @@ function showScreen(id){
 }
 
 function goTab(tab){
-  var tabs=['home','ops','checkin','requests','mail','profile'];
+  var tabs=['home','ops','checkin','requests','profile'];
   
   tabs.forEach(function(t){
 	var p=document.getElementById('pg-'+t); 
@@ -806,8 +718,7 @@ function goTab(tab){
 	'home':'nav-home', 
 	'ops':'nav-ops',
 	'checkin':'nav-checkin', 
-	'requests':'nav-requests', 
-	'mail':'nav-mail'
+	'requests':'nav-requests'
   };
   
   document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
@@ -821,7 +732,6 @@ function goTab(tab){
 	ops:'Operations',
 	checkin:'Attendance',
 	requests:'Requests',
-	mail:'Mail',
 	profile:'Profile'
   };
   
@@ -832,7 +742,6 @@ function goTab(tab){
   if(tab==='ops') loadOpsPage();
   if(tab==='checkin') loadCheckinPage();
   if(tab==='requests') loadRequests();
-  if(tab==='mail') loadMail(mMailFolder);
   if(tab==='profile') loadProfile();
 }
 
@@ -866,30 +775,7 @@ async function mLogin(){
 	else{await showNDScreen(acc.email);showScreen('screen-newdev');}
   }catch(e){errEl.innerHTML=iconCross()+' Connection error: '+e.message;errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';}
 }
-// Helper to convert file to Base64
-// Convert file to Base64
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-	const reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = () => resolve(reader.result); // Keep the data URI prefix, your GAS script strips it automatically
-	reader.onerror = error => reject(error);
-  });
-}
 
-// Update UI when file is selected
-function updateFileName(input) {
-  var lbl = document.getElementById('m-f-receipt-lbl');
-  if (input.files && input.files[0]) {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
-	lbl.style.borderColor = 'var(--green)';
-	lbl.style.background = 'var(--green-bg)';
-  } else {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
-	lbl.style.borderColor = 'var(--border)';
-	lbl.style.background = 'var(--surface2)';
-  }
-}
 async function hasSecQ(email){
   try{var r=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});return Array.isArray(r)&&r.length&&r[0].q1;}catch{return false;}
 }
@@ -988,132 +874,7 @@ async function mResendOTP(){
   if(sent){for(var i=0;i<6;i++){var el=document.getElementById('o'+i);if(el){el.value='';}}startOTPTimer(300);document.getElementById('o0').focus();}
   if(btn){btn.disabled=false;btn.innerText='Resend Code';}
 }
-function finishLogin(acc) {
-  CU = {
-	name: acc.name || acc.email.split('@')[0],
-	email: acc.email,
-	role: acc.role || 'Staff',
-	job: acc.job || '',
-	phone: acc.phone || '',
-	photo: acc.photo || ''
-  };
-  _pl = null;
-  logSession('login'); 
-  showScreen('screen-app');
-  
-  // --- START RADAR SYSTEM ---
-  localStorage.setItem('radar_enabled', 'true'); // Turn it ON permanently
-  
-  // Ask for notification permissions so it works in background
-  if ('Notification' in window && Notification.permission !== 'granted') {
-	Notification.requestPermission();
-  }
-  
-  // "Unlock" the audio element during this click event so it can play in the background later
-  let audio = document.getElementById('radar-audio');
-  audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
-  
-  // Start the continuous checking loop
-  startRadarLoop();
-  // --------------------------
 
-  initApp();
-}
-let radarInterval = null;
-let currentRadarReq = null;
-let answeredRequests = new Set(); // Local memory to stop double-ringing
-
-function startRadarLoop() {
-  if (radarInterval) clearInterval(radarInterval); 
-  
-  radarInterval = setInterval(async () => {
-	if (localStorage.getItem('radar_enabled') !== 'true') return;
-	if (document.getElementById('radar-modal').style.display === 'flex') return;
-
-	try {
-	  // Find cars that are requested
-	  let rows = await sb('operix_invoices?vehicle_status=eq.Requested', {method: 'GET'});
-	  
-	  if (rows && rows.length > 0) {
-		// Find the first requested car that we HAVEN'T answered yet
-		let req = rows.find(r => !answeredRequests.has(r.plate_num));
-		
-		if (req) {
-		  currentRadarReq = req; 
-		  
-		  // Trigger the alarm
-		  document.getElementById('radar-client-info').innerText = req.plate_num + " - " + (req.client_name || 'Client');
-		  document.getElementById('radar-modal').style.display = 'flex';
-		  document.getElementById('radar-audio').play().catch(e => console.log("Audio blocked"));
-
-		  if ('Notification' in window && Notification.permission === 'granted') {
-			navigator.serviceWorker.ready.then(function(reg) {
-			  reg.showNotification('🚨 Car Requested!', {
-				body: req.plate_num + ' is waiting!',
-				icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
-				vibrate: [200, 100, 200, 100, 200, 100, 200],
-				requireInteraction: true
-			  });
-			});
-		  }
-		}
-	  }
-	} catch(e) {}
-  }, 7000); 
-}
-
-async function answerRadar() {
-  let audio = document.getElementById('radar-audio');
-  audio.pause();
-  audio.currentTime = 0;
-  document.getElementById('radar-modal').style.display = 'none';
-  
-  if (currentRadarReq) {
-	// Instantly add to memory so it NEVER rings again for this car
-	answeredRequests.add(currentRadarReq.plate_num); 
-	
-	try {
-	  // Update database status via Plate Number and Card Number
-	  await sb(`operix_invoices?plate_num=eq.${encodeURIComponent(currentRadarReq.plate_num)}&card_num=eq.${encodeURIComponent(currentRadarReq.card_num)}`, {
-		method: 'PATCH', 
-		body: JSON.stringify({ vehicle_status: 'In Progress' })
-	  });
-	  
-	  toast("Request Accepted! Status: In Progress");
-	  
-	  // Auto-refresh the Live Board so the card changes color immediately!
-	  mLoadReports(); 
-	  
-	} catch(e) {
-	  toast("Error updating status.");
-	}
-	currentRadarReq = null;
-  }
-}
-
-async function answerRadar() {
-  // 1. Stop the alarm sound
-  let audio = document.getElementById('radar-audio');
-  audio.pause();
-  audio.currentTime = 0;
-  
-  // 2. Hide the modal
-  document.getElementById('radar-modal').style.display = 'none';
-  
-  // 3. Update the database so it stops ringing for everyone else
-  if (currentRadarRecordId) {
-	try {
-	  // Change status from 'Requested' to 'Bringing' or 'In Progress'
-	  await sb(`operix_invoices?id=eq.${currentRadarRecordId}`, {
-		method: 'PATCH', 
-		body: JSON.stringify({ vehicle_status: 'In Progress' })
-	  });
-	  toast("Request Accepted!");
-	} catch(e) {
-	  toast("Error updating status.");
-	}
-  }
-}
 function fpErr(msg){var e=document.getElementById('fp-err');e.innerHTML=iconCross()+' '+msg;e.style.display='block';}
 async function fpS1(){
   var email=(document.getElementById('fp-email').value||'').trim().toLowerCase();
@@ -1173,18 +934,43 @@ async function fpS4(){
   }catch(e){fpErr('Error: '+e.message);}
 }
 
+// --- Login & Initialization ---
+function finishLogin(acc) {
+  CU = {
+	name: acc.name || acc.email.split('@')[0],
+	email: acc.email,
+	role: acc.role || 'Staff',
+	job: acc.job || '',
+	phone: acc.phone || '',
+	photo: acc.photo || ''
+  };
+  _pl = null;
+  logSession('login'); 
+  showScreen('screen-app');
+  
+  localStorage.setItem('radar_enabled', 'true'); 
+  
+  if ('Notification' in window && Notification.permission !== 'granted') {
+	Notification.requestPermission();
+  }
+  
+  let audio = document.getElementById('radar-audio');
+  audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
+  
+  startRadarLoop();
+  
+  initApp();
+}
+
 async function initApp(){
   var av=document.getElementById('top-av');
   if(av) av.innerText=(CU.name||'?').charAt(0).toUpperCase();
   
-  // FETCH SETTINGS FIRST
   await loadSystemSettings(); 
-  
   startClock();
   goTab('home');
-  updateMailBadge();
-  setInterval(function(){if(CU)updateMailBadge();},60000);
 }
+
 function startClock(){
   var tick=function(){
 	var now=new Date();
@@ -1220,18 +1006,16 @@ async function loadHome(){
 
 function loadOpsPage(){
   buildOpsFields();
-  var attBtn=document.getElementById('ops-tab-att');
-  if(attBtn){var r=(CU.role||'').toLowerCase();attBtn.style.display=(r==='admin'||r==='manager')?'':'none';}
 }
+
 function opsTab(name,btn){
   document.querySelectorAll('#pg-ops .tab-btn').forEach(function(b){b.classList.remove('active');});
   if(btn)btn.classList.add('active');
   document.getElementById('ops-pane-new').style.display=name==='new'?'block':'none';
   document.getElementById('ops-pane-reports').style.display=name==='reports'?'block':'none';
-  document.getElementById('ops-pane-att').style.display=name==='att'?'block':'none';
   if(name==='reports')mLoadReports();
-  if(name==='att')mLoadAttendanceList();
 }
+
 function opsSvcTab(svc,btn){
   mOpsSvc=svc;
   var btns = document.querySelectorAll('#pg-ops .btn-outline');
@@ -1249,6 +1033,29 @@ function opsSvcTab(svc,btn){
   }
   buildOpsFields();
 }
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = () => resolve(reader.result); 
+	reader.onerror = error => reject(error);
+  });
+}
+
+function updateFileName(input) {
+  var lbl = document.getElementById('m-f-receipt-lbl');
+  if (input.files && input.files[0]) {
+	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
+	lbl.style.borderColor = 'var(--green)';
+	lbl.style.background = 'var(--green-bg)';
+  } else {
+	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
+	lbl.style.borderColor = 'var(--border)';
+	lbl.style.background = 'var(--surface2)';
+  }
+}
+
 function buildOpsFields(){
   var c=document.getElementById('ops-fields');if(!c)return;
   var isMB=mOpsSvc==='mb';
@@ -1264,7 +1071,6 @@ function buildOpsFields(){
 	c.appendChild(div);
   });
   
-  // --- NEW: Receipt Upload Field ---
   var fileDiv = document.createElement('div');
   fileDiv.innerHTML = `
 	<label class="field-label" style="margin-top: 4px;">Payment Receipt (Optional)</label>
@@ -1277,7 +1083,6 @@ function buildOpsFields(){
 	</div>
   `;
   c.appendChild(fileDiv);
-  // ---------------------------------
 
   var info=document.createElement('div');
   info.style.cssText='background:var(--surface2);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between; margin-top: 4px; border: 1px solid var(--border);';
@@ -1285,10 +1090,8 @@ function buildOpsFields(){
   c.appendChild(info);
 }
 
-// 1. Missing genRef function restored
 function genRef(){ return 'OPX-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,5).toUpperCase(); }
 
-// 2. NEW: Image Compressor (Prevents 15-second timeout on mobile)
 function compressImage(file, maxWidth = 1000) {
   return new Promise((resolve, reject) => {
 	const reader = new FileReader();
@@ -1303,14 +1106,13 @@ function compressImage(file, maxWidth = 1000) {
 		canvas.height = img.height * scaleSize;
 		const ctx = canvas.getContext('2d');
 		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-		resolve(canvas.toDataURL('image/jpeg', 0.6)); // Compress to 60% quality JPEG
+		resolve(canvas.toDataURL('image/jpeg', 0.6)); 
 	  };
 	  img.onerror = (e) => reject(e);
 	};
   });
 }
 
-// 3. Updated Save Function
 async function mOpsSave(){
   var plate=(document.getElementById('m-f-plate')?.value||'').trim().toUpperCase();
   var card=(document.getElementById('m-f-card')?.value||'').trim();
@@ -1328,7 +1130,6 @@ async function mOpsSave(){
   var driveLink = null; 
 
   try {
-	// If a photo is attached, compress and upload it FIRST
 	if (file) {
 	  btn.innerHTML='Compressing Photo...';
 	  let compressedBase64 = await compressImage(file);
@@ -1341,7 +1142,6 @@ async function mOpsSave(){
 		fileName: ref + '_Receipt.jpg'
 	  });
 
-	  // STOP if the upload failed so we don't save a broken ticket
 	  if (uploadRes && uploadRes.success) {
 		driveLink = uploadRes.driveUrl; 
 	  } else {
@@ -1369,15 +1169,13 @@ async function mOpsSave(){
 	  payload.receipt_url = driveLink;
 	}
 
-	// Save to Supabase
 	await sb('operix_invoices', { method: 'POST', body: JSON.stringify(payload) });
 
-	// Generate physical receipt canvas
 	var recPayload = { plateNum: plate, cardNum: card, clientName: name, staffName: CU.name, amount: payload.amount, opID: ref, ref: ref };
 	await mCaptureReceipt(recPayload);
 	
 	toast('Saved! ID: ' + ref);
-	buildOpsFields(); // Reset fields
+	buildOpsFields(); 
 	
   } catch(e) {
 	toast('Error: ' + e.message);
@@ -1432,30 +1230,26 @@ async function mCaptureReceipt(d) {
   await new Promise(r => setTimeout(r, 800));
   
   try {
-	  var canvas = await html2canvas(document.getElementById('receipt-cap'), {
-		scale: 3, 
-		backgroundColor: '#f5f4f0',
-		logging: false,
-		useCORS: true,
-		// --- ADD THIS FIX FOR SAFARI ---
-		ignoreElements: function(element) {
-		  // Stop Safari from copying extension scripts into the screenshot clone
-		  return element.tagName && element.tagName.toLowerCase() === 'script';
-		}
-		// -------------------------------
-	  });
-  
-	  var a = document.createElement('a');
-	  a.download = 'Receipt-' + d.plateNum + '.png';
-	  a.href = canvas.toDataURL('image/png');
-	  a.click();
-	  a.remove();
-	} catch(e) {
-	  console.error(e);
-	  toast('Receipt generated (save manually)');
-	}
-}
+	var canvas = await html2canvas(document.getElementById('receipt-cap'), {
+	  scale: 3, 
+	  backgroundColor: '#f5f4f0',
+	  logging: false,
+	  useCORS: true,
+	  ignoreElements: function(element) {
+		return element.tagName && element.tagName.toLowerCase() === 'script';
+	  }
+	});
 
+	var a = document.createElement('a');
+	a.download = 'Receipt-' + d.plateNum + '.png';
+	a.href = canvas.toDataURL('image/png');
+	a.click();
+	a.remove();
+  } catch(e) {
+	console.error(e);
+	toast('Receipt generated (save manually)');
+  }
+}
 
 async function mLoadReports(){
   var el=document.getElementById('m-reports-list');if(!el)return;
@@ -1470,21 +1264,19 @@ async function mLoadReports(){
 
 	var rows = await sb(query, { method: 'GET' });
 	
-// ... inside mLoadReports ...
-		mReportsData = rows.map(r => ({
-		  plateNum: r.plate_num,
-		  cardNum: r.card_num,
-		  clientName: r.client_name,
-		  valetName: r.valet_name,
-		  serviceType: r.service_type,
-		  amount: r.amount,
-		  phone: r.phone,
-		  vehicleStatus: r.vehicle_status,
-		  opID: r.op_id || r.ref,
-		  ref: r.ref,
-		  receiptUrl: r.receipt_url // <-- THIS IS CRITICAL
-		}));
-	// ...
+	mReportsData = rows.map(r => ({
+	  plateNum: r.plate_num,
+	  cardNum: r.card_num,
+	  clientName: r.client_name,
+	  valetName: r.valet_name,
+	  serviceType: r.service_type,
+	  amount: r.amount,
+	  phone: r.phone,
+	  vehicleStatus: r.vehicle_status,
+	  opID: r.op_id || r.ref,
+	  ref: r.ref,
+	  receiptUrl: r.receipt_url 
+	}));
 	
 	mRenderReports(mReportsData);
   }catch(e){
@@ -1511,15 +1303,12 @@ function mRenderReports(rows){
 	if(status === 'Requested') { chipColor = 'chip-red'; stripeBg = 'var(--red)'; }
 	if(status === 'In Progress') { chipColor = 'chip-blue'; stripeBg = 'var(--blue)'; }
 
-	// --- RENDER THE UPLOADED IMAGE ---
 	var receiptImgHtml = '';
 	if (r.receiptUrl) {
-	  // Extract ID from the Google Drive link
 	  var match = r.receiptUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
 	  var fileId = match ? match[1] : null;
 	  
 	  if (fileId) {
-		// Use the Google Drive direct embed trick
 		var imgSrc = 'https://drive.google.com/uc?export=view&id=' + fileId;
 		
 		receiptImgHtml = 
@@ -1528,7 +1317,6 @@ function mRenderReports(rows){
 		  '</div>';
 	  }
 	}
-	// ---------------------------------
 
 	window._mRpt=window._mRpt||{};window._mRpt[i]=r;
 	var div=document.createElement('div');
@@ -1550,7 +1338,6 @@ function mRenderReports(rows){
 		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
 		+'</div>'
 		
-		// Placed the image right below the data grid
 		+ receiptImgHtml
 		
 		+'<div style="display:flex;gap:10px; margin-top: 14px;">'
@@ -1581,27 +1368,8 @@ async function mUpdateVehicle(plate, card, status){
 	toast('Failed to update'); 
   }
 }
-async function mLoadAttendanceList(){
-  var el=document.getElementById('m-att-list');if(!el)return;
-  el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px;">Loading…</div>';
-  try{
-	var res=await fetch(OPS_API,{method:'POST',body:JSON.stringify({action:'getEmployees'})});
-	var emps=await res.json();
-	document.getElementById('m-cnt-t').innerText=emps.length;
-	el.innerHTML='';var present=0;
-	emps.forEach(function(emp){
-	  var row=document.createElement('div');
-	  row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;';
-	  row.innerHTML='<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy);flex-shrink:0;">'+(emp.name||'?').charAt(0).toUpperCase()+'</div>'
-		+'<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text);">'+emp.name+'</div><div style="font-size:11px;color:var(--text3);">'+emp.job+'</div></div>'
-		+'<span class="chip chip-gray">Staff</span>';
-	  el.appendChild(row);
-	});
-	document.getElementById('m-cnt-p').innerText=present;
-	document.getElementById('m-cnt-a').innerText=Math.max(0,emps.length-present);
-  }catch(e){el.innerHTML='<div style="color:var(--red);padding:16px;font-size:12px;">Error: '+e.message+'</div>';}
-}
 
+// --- Check-in & GPS System ---
 function loadCheckinPage(){
   startGPS();
   loadTodayAtt();
@@ -1677,30 +1445,7 @@ async function loadAttHistory(){
   }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:8px;">'+e.message+'</div>';}
 }
 
-// Convert file to Base64 for your GAS script
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-	const reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = () => resolve(reader.result); 
-	reader.onerror = error => reject(error);
-  });
-}
-
-// Update the UI button when a file is chosen
-function updateFileName(input) {
-  var lbl = document.getElementById('m-f-receipt-lbl');
-  if (input.files && input.files[0]) {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
-	lbl.style.borderColor = 'var(--green)';
-	lbl.style.background = 'var(--green-bg)';
-  } else {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
-	lbl.style.borderColor = 'var(--border)';
-	lbl.style.background = 'var(--surface2)';
-  }
-}
-
+// --- Requests System ---
 async function loadRequests(){
   var el=document.getElementById('req-list');if(!el)return;
   el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:28px;">Loading…</div>';
@@ -1737,113 +1482,8 @@ async function mSubmitReq(){
 	closeModal('req-modal');toast('Request submitted!');loadRequests();
   }catch(e){toast('Error: '+e.message);}
 }
-async function mSignOut() {
-  await logSession('logout'); 
-  CU = null;
-  _pl = null;
-  
-  // --- DISABLE RADAR ---
-  localStorage.setItem('radar_enabled', 'false');
-  if (radarInterval) clearInterval(radarInterval);
-  // ---------------------
-  
-  showScreen('screen-login');
-  document.getElementById('l-email').value = '';
-  document.getElementById('l-pass').value = '';
-}
-async function loadMail(folder){
-  mMailFolder=folder;
-  var el=document.getElementById('m-mail-list');if(!el)return;
-  el.innerHTML='<div style="font-size:12px;color:var(--text4);text-align:center;padding:36px;">Loading…</div>';
-  try{
-	var myEmail=CU.email.toLowerCase();
-	var q=folder==='inbox'?'folder=eq.inbox&recipient_emails=cs.{'+myEmail+'}&order=created_at.desc&select=*':'folder=eq.sent&sender_email=eq.'+myEmail+'&order=created_at.desc&select=*';
-	var rows=await sb('operix_emails?'+q,{method:'GET'});
-	if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--text4);"><div style="font-size:13px;font-weight:600;">No messages</div></div>';return;}
-	el.innerHTML='';
-	rows.forEach(function(em){
-	  var isUnread=!em.is_read&&em.sender_email!==myEmail;
-	  var dt=new Date(em.created_at);var now=new Date();
-	  var ts=dt.toDateString()===now.toDateString()?dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-	  var preview=(em.body||'').replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s{2,}/g,' ').trim().slice(0,70);
-	  var row=document.createElement('div');
-	  row.style.cssText='display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--surface);transition:background .15s;'+(isUnread?'border-left:3px solid var(--navy);background:#f8f9fa;':'');
-	  row.innerHTML='<div style="width:40px;height:40px;border-radius:12px;background:'+(isUnread?'var(--navy)':'var(--surface2)')+';color:'+(isUnread?'#fff':'var(--text3)')+';display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
-		+'<div style="flex:1;min-width:0;">'
-		  +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
-			+'<div style="font-size:13px;font-weight:'+(isUnread?'700':'600')+';color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;">'+(em.sender_name||em.sender_email)+'</div>'
-			+'<div style="font-size:10px;color:var(--text4);flex-shrink:0;">'+ts+'</div>'
-		  +'</div>'
-		  +'<div style="font-size:12px;font-weight:'+(isUnread?'600':'500')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(em.subject||'(No Subject)')+'</div>'
-		  +'<div style="font-size:11px;color:var(--text4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+preview+'</div>'
-		+'</div>';
-	  row.onclick=function(){mOpenMail(em);};
-	  el.appendChild(row);
-	});
-  }catch(e){el.innerHTML='<div style="font-size:12px;color:var(--red);padding:16px;">Error: '+e.message+'</div>';}
-}
-function mMailTab(folder,btn){
-  document.querySelectorAll('#pg-mail .tab-btn').forEach(function(b){b.classList.remove('active');});
-  if(btn)btn.classList.add('active');
-  loadMail(folder);
-}
-function mOpenMail(em){
-  var myEmail=CU.email.toLowerCase();
-  if(!em.is_read&&em.sender_email!==myEmail){
-	em.is_read=true;
-	sb('operix_emails?id=eq.'+em.id,{method:'PATCH',body:JSON.stringify({is_read:true}),headers:{'Prefer':'return=minimal'}}).catch(()=>{});
-	updateMailBadge();
-  }
-  var dt=new Date(em.created_at).toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  var bodyHtml=(/<[a-z][\s\S]{0,20}>/i.test(em.body||''))?em.body:(em.body||'').replace(/\n/g,'<br>');
-  document.getElementById('mail-read-content').innerHTML=
-	'<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">'
-	  +'<div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">'+(em.subject||'(No Subject)')+'</div>'
-	  +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
-		+'<div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--navy);">'+(em.sender_name||'?').charAt(0).toUpperCase()+'</div>'
-		+'<div><div style="font-size:13px;font-weight:700;color:var(--text);">'+(em.sender_name||em.sender_email)+'</div>'
-		+'<div style="font-size:10px;color:var(--text4);">'+dt+'</div></div>'
-	  +'</div>'
-	  +'<div style="font-size:11px;color:var(--text3);">To: '+((em.recipient_names||[]).join(', ')||'')+'</div>'
-	+'</div>'
-	+'<div style="font-size:14px;line-height:1.8;color:var(--text);overflow-x:auto;">'+bodyHtml+'</div>';
-  document.getElementById('mail-read-modal').classList.add('open');
-}
-function openComposeModal(){
-  sb('accounts?select=name,email&order=name.asc',{method:'GET'}).then(function(rows){
-	var dl=document.getElementById('cm-to-list');
-	if(dl&&Array.isArray(rows))dl.innerHTML=rows.map(function(r){return'<option value="'+r.email+'">'+r.name+'</option>';}).join('');
-  }).catch(()=>{});
-  document.getElementById('cm-to').value='';document.getElementById('cm-sub').value='';document.getElementById('cm-body').value='';
-  document.getElementById('compose-modal').classList.add('open');
-}
-async function mSendMail(){
-  var to=(document.getElementById('cm-to').value||'').trim().toLowerCase();
-  var sub=(document.getElementById('cm-sub').value||'').trim();
-  var body=(document.getElementById('cm-body').value||'').trim();
-  if(!to||!sub||!body){toast('Fill all fields.');return;}
-  try{
-	var recRows=await sb('accounts?email=eq.'+encodeURIComponent(to)+'&select=name&limit=1',{method:'GET'}).catch(()=>[]);
-	var recName=(Array.isArray(recRows)&&recRows.length)?recRows[0].name:to;
-	var p={sender_name:CU.name,sender_email:CU.email.toLowerCase(),recipient_names:[recName],recipient_emails:[to],cc_emails:[],subject:sub,body:body.replace(/\n/g,'<br>'),folder:'sent',is_read:true,thread_id:null,attachments:[]};
-	await sb('operix_emails',{method:'POST',body:JSON.stringify(p)});
-	await sb('operix_emails',{method:'POST',body:JSON.stringify({...p,folder:'inbox',is_read:false})});
-	closeModal('compose-modal');toast('Message sent!');
-	if(mMailFolder==='sent')loadMail('sent');
-  }catch(e){toast('Error: '+e.message);}
-}
-async function updateMailBadge(){
-  try{
-	var myEmail=CU.email.toLowerCase();
-	var rows=await sb('operix_emails?folder=eq.inbox&is_read=eq.false&recipient_emails=cs.{'+myEmail+'}&select=id',{method:'GET'});
-	var n=Array.isArray(rows)?rows.length:0;
-	['nav-mail-badge','m-inbox-ct','hm-mail-badge'].forEach(function(id){
-	  var el=document.getElementById(id);if(!el)return;
-	  el.innerText=n||'';el.style.display=n?'inline-block':'none';
-	});
-  }catch{}
-}
 
+// --- Profile & Export ---
 async function loadProfile(){
   document.getElementById('p-name').innerText=CU.name||'';
   document.getElementById('p-role').innerText=CU.role+(CU.job?' · '+CU.job:'');
@@ -1973,6 +1613,20 @@ async function mExportID() {
   }
 }
 
+async function mSignOut() {
+  await logSession('logout'); 
+  CU = null;
+  _pl = null;
+  
+  localStorage.setItem('radar_enabled', 'false');
+  if (radarInterval) clearInterval(radarInterval);
+  
+  showScreen('screen-login');
+  document.getElementById('l-email').value = '';
+  document.getElementById('l-pass').value = '';
+}
+
+// --- Chatbot ---
 function toggleChat() {
   var p = document.getElementById('chat-panel');
   p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
@@ -2004,62 +1658,12 @@ function sendChat() {
 
   setTimeout(() => {
 	typingDiv.remove();
-
 	var bMsg = document.createElement('div');
 	bMsg.className = 'chat-msg bot pop-in';
 	bMsg.innerHTML = getBotResponse(text.toLowerCase());
-	
 	body.appendChild(bMsg);
 	body.scrollTop = body.scrollHeight;
   }, 600); 
-}
-// 1. Request Background Notification Permissions
-function requestNotificationPermission() {
-  if ('Notification' in window && Notification.permission !== 'granted') {
-	Notification.requestPermission();
-  }
-}
-
-// 2. Trigger the Radar Alarm
-function triggerRadar(clientDetails) {
-  // Set cookie/local storage flag so we know an alarm is active
-  localStorage.setItem('active_radar_cookie', 'true');
-  
-  document.getElementById('radar-client-info').innerText = clientDetails;
-  document.getElementById('radar-modal').style.display = 'flex';
-  
-  // Play looping audio
-  let audio = document.getElementById('radar-audio');
-  audio.play().catch(e => console.log("Audio blocked until user interacts"));
-
-  // Trigger background notification if app is minimized
-  if ('Notification' in window && Notification.permission === 'granted') {
-	navigator.serviceWorker.ready.then(function(registration) {
-	  registration.showNotification('🚨 Car Requested!', {
-		body: clientDetails,
-		icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
-		vibrate: [200, 100, 200, 100, 200, 100, 200], // Vibrate pattern
-		requireInteraction: true // Keeps notification on screen until clicked
-	  });
-	});
-  }
-}
-
-// 3. Stop the Radar Alarm (When Valet answers)
-function answerRadar() {
-  let audio = document.getElementById('radar-audio');
-  audio.pause();
-  audio.currentTime = 0; // Reset audio
-  
-  document.getElementById('radar-modal').style.display = 'none';
-  
-  // Disable the cookie/flag so it doesn't trigger again
-  localStorage.setItem('active_radar_cookie', 'false');
-  document.cookie = "radar_active=false; path=/";
-  
-  toast("Request Answered. Client notified.");
-  
-  // Here you would add your backend SB fetch to update the request status to "Answered"
 }
 
 function getBotResponse(input) {
@@ -2069,14 +1673,12 @@ function getBotResponse(input) {
 	• <b>Late (16m - 1h 59m):</b> Allowed with warning. Deduction: 30 SAR/hr (prorated).<br>
 	• <b>2+ Hours Late:</b> Marked ABSENT. Cannot check in until next shift.`;
   }
-  
   if (input.includes('check out') || input.includes('check-out') || input.includes('early')) {
 	return `<b>Check-Out Rules:</b><br>
 	• <b>Valid Window:</b> Up to 30 mins after shift ends.<br>
 	• <b>Early Checkout:</b> Results in NO PAY for that session.<br>
 	• <b>After 30-min Window:</b> Blocked. Contact your manager.`;
   }
-  
   if (input.includes('absent') || input.includes('absence') || input.includes('streak')) {
 	return `<b>Absence Deductions (Consecutive Work Days):</b><br>
 	• <b>1 Day:</b> -1 day deduction.<br>
@@ -2084,7 +1686,6 @@ function getBotResponse(input) {
 	• <b>3+ Days:</b> -30% of salary.<br>
 	<i>Note: Off days/weekends do not break a streak.</i>`;
   }
-  
   if (input.includes('salary') || input.includes('pay') || input.includes('deduction') || input.includes('calculate')) {
 	return `<b>Salary Calculation:</b><br>
 	• <b>Daily Rate:</b> Monthly ÷ Working Days<br>
@@ -2093,33 +1694,23 @@ function getBotResponse(input) {
 	• <b>Net Salary:</b> Earned − Deductions<br>
 	<i>Late penalty: 30 SAR/hr prorated (e.g., 45m late = -22 SAR).</i>`;
   }
-  
   if (input.includes('gps') || input.includes('location')) {
 	return `<b>GPS Rules:</b><br>
 	You must be on-site to check in/out. The GPS dot turns green when in range.<br>
 	<i>Tip: If it shows outside while you are inside, check location permissions and wait 10-15 seconds for the signal to update.</i>`;
   }
-
   if (input.includes('ops') || input.includes('operation') || input.includes('valet') || input.includes('park')) {
 	return `<b>Operations Board:</b><br>
 	Tap the 'Ops' tab at the bottom. Select your specific module to get started.`;
   }
-
   if (input.includes('request') || input.includes('ticket') || input.includes('leave')) {
 	return `<b>Requests:</b><br>
 	Need to ask for leave, a document, or inquire about salary? Go to the 'Requests' tab and tap 'New Request' to send a formal ticket to HR/Management.`;
   }
-
-  if (input.includes('mail') || input.includes('message')) {
-	return `<b>Mail:</b><br>
-	Use the Mail tab to send internal messages to staff or management securely within the Operix system.`;
-  }
-
   if (input.includes('home') || input.includes('dashboard')) {
 	return `<b>Home Dashboard:</b><br>
 	This is your main screen. It shows your active shift details, the number of days you've worked this month, and your estimated salary.`;
   }
-
   if (input.includes('policy') || input.includes('rules') || input.includes('hr')) {
 	return `I can help you with HR policies! Ask me specifically about:<br>
 	• Check in<br>
@@ -2128,18 +1719,78 @@ function getBotResponse(input) {
 	• Salary<br>
 	• GPS`;
   }
-
   if (input.includes('hi') || input.includes('hello') || input.includes('help')) {
 	return `Hello! I'm the OPERIX AI Assistant. I can help you navigate the app or answer questions about HR policies.<br><br>Try asking:<br><i>"How does salary work?"</i><br><i>"What is the late policy?"</i><br><i>"How do I use operations?"</i>`;
   }
-
   return `I'm not quite sure about that. Try asking about specific HR policies (like 'late', 'absent', 'salary', 'check out') or how to use a specific part of the app (like 'operations' or 'requests').`;
+}
+
+// --- Radar System ---
+let radarInterval = null;
+let currentRadarReq = null;
+let answeredRequests = new Set(); 
+
+function startRadarLoop() {
+  if (radarInterval) clearInterval(radarInterval); 
+  
+  radarInterval = setInterval(async () => {
+	if (localStorage.getItem('radar_enabled') !== 'true') return;
+	if (document.getElementById('radar-modal').style.display === 'flex') return;
+
+	try {
+	  let rows = await sb('operix_invoices?vehicle_status=eq.Requested', {method: 'GET'});
+	  if (rows && rows.length > 0) {
+		let req = rows.find(r => !answeredRequests.has(r.plate_num));
+		
+		if (req) {
+		  currentRadarReq = req; 
+		  document.getElementById('radar-client-info').innerText = req.plate_num + " - " + (req.client_name || 'Client');
+		  document.getElementById('radar-modal').style.display = 'flex';
+		  document.getElementById('radar-audio').play().catch(e => console.log("Audio blocked"));
+
+		  if ('Notification' in window && Notification.permission === 'granted') {
+			navigator.serviceWorker.ready.then(function(reg) {
+			  reg.showNotification('🚨 Car Requested!', {
+				body: req.plate_num + ' is waiting!',
+				icon: 'https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png',
+				vibrate: [200, 100, 200, 100, 200, 100, 200],
+				requireInteraction: true
+			  });
+			});
+		  }
+		}
+	  }
+	} catch(e) {}
+  }, 7000); 
+}
+
+async function answerRadar() {
+  let audio = document.getElementById('radar-audio');
+  audio.pause();
+  audio.currentTime = 0;
+  document.getElementById('radar-modal').style.display = 'none';
+  
+  if (currentRadarReq) {
+	answeredRequests.add(currentRadarReq.plate_num); 
+	try {
+	  await sb(`operix_invoices?plate_num=eq.${encodeURIComponent(currentRadarReq.plate_num)}&card_num=eq.${encodeURIComponent(currentRadarReq.card_num)}`, {
+		method: 'PATCH', 
+		body: JSON.stringify({ vehicle_status: 'In Progress' })
+	  });
+	  toast("Request Accepted! Status: In Progress");
+	  mLoadReports(); 
+	} catch(e) {
+	  toast("Error updating status.");
+	}
+	currentRadarReq = null;
+  }
 }
 
 window.addEventListener('DOMContentLoaded',function(){
   showScreen('screen-login');
 });
 </script>
+
 <audio id="radar-audio" loop preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
 </audio>
