@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="OPERIX">
@@ -47,14 +47,59 @@
   --st: env(safe-area-inset-top, 0px);
 }
 
+/* ==========================================
+   CRITICAL LAYOUT FIXES FOR MOBILE
+   ========================================== */
 html, body {
-  height: 100%; 
+  width: 100vw;
+  height: 100vh; 
+  position: fixed; /* Stops whole-page bouncing on iOS */
+  margin: 0;
+  padding: 0;
   background: var(--bg); 
   font-family: 'Space Grotesk', sans-serif; 
   color: var(--text); 
-  overflow: hidden; 
+  overflow: hidden; /* Hard lock */
+  overscroll-behavior: none; 
   -webkit-font-smoothing: antialiased;
 }
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen {
+  display: none;
+  position: absolute; /* Changed from fixed to absolute to stay inside body */
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.screen.active { display: flex; animation: fadeUp .3s ease-out; }
+
+.page {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden; /* Kills horizontal slide */
+  overscroll-behavior-y: contain; /* Traps vertical bounce to this element only */
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px; /* Ensures content clears bottom nav */
+}
+.page.active { display: block; }
+.page-pad { padding: 16px; width: 100%; overflow-x: hidden; }
+
+#pages {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+/* ========================================== */
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{0%{opacity:0;transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
@@ -70,7 +115,7 @@ html, body {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  z-index: 50; position: relative;
+  z-index: 50; position: relative; width: 100%;
 }
 .topbar-title{font-size:18px;font-weight:800;letter-spacing:-.01em;}
 .topbar-sub{font-size:9px;color:var(--text3);font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-top:1px;}
@@ -82,7 +127,7 @@ html, body {
   display: flex; align-items: stretch;
   border-top: 1px solid var(--border);
   box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
-  z-index: 50; position: relative;
+  z-index: 50; position: relative; width: 100%;
 }
 .nav-btn{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
@@ -95,12 +140,7 @@ html, body {
 .nav-btn.active{color:var(--navy);}
 .nav-btn.active svg{transform:translateY(-2px);stroke-width:2.5;}
 
-.screen{display:none;position:fixed;inset:0;overflow:hidden;flex-direction:column;}
-.screen.active{display:flex;animation:fadeUp .3s ease-out;}
-.auth-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;background:var(--bg);}
-.page{display:none;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;}
-.page.active{display:block;}
-.page-pad{padding:16px;}
+.auth-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;background:var(--bg); width:100%; overflow-y:auto;}
 
 .card, .card-sm {
   background: var(--surface);
@@ -110,6 +150,8 @@ html, body {
   margin-bottom: 16px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow .2s, transform .2s;
+  width: 100%;
+  overflow: hidden; /* Prevents internal blowout */
 }
 .card:hover { box-shadow: var(--shadow-md); }
 .card-sm{padding:14px 16px;margin-bottom:12px;}
@@ -126,7 +168,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .btn-gold {background: var(--gold); color: #fff; box-shadow: 0 4px 12px rgba(154, 111, 40, 0.2);}
 .btn-outline {background: var(--surface); color: var(--text); border: 1.5px solid var(--border);}
 
-.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
 .chip-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border);}
 .chip-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
 .chip-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
@@ -134,14 +176,14 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .chip-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
 .chip-gray{background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 
-.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;width:100%;}
 .kpi-tile{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .2s;}
 .kpi-val{font-size:26px;font-weight:900;color:var(--navy);letter-spacing:-.02em;}
 .kpi-lbl{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;}
 
-.shift-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-hover) 100%);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
+.shift-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-hover) 100%);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;width:100%;}
 
-.inv-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.inv-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm);width:100%;}
 .inv-stripe-parked{width:5px;background:var(--amber);flex-shrink:0;}
 .inv-stripe-done{width:5px;background:var(--green);flex-shrink:0;}
 
@@ -157,7 +199,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
 .modal.open{display:flex;animation:popIn .3s;}
-.modal-box{background:var(--surface);border-radius:24px 24px 0 0;padding:0 0 calc(20px + var(--sb));width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 -10px 40px rgba(0,0,0,.1);}
+.modal-box{background:var(--surface);border-radius:24px 24px 0 0;padding:0 0 calc(20px + var(--sb));width:100%;max-height:90vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 -10px 40px rgba(0,0,0,.1);}
 .modal-handle{width:48px;height:5px;background:var(--border2);border-radius:3px;margin:16px auto;}
 .modal-hdr{padding:0 20px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
 .modal-title{font-size:18px;font-weight:800;}
@@ -167,10 +209,9 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 *::-webkit-scrollbar{display:none;}
 *{scrollbar-width:none;}
-.tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;padding:0 8px;}
+.tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;padding:0 8px;width:100%;}
 .tab-btn{padding:16px;background:none;border:none;border-bottom:3px solid transparent;font-size:14px;font-weight:700;color:var(--text4);cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
 .tab-btn.active{border-bottom-color:var(--navy);color:var(--navy);}
-.list-row{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface);border-bottom:1px solid var(--border);cursor:pointer;}
 .att-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
 
 .fab-chat{position:fixed;bottom:calc(100px + var(--sb));right:20px;width:56px;height:56px;background:var(--navy);border-radius:50%;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;transition:transform .3s;}
@@ -178,8 +219,8 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .fab-chat svg{color:#fff;width:24px;height:24px;}
 #chat-panel{position:fixed;bottom:calc(110px + var(--sb));right:20px;width:calc(100% - 40px);max-width:360px;height:450px;background:var(--surface);border-radius:20px;box-shadow:var(--shadow-md);border:1px solid var(--border);display:none;flex-direction:column;z-index:200;overflow:hidden;animation:popIn .3s;}
 .chat-hdr{background:var(--navy);padding:16px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
-.chat-body{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--surface2);}
-.chat-msg{max-width:85%;padding:12px 16px;border-radius:18px;font-size:13px;line-height:1.5;font-weight:600;}
+.chat-body{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--surface2);overflow-x:hidden;}
+.chat-msg{max-width:85%;padding:12px 16px;border-radius:18px;font-size:13px;line-height:1.5;font-weight:600;word-wrap:break-word;}
 .chat-msg.bot{background:#fff;border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);}
 .chat-msg.user{background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue);align-self:flex-end;border-bottom-right-radius:4px;}
 .chat-input-area{padding:12px 16px;background:var(--surface);border-top:1px solid var(--border);display:flex;gap:8px;}
@@ -325,9 +366,9 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	</div>
   </div>
 
-  <div id="pages" style="flex:1;overflow:hidden;position:relative;">
+  <div id="pages">
 
-	<div id="pg-home" class="page active" style="padding-bottom:calc(72px + var(--sb));">
+	<div id="pg-home" class="page active">
 	  <div class="page-pad fade-up">
 		<div id="hm-greeting" style="font-size:26px;font-weight:900;margin-bottom:4px;"></div>
 		<div id="hm-name" style="font-size:14px;color:var(--text3);margin-bottom:24px;"></div>
@@ -371,7 +412,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  </div>
 	</div>
 
-	<div id="pg-ops" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	<div id="pg-ops" class="page">
 	  <div class="tab-bar">
 		<button class="tab-btn active" id="ops-tab-new" onclick="opsTab('new',this)">New Entry</button>
 		<button class="tab-btn" id="ops-tab-reports" onclick="opsTab('reports',this)">Live Board</button>
@@ -391,18 +432,18 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 		</div>
 	  </div>
 	  
-	  <div id="ops-pane-reports" class="fade-up" style="display:none;padding-bottom:12px;">
-		<div style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;">
+	  <div id="ops-pane-reports" class="fade-up" style="display:none;">
+		<div style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10; width:100%;">
 		  <div style="position:relative;">
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5" stroke-linecap="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 			<input type="text" id="m-rep-search" class="field" placeholder="Search plates, names..." oninput="mFilterReports()" style="padding-left:42px;">
 		  </div>
 		</div>
-		<div id="m-reports-list" style="padding:16px 20px;"></div>
+		<div id="m-reports-list" style="padding:16px 20px; width:100%; overflow-x:hidden;"></div>
 	  </div>
 	</div> 
 
-	<div id="pg-checkin" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	<div id="pg-checkin" class="page">
 	  <div class="page-pad fade-up">
 		<div style="text-align:center;padding:32px 0;">
 		  <div id="m-clock" style="font-size:54px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px;"></div>
@@ -431,7 +472,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  </div>
 	</div>
 
-	<div id="pg-requests" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	<div id="pg-requests" class="page">
 	  <div class="page-pad fade-up">
 		<button class="btn btn-dark hover-lift" onclick="openReqModal()" style="margin-bottom:20px;">
 		  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -442,7 +483,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	  </div>
 	</div>
 
-	<div id="pg-profile" class="page" style="padding-bottom:calc(72px + var(--sb));">
+	<div id="pg-profile" class="page">
 	  <div class="page-pad fade-up">
 		<div class="card" style="text-align:center;padding:32px 20px;">
 		  <div id="p-av" style="width:84px;height:84px;border-radius:24px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 16px;overflow:hidden;"></div>
@@ -958,7 +999,6 @@ function finishLogin(acc) {
   audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
   
   startRadarLoop();
-  
   initApp();
 }
 
@@ -1324,18 +1364,20 @@ function mRenderReports(rows){
 	
 	div.innerHTML='<div style="display:flex;">'
 	  +'<div style="width:5px; flex-shrink:0; background:'+stripeBg+';"></div>' 
-	  +'<div style="padding:16px;flex:1;">'
+	  +'<div style="padding:16px;flex:1;min-width:0;">'
 		
-		+'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">'
-		  +'<div style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);line-height:1;">'+r.plateNum+'</div>'
-		  +'<span class="chip '+chipColor+'">'+status+'</span>' 
+		+'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;width:100%;overflow:hidden;">'
+		  +'<div style="min-width:0;flex:1;padding-right:8px;">'
+			+'<div style="font-family:\'Fira Code\',monospace;font-size:22px;font-weight:900;color:var(--text);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+r.plateNum+'</div>'
+		  +'</div>'
+		  +'<span class="chip '+chipColor+'" style="flex-shrink:0;">'+status+'</span>' 
 		+'</div>'
 		
-		+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0;">'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);">#'+r.cardNum+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+'">'+(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
-		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
+		+'<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:0;">'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;overflow:hidden;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Card</div><div style="font-family:\'Fira Code\',monospace;font-size:15px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">#'+r.cardNum+'</div></div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;overflow:hidden;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Service</div><div style="font-size:14px;font-weight:800;color:'+(r.serviceType==='Free'?'var(--green)':'var(--gold)')+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(r.serviceType==='Free' ? 'Free' : (r.amount || currentExternalFee) + ' SAR')+'</div></div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;overflow:hidden;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Client</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.clientName||'—')+'</div></div>'
+		  +'<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;overflow:hidden;"><div style="font-size:9px;color:var(--text4);font-weight:800;text-transform:uppercase;letter-spacing:.1em;">Staff</div><div style="font-size:13px;font-weight:700;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(r.valetName||'—')+'</div></div>'
 		+'</div>'
 		
 		+ receiptImgHtml
