@@ -51,20 +51,19 @@
    CRITICAL LAYOUT FIXES FOR MOBILE
    ========================================== */
 html, body {
-	 width: 100%;
-	 height: 100%; 
-	 height: 100dvh; /* The magic fix for mobile browser toolbars */
-	 position: fixed; 
-	 top: 0; left: 0;
-	 margin: 0;
-	 padding: 0;
-	 background: var(--bg); 
-	 font-family: 'Space Grotesk', sans-serif; 
-	 color: var(--text); 
-	 overflow: hidden; 
-	 overscroll-behavior: none; 
-	 -webkit-font-smoothing: antialiased;
-   }
+  width: 100vw;
+  height: 100vh; 
+  height: 100dvh;
+  position: fixed; /* Stops whole-page bouncing on iOS */
+  margin: 0;
+  padding: 0;
+  background: var(--bg); 
+  font-family: 'Space Grotesk', sans-serif; 
+  color: var(--text); 
+  overflow: hidden; /* Hard lock */
+  overscroll-behavior: none; 
+  -webkit-font-smoothing: antialiased;
+}
 
 * {
   box-sizing: border-box;
@@ -130,6 +129,7 @@ html, body {
   border-top: 1px solid var(--border);
   box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
   z-index: 50; position: relative; width: 100%;
+  flex-shrink: 0;
 }
 .nav-btn{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
@@ -251,7 +251,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
   <div class="auth-wrap">
 	<div style="width:100%;max-width:340px;" class="fade-up">
 	 <div style="text-align:center;margin-bottom:36px;">
-	   <div style="display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:25px;background:var(--navy);border:1px solid var(--border2);box-shadow:var(--shadow-md);margin-bottom:18px;">
+	   <div style="display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:26px;background:var(--navy);border:1px solid var(--border2);box-shadow:var(--shadow-md);margin-bottom:18px;">
 		 <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:60px;height:60px;object-fit:contain;border-radius:16px;" onerror="this.style.display='none'">
 	   </div>
 	   <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--navy);letter-spacing:-.02em;">OPERIX</div>
@@ -562,6 +562,31 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
   </div>
 </div>
 
+<div id="return-modal" class="modal">
+  <div class="modal-box">
+	<div class="modal-handle"></div>
+	<div class="modal-hdr">
+	  <div class="modal-title">Return Vehicle</div>
+	  <button onclick="closeModal('return-modal')" style="background:none;border:none;cursor:pointer;color:var(--text3);display:flex;padding:4px;">
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+	  </button>
+	</div>
+	<div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
+	  <div style="font-size:13px; color:var(--text3); text-align:center; margin-bottom: 8px;">
+		This is a paid external service. You must upload the payment receipt to complete the return.
+	  </div>
+	  <div style="position:relative; width:100%;">
+		<input type="file" id="r-f-receipt" accept="image/*" style="opacity:0; position:absolute; inset:0; width:100%; height:100%; z-index:10; cursor:pointer;" onchange="updateReturnFileName(this)">
+		<div id="r-f-receipt-lbl" class="field" style="display:flex; align-items:center; justify-content:center; gap:8px; background:var(--surface2); color:var(--text3); border: 1.5px dashed var(--border); text-align:center; transition: all 0.2s;">
+		  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+		  <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>
+		</div>
+	  </div>
+	  <button class="btn btn-dark hover-lift" onclick="mConfirmReturn()" id="return-confirm-btn">Confirm Return</button>
+	</div>
+  </div>
+</div>
+
 <div id="receipt-cap" style="position:fixed;left:-9999px;top:0;width:320px;background:#ffffff;padding:20px;font-family:'Space Grotesk',sans-serif;z-index:-1;box-sizing:border-box;">
   <div style="text-align:center;margin-bottom:16px;border-bottom:1.5px dashed #1e2d40;padding-bottom:16px;">
 	<div style="font-size:22px;font-weight:900;color:#1e2d40;text-transform:uppercase;line-height:1.1;letter-spacing:-0.02em;">OPERIX</div>
@@ -593,7 +618,7 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 	</div>
   </div>
   <div style="display:flex;gap:16px;margin-bottom:24px;position:relative;z-index:1;width:100%;">
-	<div id="id-photo" style="width:84px;height:84px;border-radius:20px;background:#2a3f5c;border:2px solid #93c5fd;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;overflow:hidden;flex-shrink:0;"></div>
+	<div id="id-photo" style="width:84px;height:84px;border-radius:20px;background:#2a3f5c;border:1px solid rgba(147, 197, 253, 0.5);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;overflow:hidden;flex-shrink:0;"></div>
 	<div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">
 	  <div id="id-name" style="font-size:22px;font-weight:800;margin-bottom:4px;line-height:1.1;color:#fff;word-break:break-word;"></div>
 	  <div id="id-job" style="font-size:12px;color:#93c5fd;font-weight:700;margin-bottom:10px;"></div>
@@ -1076,28 +1101,6 @@ function opsSvcTab(svc,btn){
   buildOpsFields();
 }
 
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-	const reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = () => resolve(reader.result); 
-	reader.onerror = error => reject(error);
-  });
-}
-
-function updateFileName(input) {
-  var lbl = document.getElementById('m-f-receipt-lbl');
-  if (input.files && input.files[0]) {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
-	lbl.style.borderColor = 'var(--green)';
-	lbl.style.background = 'var(--green-bg)';
-  } else {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
-	lbl.style.borderColor = 'var(--border)';
-	lbl.style.background = 'var(--surface2)';
-  }
-}
-
 function buildOpsFields(){
   var c=document.getElementById('ops-fields');if(!c)return;
   var isMB=mOpsSvc==='mb';
@@ -1112,19 +1115,6 @@ function buildOpsFields(){
 	div.innerHTML='<label class="field-label">'+f.label+'</label><input id="'+f.id+'" type="'+f.type+'" class="field" placeholder="'+f.ph+'"'+(f.upper?' style="text-transform:uppercase;"':'')+' autocomplete="off">';
 	c.appendChild(div);
   });
-  
-  var fileDiv = document.createElement('div');
-  fileDiv.innerHTML = `
-	<label class="field-label" style="margin-top: 4px;">Payment Receipt (Optional)</label>
-	<div style="position:relative; width:100%;">
-	  <input type="file" id="m-f-receipt" accept="image/*" style="opacity:0; position:absolute; inset:0; width:100%; height:100%; z-index:10; cursor:pointer;" onchange="updateFileName(this)">
-	  <div id="m-f-receipt-lbl" class="field" style="display:flex; align-items:center; justify-content:center; gap:8px; background:var(--surface2); color:var(--text3); border: 1.5px dashed var(--border); text-align:center; transition: all 0.2s;">
-		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-		<span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>
-	  </div>
-	</div>
-  `;
-  c.appendChild(fileDiv);
 
   var info=document.createElement('div');
   info.style.cssText='background:var(--surface2);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between; margin-top: 4px; border: 1px solid var(--border);';
@@ -1161,38 +1151,15 @@ async function mOpsSave(){
   var name=mOpsSvc==='mb'?'Mind Break member':((document.getElementById('m-f-name')?.value||'').trim());
   var phone=mOpsSvc==='mb'?'-':((document.getElementById('m-f-phone')?.value||'-').trim());
   
-  var fileInput = document.getElementById('m-f-receipt');
-  var file = fileInput && fileInput.files ? fileInput.files[0] : null;
-  
   if(!plate||!card||(mOpsSvc==='ext'&&!name)){toast('Fill required fields');return;}
   
   var btn=document.getElementById('ops-save-btn');
   btn.disabled=true; 
+  btn.innerHTML='Saving...';
+  
   var ref=genRef();
-  var driveLink = null; 
 
   try {
-	if (file) {
-	  btn.innerHTML='Compressing Photo...';
-	  let compressedBase64 = await compressImage(file);
-	  
-	  btn.innerHTML='Uploading to Drive...';
-	  let uploadRes = await gas({
-		action: 'uploadPhoto',
-		base64: compressedBase64,
-		mimeType: 'image/jpeg',
-		fileName: ref + '_Receipt.jpg'
-	  });
-
-	  if (uploadRes && uploadRes.success) {
-		driveLink = uploadRes.driveUrl; 
-	  } else {
-		throw new Error("Photo upload failed. Check connection.");
-	  }
-	}
-
-	btn.innerHTML='Saving Record...';
-	
 	var payload = {
 	  plate_num: plate,
 	  card_num: card,
@@ -1207,10 +1174,6 @@ async function mOpsSave(){
 	  date: new Date().toISOString()
 	};
 
-	if (driveLink) {
-	  payload.receipt_url = driveLink;
-	}
-
 	await sb('operix_invoices', { method: 'POST', body: JSON.stringify(payload) });
 
 	var recPayload = { plateNum: plate, cardNum: card, clientName: name, staffName: CU.name, amount: payload.amount, opID: ref, ref: ref };
@@ -1218,7 +1181,27 @@ async function mOpsSave(){
 	
 	toast('Saved! ID: ' + ref);
 	buildOpsFields(); 
-	
+
+	if (phone && phone !== '-' && phone.length > 5) {
+	  let cleanPhone = phone.replace(/[^0-9]/g, '');
+	  if (cleanPhone.startsWith('05')) {
+		cleanPhone = '966' + cleanPhone.substring(1);
+	  } else if (!cleanPhone.startsWith('966') && cleanPhone.length === 9) {
+		cleanPhone = '966' + cleanPhone; 
+	  }
+
+	  let isFree = mOpsSvc === 'mb';
+	  let waText = `Welcome to *Mind Break* ☕\n\n`;
+	  waText += `Hello ${name !== '-' ? name : 'Guest'}, your vehicle is safely parked with us.\n\n`;
+	  waText += `🚘 *Plate:* ${plate}\n`;
+	  waText += `🎫 *Card:* #${card}\n`;
+	  waText += `💰 *Service:* ${isFree ? 'Member (Free)' : currentExternalFee + ' SAR'}\n`;
+	  waText += `🔢 *Ticket ID:* ${ref}\n\n`;
+	  waText += `_Reply to this message when you need your car back!_`;
+
+	  let waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waText)}`;
+	  setTimeout(() => { window.open(waUrl, '_blank'); }, 1000);
+	}
   } catch(e) {
 	toast('Error: ' + e.message);
   }
@@ -1239,34 +1222,17 @@ async function mCaptureReceipt(d) {
   var qrEl = document.getElementById('r-qr');
   qrEl.innerHTML = '';
   
-  var qrData = JSON.stringify({
-	opID: d.opID || d.ref,
-	plate: d.plateNum,
-	card: d.cardNum,
-	client: d.clientName,
-	staff: d.staffName,
-	amount: d.amount
-  });
-  
+  var qrData = JSON.stringify({ opID: d.opID || d.ref, plate: d.plateNum, card: d.cardNum, client: d.clientName, staff: d.staffName, amount: d.amount });
   var safeQrData = unescape(encodeURIComponent(qrData));
   
   try {
-	new QRCode(qrEl, {
-	  text: safeQrData,
-	  width: 256,
-	  height: 256,
-	  colorDark: '#1e2d40',
-	  colorLight: '#ffffff',
-	  correctLevel: QRCode.CorrectLevel.L
-	});
-
+	new QRCode(qrEl, { text: safeQrData, width: 256, height: 256, colorDark: '#1e2d40', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.L });
 	setTimeout(() => {
 		var qrImg = qrEl.querySelector('img');
 		var qrCanvas = qrEl.querySelector('canvas');
 		if(qrImg) { qrImg.style.width = '100%'; qrImg.style.height = '100%'; }
 		if(qrCanvas) { qrCanvas.style.width = '100%'; qrCanvas.style.height = '100%'; }
 	}, 50);
-
   } catch(e) { }
   
   await new Promise(r => setTimeout(r, 800));
@@ -1277,9 +1243,7 @@ async function mCaptureReceipt(d) {
 	  backgroundColor: '#f5f4f0',
 	  logging: false,
 	  useCORS: true,
-	  ignoreElements: function(element) {
-		return element.tagName && element.tagName.toLowerCase() === 'script';
-	  }
+	  ignoreElements: function(element) { return element.tagName && element.tagName.toLowerCase() === 'script'; }
 	});
 
 	var a = document.createElement('a');
@@ -1293,14 +1257,103 @@ async function mCaptureReceipt(d) {
   }
 }
 
+// --- Return Image Upload Logic ---
+let currentReturnReq = null;
+
+function updateReturnFileName(input) {
+  var lbl = document.getElementById('r-f-receipt-lbl');
+  if (input.files && input.files[0]) {
+	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
+	lbl.style.borderColor = 'var(--green)';
+	lbl.style.background = 'var(--green-bg)';
+  }
+}
+
+function initiateReturn(idx) {
+  let r = window._mRpt[idx];
+  
+  if (r.serviceType === 'Free') {
+	mUpdateVehicle(r.plateNum, r.cardNum, 'Returned');
+  } else {
+	currentReturnReq = r;
+	document.getElementById('r-f-receipt-lbl').innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
+	document.getElementById('r-f-receipt-lbl').style.borderColor = 'var(--border)';
+	document.getElementById('r-f-receipt-lbl').style.background = 'var(--surface2)';
+	
+	let fileInput = document.getElementById('r-f-receipt');
+	if (fileInput) fileInput.value = '';
+	
+	document.getElementById('return-modal').classList.add('open');
+  }
+}
+
+async function mConfirmReturn() {
+  let fileInput = document.getElementById('r-f-receipt');
+  let file = fileInput.files ? fileInput.files[0] : null;
+  
+  if (!file) { 
+	toast('Receipt image is strictly required!'); 
+	return; 
+  }
+
+  let btn = document.getElementById('return-confirm-btn');
+  btn.disabled = true;
+
+  try {
+	btn.innerHTML = 'Compressing Photo...';
+	let compressedBase64 = await compressImage(file);
+	
+	btn.innerHTML = 'Uploading to Drive...';
+	let uploadRes = await gas({
+	  action: 'uploadPhoto',
+	  base64: compressedBase64,
+	  mimeType: 'image/jpeg',
+	  fileName: currentReturnReq.opID + '_Receipt.jpg'
+	});
+
+	if (uploadRes && uploadRes.success) {
+	  let driveLink = uploadRes.driveUrl;
+	  btn.innerHTML = 'Updating Ticket...';
+	  
+	  await sb(`operix_invoices?plate_num=eq.${encodeURIComponent(currentReturnReq.plateNum)}&card_num=eq.${encodeURIComponent(currentReturnReq.cardNum)}`, {
+		method: 'PATCH',
+		body: JSON.stringify({ vehicle_status: 'Returned', receipt_url: driveLink })
+	  });
+	  
+	  toast('Vehicle Returned & Receipt Saved!');
+	  closeModal('return-modal');
+	  mLoadReports(); 
+	} else {
+	  throw new Error("Upload failed. Check connection.");
+	}
+  } catch(e) {
+	toast('Error: ' + e.message);
+  }
+  
+  btn.disabled = false;
+  btn.innerHTML = 'Confirm Return';
+}
+
+async function mUpdateVehicle(plate, card, status){
+  if(status === 'Returned' && !confirm('Confirm vehicle returned?')) return;
+  try {
+	await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
+	  method: 'PATCH', 
+	  body: JSON.stringify({ vehicle_status: status })
+	});
+	toast('Status Updated');
+	setTimeout(mLoadReports, 500);
+  } catch(e) { 
+	toast('Failed to update'); 
+  }
+}
+
 async function mLoadReports(){
   var el=document.getElementById('m-reports-list');if(!el)return;
   el.innerHTML='<div style="text-align:center;padding:32px;color:var(--text3);font-size:14px;font-weight:600;">Loading Board...</div>';
   
   try{
-	// Fetches ALL operations for EVERYONE, ordered by newest first
 	var query = 'operix_invoices?order=created_at.desc';
-	
 	var rows = await sb(query, { method: 'GET' });
 	
 	mReportsData = rows.map(r => ({
@@ -1349,10 +1402,11 @@ function mRenderReports(rows){
 	  
 	  if (fileId) {
 		var imgSrc = 'https://drive.google.com/uc?export=view&id=' + fileId;
+		var fallbackStr = '<a href=&quot;'+r.receiptUrl+'&quot; target=&quot;_blank&quot; style=&quot;display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; font-size:13px; font-weight:700; color:var(--blue); text-decoration:none;&quot;><svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;18&quot; height=&quot;18&quot; rx=&quot;2&quot; ry=&quot;2&quot;></rect><circle cx=&quot;8.5&quot; cy=&quot;8.5&quot; r=&quot;1.5&quot;></circle><polyline points=&quot;21 15 16 10 5 21&quot;></polyline></svg> View Uploaded Receipt</a>';
 		
 		receiptImgHtml = 
 		  '<div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface2);">' +
-			'<img src="' + imgSrc + '" style="width: 100%; max-height: 180px; object-fit: cover; display: block; cursor: pointer;" onclick="window.open(\'' + r.receiptUrl + '\', \'_blank\')" onerror="this.parentElement.innerHTML=\'<a href=&quot;'+r.receiptUrl+'&quot; target=&quot;_blank&quot; style=&quot;display:block; padding:12px; text-align:center; font-size:13px; font-weight:700; color:var(--blue); text-decoration:none;&quot;>📸 View Uploaded Receipt</a>\';">' +
+			'<img src="' + imgSrc + '" style="width: 100%; max-height: 180px; object-fit: cover; display: block; cursor: pointer;" onclick="window.open(\'' + r.receiptUrl + '\', \'_blank\')" onerror="this.parentElement.innerHTML=\'' + fallbackStr + '\';">' +
 		  '</div>';
 	  }
 	}
@@ -1386,7 +1440,7 @@ function mRenderReports(rows){
 		  
 		  + (status === 'Requested' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'In Progress\')" style="flex:1;padding:12px;background:var(--blue-bg);border:1.5px solid var(--blue-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--blue);display:flex;align-items:center;justify-content:center;gap:6px;">Accept</button>' : '')
 		  
-		  + (status === 'Parked' || status === 'In Progress' ? '<button class="hover-lift" onclick="mUpdateVehicle(\''+r.plateNum+'\',\''+r.cardNum+'\',\'Returned\')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>' : '')
+		  + (status === 'Parked' || status === 'In Progress' ? '<button class="hover-lift" onclick="initiateReturn(' + i + ')" style="flex:1;padding:12px;background:var(--green-bg);border:1.5px solid var(--green-border);border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;color:var(--green);display:flex;align-items:center;justify-content:center;gap:6px;">Return</button>' : '')
 		  
 		+'</div>'
 	  +'</div>'
@@ -1395,20 +1449,6 @@ function mRenderReports(rows){
   });
 }
 function mReExport(r){mCaptureReceipt({...r,staffName:r.valetName||'—',amount:r.amount||0,ref:r.ref||genRef()});}
-
-async function mUpdateVehicle(plate, card, status){
-  if(!confirm('Confirm vehicle returned?')) return;
-  try {
-	await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
-	  method: 'PATCH', 
-	  body: JSON.stringify({ vehicle_status: status })
-	});
-	toast('Status Updated');
-	setTimeout(mLoadReports, 500);
-  } catch(e) { 
-	toast('Failed to update'); 
-  }
-}
 
 // --- Check-in & GPS System ---
 function loadCheckinPage(){
@@ -1652,19 +1692,6 @@ async function mExportID() {
 	btn.disabled = false; 
 	btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Official ID'; 
   }
-}
-
-async function mSignOut() {
-  await logSession('logout'); 
-  CU = null;
-  _pl = null;
-  
-  localStorage.setItem('radar_enabled', 'false');
-  if (radarInterval) clearInterval(radarInterval);
-  
-  showScreen('screen-login');
-  document.getElementById('l-email').value = '';
-  document.getElementById('l-pass').value = '';
 }
 
 // --- Chatbot ---
