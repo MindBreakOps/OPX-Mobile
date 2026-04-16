@@ -8,13 +8,13 @@
 <meta name="apple-mobile-web-app-title" content="OPERIX">
 <meta name="theme-color" content="#f0eff5">
 <title>OPERIX</title>
-
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <link rel="manifest" id="pwa-manifest">
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
 <style>
 :root {
   --navy: #1e2d40; 
@@ -571,22 +571,37 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 	  </button>
 	</div>
-	<div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
-	  <div style="font-size:13px; color:var(--text3); text-align:center; margin-bottom: 8px;">
-		This is a paid external service. You must upload the payment receipt to complete the return.
-	  </div>
-	  <div style="position:relative; width:100%;">
-		<input type="file" id="r-f-receipt" accept="image/*" style="opacity:0; position:absolute; inset:0; width:100%; height:100%; z-index:10; cursor:pointer;" onchange="updateReturnFileName(this)">
-		<div id="r-f-receipt-lbl" class="field" style="display:flex; align-items:center; justify-content:center; gap:8px; background:var(--surface2); color:var(--text3); border: 1.5px dashed var(--border); text-align:center; transition: all 0.2s;">
-		  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-		  <span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>
+	
+	<div class="modal-body" style="display:flex;flex-direction:column;gap:16px;">
+	  <div style="background: var(--blue-bg); border: 1px solid var(--blue-border); padding: 12px; border-radius: 12px; display: flex; gap: 10px; align-items: flex-start;">
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+		<div style="font-size: 12px; font-weight: 600; color: var(--blue); line-height: 1.4;">
+		  Upload the payment receipt to mark this vehicle as returned.
 		</div>
 	  </div>
+
+	  <div style="position:relative; width:100%;">
+		<input type="file" id="r-f-receipt" accept="image/*" capture="environment" style="opacity:0; position:absolute; inset:0; width:100%; height:100%; z-index:10; cursor:pointer;" onchange="updateReturnFileName(this)">
+		<div id="r-f-receipt-lbl" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:var(--surface2); color:var(--text3); border: 2px dashed var(--border); border-radius: 16px; padding: 30px 20px; text-align:center; transition: all 0.2s;">
+		  <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); margin-bottom: 4px;">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+		  </div>
+		  <span style="font-size: 14px; font-weight: 800; color: var(--navy);">Tap to Scan Receipt</span>
+		  <span style="font-size: 11px; font-weight: 600;">Use camera to capture proof</span>
+		</div>
+	  </div>
+	  
+	  <div id="receipt-preview-container" style="display:none; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); position: relative;">
+		<img id="receipt-preview-img" style="width: 100%; height: 160px; object-fit: cover; display: block;">
+		<button onclick="clearReceiptUpload()" style="position:absolute; top:8px; right:8px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px);">
+		  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	  </div>
+
 	  <button class="btn btn-dark hover-lift" onclick="mConfirmReturn()" id="return-confirm-btn">Confirm Return</button>
 	</div>
   </div>
 </div>
-
 <div id="receipt-cap" style="position:fixed;left:-9999px;top:0;width:320px;background:#ffffff;padding:20px;font-family:'Space Grotesk',sans-serif;z-index:-1;box-sizing:border-box;">
   <div style="text-align:center;margin-bottom:16px;border-bottom:1.5px dashed #1e2d40;padding-bottom:16px;">
 	<div style="font-size:22px;font-weight:900;color:#1e2d40;text-transform:uppercase;line-height:1.1;letter-spacing:-0.02em;">OPERIX</div>
@@ -1257,34 +1272,34 @@ async function mCaptureReceipt(d) {
   }
 }
 
-// --- Return Image Upload Logic ---
-let currentReturnReq = null;
+// --- Updated Return & Receipt Logic ---
 
-function updateReturnFileName(input) {
-  var lbl = document.getElementById('r-f-receipt-lbl');
-  if (input.files && input.files[0]) {
-	lbl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--green); font-weight:700; font-size: 13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${input.files[0].name}</span>`;
-	lbl.style.borderColor = 'var(--green)';
-	lbl.style.background = 'var(--green-bg)';
-  }
-}
+let currentReturnReq = null;
 
 function initiateReturn(idx) {
   let r = window._mRpt[idx];
-  
-  if (r.serviceType === 'Free') {
-	mUpdateVehicle(r.plateNum, r.cardNum, 'Returned');
-  } else {
-	currentReturnReq = r;
-	document.getElementById('r-f-receipt-lbl').innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span style="font-size: 13px; font-weight: 700;">Tap to Upload Receipt</span>`;
-	document.getElementById('r-f-receipt-lbl').style.borderColor = 'var(--border)';
-	document.getElementById('r-f-receipt-lbl').style.background = 'var(--surface2)';
-	
-	let fileInput = document.getElementById('r-f-receipt');
-	if (fileInput) fileInput.value = '';
-	
-	document.getElementById('return-modal').classList.add('open');
+  currentReturnReq = r;
+  clearReceiptUpload(); // Ensure it opens clean
+  document.getElementById('return-modal').classList.add('open');
+}
+
+function updateReturnFileName(input) {
+  if (input.files && input.files[0]) {
+	// Show image preview
+	let reader = new FileReader();
+	reader.onload = function(e) {
+	  document.getElementById('receipt-preview-img').src = e.target.result;
+	  document.getElementById('receipt-preview-container').style.display = 'block';
+	  document.getElementById('r-f-receipt-lbl').style.display = 'none';
+	}
+	reader.readAsDataURL(input.files[0]);
   }
+}
+
+function clearReceiptUpload() {
+  document.getElementById('r-f-receipt').value = '';
+  document.getElementById('receipt-preview-container').style.display = 'none';
+  document.getElementById('r-f-receipt-lbl').style.display = 'flex';
 }
 
 async function mConfirmReturn() {
@@ -1300,9 +1315,26 @@ async function mConfirmReturn() {
   btn.disabled = true;
 
   try {
-	btn.innerHTML = 'Compressing Photo...';
+	// 1. Compress image FIRST to create a safe format for Tesseract
+	btn.innerHTML = 'Compressing...';
 	let compressedBase64 = await compressImage(file);
+
+	// 2. Pass the safe compressed image to Tesseract
+	btn.innerHTML = 'Scanning Receipt...';
+	const worker = await Tesseract.createWorker('eng');
+	const ret = await worker.recognize(compressedBase64);
+	const text = ret.data.text.toLowerCase();
+	await worker.terminate();
+
+	// 3. Verify Receipt Keywords
+	if (!text.includes('sar') && !text.includes('receipt') && !text.includes('operix') && !text.includes('total') && !text.includes('valet')) {
+		toast('Error: Does not look like a valid receipt.');
+		btn.disabled = false;
+		btn.innerHTML = 'Confirm Return';
+		return; 
+	}
 	
+	// 4. Upload to Google Drive
 	btn.innerHTML = 'Uploading to Drive...';
 	let uploadRes = await gas({
 	  action: 'uploadPhoto',
@@ -1333,21 +1365,6 @@ async function mConfirmReturn() {
   btn.disabled = false;
   btn.innerHTML = 'Confirm Return';
 }
-
-async function mUpdateVehicle(plate, card, status){
-  if(status === 'Returned' && !confirm('Confirm vehicle returned?')) return;
-  try {
-	await sb('operix_invoices?plate_num=eq.' + encodeURIComponent(plate) + '&card_num=eq.' + encodeURIComponent(card), {
-	  method: 'PATCH', 
-	  body: JSON.stringify({ vehicle_status: status })
-	});
-	toast('Status Updated');
-	setTimeout(mLoadReports, 500);
-  } catch(e) { 
-	toast('Failed to update'); 
-  }
-}
-
 async function mLoadReports(){
   var el=document.getElementById('m-reports-list');if(!el)return;
   el.innerHTML='<div style="text-align:center;padding:32px;color:var(--text3);font-size:14px;font-weight:600;">Loading Board...</div>';
