@@ -11,7 +11,6 @@
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <link rel="manifest" id="pwa-manifest">
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
@@ -658,6 +657,119 @@ select.field{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+
+const OPS_API = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgIFFXUoKip3yeEkQqzbugfJtUsK7YHj8Ma0eMxDl6lLDtzL8f/exec';
+const SUPABASE_URL = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
+
+
+
+var CU = null; 
+var _pl = null; 
+var _sqd = null; 
+var _fpAcc = null;
+var _otpTimer = null;
+var myLat = null, myLng = null, myDist = 9999;
+var CAFE_LAT = 24.7694973, CAFE_LNG = 46.7625231, GPS_RADIUS = 150;
+var myShift = null;
+var mReportsData = [];
+var mOpsSvc = 'mb'; 
+
+function iconTick() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`; }
+function iconCross() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`; }
+
+// ══════════════════════════════════════════════
+// 1. SUPABASE AUTH HELPER (From Naseem App)
+// ══════════════════════════════════════════════
+async function sbAuth(endpoint, body) {
+  const url = SUPABASE_URL + '/auth/v1/' + endpoint;
+  const res = await fetch(url, { 
+	method: 'POST', 
+	headers: { 'apikey': SUPABASE_ANON, 'Content-Type': 'application/json' }, 
+	body: JSON.stringify(body) 
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error_description || data.msg || 'Login failed');
+  return data;
+}
+
+// ══════════════════════════════════════════════
+// 2. MAIN DATABASE FETCH HELPER
+// ══════════════════════════════════════════════
+async function sb(path, opts={}) {
+  const token = localStorage.getItem('operix_jwt') || SUPABASE_ANON;
+  const authHeader = localStorage.getItem('operix_jwt') ? 'Bearer ' + token : 'Bearer ' + SUPABASE_ANON;
+
+  var res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+	...opts,
+	headers: {
+	  'Content-Type': 'application/json',
+	  'apikey': SUPABASE_ANON,
+	  'Authorization': authHeader,
+	  'Prefer': opts.prefer || (opts.method==='GET' ? 'count=exact' : 'return=representation'),
+	  ...(opts.headers||{})
+	}
+  });
+  if(!res.ok){ var t=await res.text().catch(()=>''); throw new Error('SB '+res.status+': '+t.slice(0,100)); }
+  if(res.status===204||opts.method==='DELETE') return null;
+  try{ return await res.json(); }catch{ return null; }
+}
+
+// ══════════════════════════════════════════════
+// 3. LOGIN FUNCTION
+// ══════════════════════════════════════════════
+async function mLogin(){
+  var email=(document.getElementById('l-email').value||'').trim().toLowerCase();
+  var pass=(document.getElementById('l-pass').value||'').trim();
+  var errEl=document.getElementById('l-err'); errEl.style.display='none';
+  var btn=document.getElementById('l-btn');
+
+  if(!email||!pass){errEl.innerHTML=iconCross()+' Please enter email and password.';errEl.style.display='block';return;}
+
+  btn.disabled=true; 
+  btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…';
+
+  try {
+	// 1. Authenticate using the REST API (Padlock Vault)
+	const authData = await sbAuth('token?grant_type=password', { email: email, password: pass });
+	
+	// 2. Save the secure JWT token to the browser
+	localStorage.setItem('operix_jwt', authData.access_token);
+
+	// 3. Fetch their OPERIX profile from the accounts table securely
+	var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&select=id,name,email,role,job,phone,photo,otp_email&limit=1',{method:'GET'});
+	
+	if(!Array.isArray(rows)||!rows.length){
+	  throw new Error('Account profile not found in OPERIX.');
+	}
+	
+	var acc=rows[0];
+	if((acc.role||'').toLowerCase()==='pending'){ throw new Error('Account pending approval.'); }
+	
+	_pl=acc;
+	if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+	if(!acc.otp_email){ throw new Error('2-step verification not configured.'); }
+	
+	// 4. Continue to Device Check & OTP (Original OPERIX Logic)
+	btn.innerHTML='Checking device…';
+	var trusted=await isTrusted(acc.email);
+	if(trusted){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
+	
+	btn.disabled=false;btn.innerHTML='Sign In';
+	var hasSQ=await hasSecQ(acc.email);
+	if(!hasSQ){showScreen('screen-setup-sq');}
+	else{await showNDScreen(acc.email);showScreen('screen-newdev');}
+
+  } catch(e) {
+	localStorage.removeItem('operix_jwt');
+	var msg = e.message.includes('Invalid login credentials') ? 'Wrong email or password.' : e.message;
+	errEl.innerHTML=iconCross()+' ' + msg;
+	errEl.style.display='block';
+	btn.disabled=false;
+	btn.innerHTML='Sign In';
+  }
+}
+
 var currentExternalFee = 19; 
 
 async function loadSystemSettings() {
@@ -694,23 +806,6 @@ const manifestObj = {
 const manifestBlob = new Blob([JSON.stringify(manifestObj)], {type: 'application/json'});
 document.getElementById('pwa-manifest').href = URL.createObjectURL(manifestBlob);
 
-const OPS_API = 'https://script.google.com/macros/s/AKfycbwmd1QUqvJ9FNIGDXAgIFFXUoKip3yeEkQqzbugfJtUsK7YHj8Ma0eMxDl6lLDtzL8f/exec';
-const SUPABASE_URL = 'https://lzobdqlbsxjlupyewdqq.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6b2JkcWxic3hqbHVweWV3ZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY0MDQsImV4cCI6MjA4OTU3MjQwNH0.fH-bV3QiQUbk_6L-clwwdHlZTnTIYAIJeKysMhUlBIs';
-
-var CU = null; 
-var _pl = null; 
-var _sqd = null; 
-var _fpAcc = null;
-var _otpTimer = null;
-var myLat = null, myLng = null, myDist = 9999;
-var CAFE_LAT = 24.7694973, CAFE_LNG = 46.7625231, GPS_RADIUS = 150;
-var myShift = null;
-var mReportsData = [];
-var mOpsSvc = 'mb'; 
-
-function iconTick() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`; }
-function iconCross() { return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`; }
 
 async function getDevFP() {
   var c = [navigator.userAgent, navigator.language, screen.width + 'x' + screen.height, new Date().getTimezoneOffset(), navigator.platform].join('|');
@@ -744,12 +839,16 @@ async function logSession(action) {
 }
 
 async function sb(path, opts={}) {
+  // Use the stored JWT token if it exists, otherwise use the public Anon key
+  const token = localStorage.getItem('operix_jwt') || SUPABASE_ANON;
+  const authHeader = localStorage.getItem('operix_jwt') ? `Bearer ${token}` : `Bearer ${SUPABASE_ANON}`;
+
   var res = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
 	...opts,
 	headers: {
 	  'Content-Type':'application/json',
 	  'apikey':SUPABASE_ANON,
-	  'Authorization':'Bearer '+SUPABASE_ANON,
+	  'Authorization': authHeader, // <-- Passes the secure session identity
 	  'Prefer': opts.prefer || (opts.method==='GET'?'count=exact':'return=representation'),
 	  ...(opts.headers||{})
 	}
@@ -834,30 +933,6 @@ function toast(msgHtml,dur){
 }
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-async function mLogin(){
-  var email=(document.getElementById('l-email').value||'').trim().toLowerCase();
-  var pass=(document.getElementById('l-pass').value||'').trim();
-  var errEl=document.getElementById('l-err'); errEl.style.display='none';
-  var btn=document.getElementById('l-btn');
-  if(!email||!pass){errEl.innerHTML=iconCross()+' Please enter email and password.';errEl.style.display='block';return;}
-  btn.disabled=true; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…';
-  try{
-	var rows=await sb('accounts?email=eq.'+encodeURIComponent(email)+'&password=eq.'+encodeURIComponent(pass)+'&select=id,name,email,role,job,phone,photo,otp_email&limit=1',{method:'GET'});
-	if(!Array.isArray(rows)||!rows.length){errEl.innerHTML=iconCross()+' Wrong email or password.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-	var acc=rows[0];
-	if((acc.role||'').toLowerCase()==='pending'){errEl.innerHTML=iconCross()+' Account pending approval.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-	_pl=acc;
-	if(window.location.protocol==='file:'){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
-	if(!acc.otp_email){errEl.innerHTML=iconCross()+' 2-step verification not configured.';errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';return;}
-	btn.innerHTML='Checking device…';
-	var trusted=await isTrusted(acc.email);
-	if(trusted){finishLogin(acc);btn.disabled=false;btn.innerHTML='Sign In';return;}
-	btn.disabled=false;btn.innerHTML='Sign In';
-	var hasSQ=await hasSecQ(acc.email);
-	if(!hasSQ){showScreen('screen-setup-sq');}
-	else{await showNDScreen(acc.email);showScreen('screen-newdev');}
-  }catch(e){errEl.innerHTML=iconCross()+' Connection error: '+e.message;errEl.style.display='block';btn.disabled=false;btn.innerHTML='Sign In';}
-}
 
 async function hasSecQ(email){
   try{var r=await sb('operix_security_questions?account_email=eq.'+encodeURIComponent(email)+'&limit=1',{method:'GET'});return Array.isArray(r)&&r.length&&r[0].q1;}catch{return false;}
